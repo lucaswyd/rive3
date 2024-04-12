@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "WarezTuga",
+  "name": "Warez",
   "short_name": "WZT",
-  "description": "App de filmes e Series Gratis",
+  "description": "App de Filmes e Series Gratis",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
@@ -30,9 +30,9 @@
       "type": "image/png"
     },
     {
-      "src": "/images/logo512.svg",
+      "src": "/images/logolmg.png",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ]
 }
