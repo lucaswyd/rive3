@@ -21,17 +21,17 @@ const LoginPage = () => {
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/logo.svg"
+          src="/images/logolmg.png"
           alt="logo"
           data-tooltip-id="tooltip"
           data-tooltip-content="Rive"
         />
-        <p>WZTuga</p>
+        <p>WarezAPP</p>
       </div>
       <div className={styles.settings}>
         <h1>Downloads</h1>
         <div className={styles.group2}>
-          <h1>PWA</h1>
+          <h1>App Beta v2 </h1>
           <p>
           Isso instalará o aplicativo para todos os dispositivos ocupando pouca memória e dados móveis
           </p>
@@ -39,6 +39,9 @@ const LoginPage = () => {
           Baixe usando qualquer Navegador, utilize AD-Block para tentar remover ou minimizar a publicidade dos Players
           </p>
           <p>Se o download não iniciar ou o botão não funcionar, desligue a tradução automática, atualize e tente novamente!</p>
+          <p>
+            * Por favor, note que o App ainda esta em fase teste, bugs e erros serao corrigidos com o tempo.
+          </p>
           {/* <p>To download movies/tv shows, go to it's watch page, and use extensions like FetchV</p> */}
           <h4
             className={styles.downloadButton}

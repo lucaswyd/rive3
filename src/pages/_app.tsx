@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }: any) {
   return (
     <>
       <Head>
-        <title>Rive</title>
+        <title>Wareztuga</title>
         <meta name="description" content="Your Personal Streaming Oasis" />
         <meta
           name="keywords"

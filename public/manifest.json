@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Rive",
-  "short_name": "Rive",
-  "description": "Your Personal Streaming Oasis.",
+  "name": "WarezTuga",
+  "short_name": "WZT",
+  "description": "App de filmes e Series Gratis",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",

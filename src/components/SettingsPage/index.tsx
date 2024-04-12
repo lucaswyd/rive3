@@ -41,19 +41,19 @@ const SettingsPage = ({
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img src="/images/logolmg.png" alt="logo" />
-        <p>Your Personal Streaming Oasis</p>
+        <p>WarezTuga v2 Beta App</p>
       </div>
       <div className={styles.settings}>
-        <h1>Account</h1>
+        <h1>Conta</h1>
         {user ? (
           <div className={styles.group}>
             <>
               <p className={styles.logout} onClick={() => logoutUser()}>
-                Logout
+                Sair
               </p>
               {/* <Link href="/signup">Signup</Link> */}
             </>
-            <h4 className={styles.profileCard}>Hi There!</h4>
+            <h4 className={styles.profileCard}>Ola, essa e a V2 Beta Wztuga!</h4>
           </div>
         ) : (
           <div className={styles.group}>
@@ -64,10 +64,10 @@ const SettingsPage = ({
             <h4 className={styles.profileCard}>Faça login para sincronizar com a nuvem</h4>
           </div>
         )}
-        <h1>Appearence</h1>
+        <h1>Aparencia</h1>
         <div className={styles.group}>
           <div>
-            <label htmlFor="mode">Mode</label>
+            <label htmlFor="mode">Modo</label>
             <select
               name="mode"
               id="mode"
@@ -78,7 +78,7 @@ const SettingsPage = ({
               }}
             >
               <option value="system" defaultChecked>
-                System
+                Escolha um modo
               </option>
               <option value="light">Light</option>
               <option value="dark">Dark</option>
@@ -92,7 +92,7 @@ const SettingsPage = ({
             </select>
           </div> */}
           <div>
-            <label htmlFor="ascent">Ascent Color</label>
+            <label htmlFor="ascent">Cores secundarias </label>
             <select
               name="ascent"
               id="ascent"
@@ -124,27 +124,27 @@ const SettingsPage = ({
             </select>
           </div>
         </div>
-        <h1>App Center</h1>
+        <h1>Centro da App</h1>
         <div className={styles.group}>
           <Link
             href="/downloads"
             data-tooltip-id="tooltip"
             data-tooltip-content="Downloads"
           >
-            Download
+            Download App
           </Link>
-          <Link href="mailto:kumarashishranjan4971@hotmail.com">
-            Contact Us
+          <Link href="mailto:tv@wareztuga.pt">
+            Envie-nos a sua opniao
           </Link>
           {/* <Link href="/contact">Contact Us</Link> */}
         </div>
         <h1>Links</h1>
         <div className={styles.group}>
-          <Link href={"https://github.com/Developabile/rive-next"}>
-            <FaGithub /> Github
+          <Link href={"https://wareztuga.pt"}>
+            <FaGlobe /> Wareztuga
           </Link>
-          <Link href={"/"}>
-            <FaGlobe /> Website
+          <Link href={"https://wareztuga.pt"}>
+            <FaGlobe /> Parceiro
           </Link>
         </div>
       </div>
