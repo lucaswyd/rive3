@@ -1,45 +1,38 @@
-// Importar dependências
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import Router from "next/router";
-
-// Importar estilos globais
 import "@/styles/globals.scss";
 import Layout from "@/components/Layout";
+import Head from "next/head";
 import { Toaster } from "sonner";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
+import Router from "next/router";
+import { useState, useEffect } from "react";
 import NProgress from "nprogress";
+import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
-
-  // Configurar o NProgress
   NProgress.configure({ showSpinner: false });
 
-  // Efeito para lidar com as mudanças de rota
   useEffect(() => {
-    const handleRouteChangeStart = () => {
+    const handleRouteChangeStart = (url: string) => {
       setIsLoading(true);
       NProgress.start();
     };
 
-    const handleRouteChangeComplete = () => {
+    const handleRouteChangeComplete = (url: string) => {
       setIsLoading(false);
       NProgress.done(false);
     };
 
-    const handleRouteChangeError = () => {
+    const handleRouteChangeError = (url: string) => {
       setIsLoading(false);
     };
 
-    // Registrar os eventos de mudança de rota
     Router.events.on("routeChangeStart", handleRouteChangeStart);
     Router.events.on("routeChangeComplete", handleRouteChangeComplete);
     Router.events.on("routeChangeError", handleRouteChangeError);
 
-    // Remover os eventos ao desmontar o componente
     return () => {
       Router.events.off("routeChangeStart", handleRouteChangeStart);
       Router.events.off("routeChangeComplete", handleRouteChangeComplete);
@@ -47,35 +40,51 @@ export default function App({ Component, pageProps }: any) {
     };
   }, []);
 
-  // Efeito para adicionar os scripts de analytics
   useEffect(() => {
+    // Verificar se estamos no navegador antes de chamar a função DisableDevtool
+    if (typeof window !== 'undefined') {
+      const DisableDevtool = require('disable-devtool');
+      DisableDevtool();
+    }
+
+    // Adicionar os scripts de analytics
     const script = document.createElement("script");
-    script.id = "_waubyv";
-    script.innerHTML = `var _wau = _wau || []; _wau.push(["dynamic", "8vab3h8jp8", "byv", "c4302bffffff", "small"]);`;
-    document.body.appendChild(script);
+  script.id = "_waubyv";
+  script.innerHTML = `
+    var _wau = _wau || [];
+    _wau.push(["dynamic", "8vab3h8jp8", "byv", "c4302bffffff", "small"]);
+  `;
+  document.head.appendChild(script);
 
-    const asyncScript = document.createElement("script");
-    asyncScript.src = "//waust.at/d.js";
-    asyncScript.async = true;
-    document.body.appendChild(asyncScript);
+  const asyncScript = document.createElement("script");
+  asyncScript.src = "//waust.at/d.js";
+  asyncScript.async = true;
+  document.head.appendChild(asyncScript);
 
-    // Remover os scripts ao desmontar o componente
-    return () => {
-      document.body.removeChild(script);
-      document.body.removeChild(asyncScript);
+  // Adicionar estilo para display: none ao elemento de analytics
+  const style = document.createElement("style");
+  style.innerHTML = `
+    #_waubyv, // id do primeiro script
+    script[src="//waust.at/d.js"] { // script async
+      display: none;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Retornar a função de cleanup para remover os scripts e estilos ao desmontar o componente
+  return () => {
+    document.head.removeChild(script);
+    document.head.removeChild(asyncScript);
+    document.head.removeChild(style);
     };
   }, []);
 
-  // Retornar a estrutura da aplicação
   return (
     <>
       <Head>
         <title>Wareztuga</title>
         <meta name="description" content="Your Personal Streaming Oasis" />
-        <meta
-          name="keywords"
-          content="movie, streaming, tv, rive, stream. movie app, tv shows, movie download"
-        />
+        <meta name="keywords" content="movie, streaming, tv, rive, stream. movie app, tv shows, movie download" />
         <link rel="manifest" href="manifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -83,7 +92,6 @@ export default function App({ Component, pageProps }: any) {
         <meta name="apple-mobile-web-app-title" content="Rive" />
         <link rel="icon" href="/images/logo512.png" />
         <link rel="apple-touch-icon" href="/images/logo512.png" />
-        {/* <link rel="mask-icon" href="/images/logo512.svg" color="#f4f7fe" /> */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#f4f7fe" />
         <meta name="msapplication-tap-highlight" content="no" />
