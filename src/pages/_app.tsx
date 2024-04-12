@@ -2,7 +2,6 @@ import "@/styles/globals.scss";
 import Layout from "@/components/Layout";
 import Head from "next/head";
 import { Toaster } from "sonner";
-import "@/styles/checkbox.scss";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import Router from "next/router";
@@ -11,33 +10,51 @@ import NProgress from "nprogress";
 import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
 
-
+// Import do DisableDevtool removido do componente
 
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
   NProgress.configure({ showSpinner: false });
-  // NProgress.configure({
-  //   template: '<div class="bar" role="bar"><div class="peg"></div></div>'
-  // });
+
   useEffect(() => {
-    Router.events.on("routeChangeStart", (url) => {
+    const handleRouteChangeStart = (url: string) => {
       setIsLoading(true);
       NProgress.start();
-    });
+    };
 
-    Router.events.on("routeChangeComplete", (url) => {
+    const handleRouteChangeComplete = (url: string) => {
       setIsLoading(false);
       NProgress.done(false);
-    });
+    };
 
-    Router.events.on("routeChangeError", (url) => {
+    const handleRouteChangeError = (url: string) => {
       setIsLoading(false);
-    });
-  }, [Router]);
+    };
+
+    Router.events.on("routeChangeStart", handleRouteChangeStart);
+    Router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    Router.events.on("routeChangeError", handleRouteChangeError);
+
+    // Cleanup da subscrição do evento ao desmontar o componente
+    return () => {
+      Router.events.off("routeChangeStart", handleRouteChangeStart);
+      Router.events.off("routeChangeComplete", handleRouteChangeComplete);
+      Router.events.off("routeChangeError", handleRouteChangeError);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Verificar se estamos no navegador antes de chamar a função DisableDevtool
+    if (typeof window !== 'undefined') {
+      const DisableDevtool = require('disable-devtool');
+      DisableDevtool();
+    }
+  }, []);
+
   return (
     <>
       <Head>
-        <title>WarezTuga</title>
+        <title>Rive</title>
         <meta name="description" content="Your Personal Streaming Oasis" />
         <meta
           name="keywords"
