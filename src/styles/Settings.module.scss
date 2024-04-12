@@ -36,7 +36,7 @@
     justify-content: flex-start;
     flex-direction: column;
     align-items: flex-start;
-    padding: 2rem 4rem;
+    padding: 4rem 4rem;
     .group {
       width: 100%;
       margin: 1rem 0 3rem 1rem;
@@ -76,12 +76,33 @@
         align-items: center;
         gap: 1rem;
         display: flex;
-        width: 7rem;
+        width: 7rem; /* Tornar ligeiramente maior */
+        padding: 0.5rem 1rem; /* Adicionar preenchimento para tornar o botão mais visível e clicável */
+        border: 1px solid transparent; /* Adicionar borda transparente para manter o tamanho do botão consistente */
+        border-radius: 0.25rem; /* Adicionar borda arredondada */
+        background-color: rgb(3, 3, 3); /* Definir cor de fundo transparente */
+        color:whitesmoke; /* Definir cor do texto */
+        text-decoration: none; /* Remover sublinhado do link */
+        box-shadow: 5px 5px 10px rgba(2, 1, 55, 0.195); /* Aplica efeito de botao com shadows */
+        backdrop-filter: blur(6px) inset transparent;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Adicionar transição suave para o efeito hover e clique */
+
+        &:hover{
+          background-color:#f0f0f0; /* alterar cor de fundo do hover */
+
+        }
+
+        &:active {
+          box-shadow: 0.0.1rem 0.3rem rgba(0,0,0,0.1 ); /*adicionar uma leve sombra ao clicar */
+        }
+
+
       }
       .logout {
         color: var(--primary-2);
         cursor: pointer;
         width: 7rem;
+        box-shadow:5px 5px 10px rgba(0, 0, 0, 0);
       }
       .downloadButton {
         width: clamp(12rem, 50%, 20rem);
@@ -137,6 +158,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
+  
 }
 .signin {
   cursor: pointer;
@@ -180,9 +202,9 @@
     // min-height: 100vh;
     height: auto;
     position: relative;
-    top: -2rem;
+    top: -1rem;
     .logo {
-      width: clamp(20rem, calc(100vw - 2rem), 40rem);
+      width: clamp(10rem, calc(100vw - 2rem), 40rem);
       position: unset;
       right: 0;
       color: var(--primary-2);
@@ -190,9 +212,11 @@
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      // margin-bottom: 2rem;
+      // margin-bottom: 4rem;
       img {
-        width: 20rem;
+        padding: 3.5rem;
+        width: 15rem;
+
       }
     }
   }
@@ -208,13 +232,13 @@
       width: clamp(20rem, calc(100vw - 2rem), 40rem);
       // background: red;
       display: flex;
-      justify-content: center;
+      justify-content:left;
       flex-direction: column;
       align-items: flex-start;
-      padding: 2rem 0;
+      padding: 5rem 0;
       padding-right: 1rem;
       position: relative;
-      top: -2rem;
+      top: -4rem;
       padding-bottom: 0;
     }
   }

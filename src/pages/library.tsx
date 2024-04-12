@@ -121,19 +121,19 @@ const Library = () => {
     <div className={styles.MoviePage}>
       {/* if login, "hello username" */}
       {/* else, "Login to sunc to cloud" */}
-      <h1>Library</h1>
+      <h1>Biblioteca</h1>
       <div className={styles.category}>
         <p
           className={`${category === "watchlist" ? styles.active : styles.inactive}`}
           onClick={() => setCategory("watchlist")}
         >
-          Watchlist
+          Favoritos
         </p>
         <p
           className={`${category === "continueWatching" ? styles.active : styles.inactive}`}
           onClick={() => setCategory("continueWatching")}
         >
-          Continue Watching
+          Continuar Assistindo
         </p>
       </div>
       <div className={styles.category}>
@@ -141,13 +141,13 @@ const Library = () => {
           className={`${subCategory === "movie" ? styles.active : styles.inactive}`}
           onClick={() => setSubCategory("movie")}
         >
-          Movie
+          Filme
         </p>
         <p
           className={`${subCategory === "tv" ? styles.active : styles.inactive}`}
           onClick={() => setSubCategory("tv")}
         >
-          TV Shows
+          Series
         </p>
       </div>
 
@@ -172,7 +172,9 @@ const Library = () => {
               return <MovieCardSmall data={ele} media_type={subCategory} />;
           })
         ) : ids?.length === 0 || ids === undefined ? (
-          <p>List Is Empty</p>
+            <p>A sua lista esta vazia, adicione o seu conteudo favorito
+              !
+          </p>
         ) : (
           dummyList.map((ele) => <Skeleton className={styles.loading} />)
         )}

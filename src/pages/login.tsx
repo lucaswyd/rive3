@@ -23,12 +23,12 @@ const LoginPage = () => {
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/logo.svg"
+          src="/images/logolmg.png"
           alt="logo"
           data-tooltip-id="tooltip"
           data-tooltip-content="Rive"
         />
-        <p>Your Personal Streaming Oasis</p>
+        <p>O seu aplicativo de filmes gratuito</p>
       </div>
       <div className={styles.settings}>
         <h1>Login</h1>
@@ -50,16 +50,16 @@ const LoginPage = () => {
               onChange={(e: any) => setPassword(e.target.value)}
               required
             />
-            <button onClick={handleFormSubmission}>submit</button>
+            <button onClick={handleFormSubmission}>Entrar</button>
           </>
         </div>
         <h4 className={styles.signin} onClick={handleGoogleSignIn}>
-          SignIn with <span className={styles.highlight}>Google</span>
+          Entrar com a conta <span className={styles.highlight}>Google</span>
         </h4>
         <h4>
-          Become Rive member!{" "}
+          Se preferir utilize um Email e Password!{" "}
           <Link href="/signup" className={styles.highlight}>
-            Signup
+            Criar conta
           </Link>
         </h4>
         {/* <h4 onClick={() => resetPassword(email)} className={styles.highlight}>Forgot Password?</h4> */}

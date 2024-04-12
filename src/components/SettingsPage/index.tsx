@@ -40,7 +40,7 @@ const SettingsPage = ({
   return (
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
-        <img src="/images/logo.svg" alt="logo" />
+        <img src="/images/logolmg.png" alt="logo" />
         <p>Your Personal Streaming Oasis</p>
       </div>
       <div className={styles.settings}>
@@ -61,7 +61,7 @@ const SettingsPage = ({
               <Link href="/login">Login</Link>
               <Link href="/signup">Signup</Link>
             </>
-            <h4 className={styles.profileCard}>Login to sync to cloud</h4>
+            <h4 className={styles.profileCard}>Faça login para sincronizar com a nuvem</h4>
           </div>
         )}
         <h1>Appearence</h1>
