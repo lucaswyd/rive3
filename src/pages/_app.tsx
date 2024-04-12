@@ -1,41 +1,45 @@
+// Importar dependências
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import Router from "next/router";
+
+// Importar estilos globais
 import "@/styles/globals.scss";
 import Layout from "@/components/Layout";
-import Head from "next/head";
 import { Toaster } from "sonner";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
-import Router from "next/router";
-import { useState, useEffect } from "react";
 import NProgress from "nprogress";
-import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
-
-// Import do DisableDevtool removido do componente
 
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
+
+  // Configurar o NProgress
   NProgress.configure({ showSpinner: false });
 
+  // Efeito para lidar com as mudanças de rota
   useEffect(() => {
-    const handleRouteChangeStart = (url: string) => {
+    const handleRouteChangeStart = () => {
       setIsLoading(true);
       NProgress.start();
     };
 
-    const handleRouteChangeComplete = (url: string) => {
+    const handleRouteChangeComplete = () => {
       setIsLoading(false);
       NProgress.done(false);
     };
 
-    const handleRouteChangeError = (url: string) => {
+    const handleRouteChangeError = () => {
       setIsLoading(false);
     };
 
+    // Registrar os eventos de mudança de rota
     Router.events.on("routeChangeStart", handleRouteChangeStart);
     Router.events.on("routeChangeComplete", handleRouteChangeComplete);
     Router.events.on("routeChangeError", handleRouteChangeError);
 
-    // Cleanup da subscrição do evento ao desmontar o componente
+    // Remover os eventos ao desmontar o componente
     return () => {
       Router.events.off("routeChangeStart", handleRouteChangeStart);
       Router.events.off("routeChangeComplete", handleRouteChangeComplete);
@@ -43,14 +47,26 @@ export default function App({ Component, pageProps }: any) {
     };
   }, []);
 
+  // Efeito para adicionar os scripts de analytics
   useEffect(() => {
-    // Verificar se estamos no navegador antes de chamar a função DisableDevtool
-    if (typeof window !== 'undefined') {
-      const DisableDevtool = require('disable-devtool');
-      DisableDevtool();
-    }
+    const script = document.createElement("script");
+    script.id = "_waubyv";
+    script.innerHTML = `var _wau = _wau || []; _wau.push(["dynamic", "8vab3h8jp8", "byv", "c4302bffffff", "small"]);`;
+    document.body.appendChild(script);
+
+    const asyncScript = document.createElement("script");
+    asyncScript.src = "//waust.at/d.js";
+    asyncScript.async = true;
+    document.body.appendChild(asyncScript);
+
+    // Remover os scripts ao desmontar o componente
+    return () => {
+      document.body.removeChild(script);
+      document.body.removeChild(asyncScript);
+    };
   }, []);
 
+  // Retornar a estrutura da aplicação
   return (
     <>
       <Head>
