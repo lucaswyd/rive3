@@ -89,7 +89,7 @@ const Watch = () => {
     };
   }, [params, id, season, episode]);
   useEffect(() => {
-    toast.info(
+   /* toast.info(
       <div>
          Baixe o nosso APP para o Telemovel, leve o Warez contigo a todo sitio
         { " " }
@@ -134,7 +134,7 @@ const Watch = () => {
           {" "}
         </a>
       </div>,
-    );
+    ); */
     // window.addEventListener("keydown", (event) => {
     //   console.log("Key pressed:", event.key);
     // });
@@ -258,14 +258,13 @@ const Watch = () => {
         value={source}
         onChange={(e) => setSource(e.target.value)}
       >
-        <option value="AGG">SERVIDOR  : 1 (Melhor Servidor)</option>
-        <option value="VID">SERVIDOR : 2 (WarezCDN)</option>
-        <option value="PRO">SERVIDOR : 3 (Embbeder)</option>
-        <option value="EMB">SERVIDOR : 4 (Servidor para Animes)</option>
-        <option value="MULTI">SERVIDOR : 5 (Servidor sem legendas)</option>
+        <option value="AGG">SERVIDOR  : 6 (EM BREVE)</option>
+        <option value="VID">SERVIDOR : 5 (EM BREVE)</option>
+        <option value="PRO">SERVIDOR : 4 (Servidor 4 - Sem Legendas)</option>
+        <option value="EMB">SERVIDOR : 3 (Servidor 3 - com Legendas)</option>
+        <option value="MULTI">SERVIDOR : 2 (Servidor Secundário - Com Legendas)</option>
         <option value="SUP" defaultChecked>
-          SERVIDOR : 6 (Multi/Most-Server)
-        </option>
+          SERVIDOR : 1 (Servidor Principal com Legendas)</option>
       </select>
       <div className={`${styles.loader} skeleton`}></div>
 
@@ -287,8 +286,8 @@ const Watch = () => {
           scrolling="no"
           src={
             type === "movie"
-              ? `${STREAM_URL_VID}/embed/${type}/${id}`
-              : `${STREAM_URL_VID}/embed/${type}/${id}/${season}/${episode}`
+              ? `${STREAM_URL_VID}/filme/${id}`
+              : `${STREAM_URL_VID}/${type}/${id}/${season}/${episode}`
           }
           className={styles.iframe}
           allowFullScreen
@@ -313,7 +312,7 @@ const Watch = () => {
           scrolling="no"
           src={
             type === "movie"
-              ? `${STREAM_URL_EMB}/embed/movie?tmdb=${id}`
+              ? `${STREAM_URL_EMB}/embed/movie/${id}`
               : `${STREAM_URL_EMB}/embed/${type}/${id}/${season}/${episode}`
           }
           className={styles.iframe}
@@ -326,8 +325,8 @@ const Watch = () => {
           scrolling="no"
           src={
             type === "movie"
-              ? `${STREAM_URL_MULTI}?video_id=${id}&tmdb=1`
-              : `${STREAM_URL_MULTI}?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
+              ? `${STREAM_URL_MULTI}/embed/movie?tmdb=${id}`
+              : `${STREAM_URL_MULTI}/embed/${type}/${id}/${season}/${episode}`
           }
           className={styles.iframe}
           allowFullScreen
@@ -339,8 +338,8 @@ const Watch = () => {
           scrolling="no"
           src={
             type === "movie"
-              ? `${STREAM_URL_SUP}/?video_id=${id}&tmdb=1`
-              : `${STREAM_URL_SUP}/?video_id=${id}&tmdb=1&s=${season}&e=${episode}`
+              ? `${STREAM_URL_SUP}/embed/movie/${id}`
+              : `${STREAM_URL_SUP}/embed/${type}/${id}/${season}/${episode}`
           }
           className={styles.iframe}
           allowFullScreen
