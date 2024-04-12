@@ -1,42 +1,47 @@
-import "@/styles/globals.scss";
-import Layout from "@/components/Layout";
-import Head from "next/head";
-import { Toaster } from "sonner";
-import "@/styles/checkbox.scss";
-import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
-import Router from "next/router";
-import { useState, useEffect } from "react";
-import NProgress from "nprogress";
-import "@/styles/nprogress.scss";
-import "react-loading-skeleton/dist/skeleton.css";
-
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+import Layout from '@/components/Layout';
+import Head from 'next/head';
+import { Toaster } from 'sonner';
+import { Tooltip } from 'react-tooltip';
+import Router from 'next/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+import '@/styles/globals.scss';
+import '@/styles/checkbox.scss';
+import '@/styles/nprogress.scss';
+import 'react-tooltip/dist/react-tooltip.css';
 
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
-  NProgress.configure({ showSpinner: false });
-  // NProgress.configure({
-  //   template: '<div class="bar" role="bar"><div class="peg"></div></div>'
-  // });
+
   useEffect(() => {
-    Router.events.on("routeChangeStart", (url) => {
+    Router.events.on('routeChangeStart', () => {
       setIsLoading(true);
       NProgress.start();
     });
 
-    Router.events.on("routeChangeComplete", (url) => {
+    Router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
       NProgress.done(false);
     });
 
-    Router.events.on("routeChangeError", (url) => {
+    Router.events.on('routeChangeError', () => {
       setIsLoading(false);
     });
-  }, [Router]);
+
+    // Desativar as React Developer Tools em ambiente de produção
+    if (process.env.NODE_ENV === 'production') {
+      disableReactDevTools();
+    }
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Rive</title>
+        <title>WarezTuga</title>
         <meta name="description" content="Your Personal Streaming Oasis" />
         <meta
           name="keywords"
@@ -49,7 +54,6 @@ export default function App({ Component, pageProps }: any) {
         <meta name="apple-mobile-web-app-title" content="Rive" />
         <link rel="icon" href="/images/logo512.png" />
         <link rel="apple-touch-icon" href="/images/logo512.png" />
-        {/* <link rel="mask-icon" href="/images/logo512.svg" color="#f4f7fe" /> */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#f4f7fe" />
         <meta name="msapplication-tap-highlight" content="no" />
@@ -58,13 +62,13 @@ export default function App({ Component, pageProps }: any) {
       <Layout>
         <Toaster
           toastOptions={{
-            className: "sooner-toast-desktop",
+            className: 'sooner-toast-desktop',
           }}
           position="bottom-right"
         />
         <Toaster
           toastOptions={{
-            className: "sooner-toast-mobile",
+            className: 'sooner-toast-mobile',
           }}
           position="top-center"
         />

@@ -26,20 +26,19 @@ const LoginPage = () => {
           data-tooltip-id="tooltip"
           data-tooltip-content="Rive"
         />
-        <p>Your Personal Streaming Oasis</p>
+        <p>WZTuga</p>
       </div>
       <div className={styles.settings}>
         <h1>Downloads</h1>
         <div className={styles.group2}>
           <h1>PWA</h1>
           <p>
-            This will install app for all device with very low space and data
+          Isso instalará o aplicativo para todos os dispositivos ocupando pouca memória e dados móveis
           </p>
           <p>
-            Download using Brave Browser or Chrome if you have ad-blocker on the
-            chrome account, for ad-free experience
+          Baixe usando qualquer Navegador, utilize AD-Block para tentar remover ou minimizar a publicidade dos Players
           </p>
-          <p>If not downloading, refresh this page and try again</p>
+          <p>Se o download não iniciar ou o botão não funcionar, desligue a tradução automática, atualize e tente novamente!</p>
           {/* <p>To download movies/tv shows, go to it's watch page, and use extensions like FetchV</p> */}
           <h4
             className={styles.downloadButton}

@@ -3,8 +3,8 @@ const OfflinePage = () => {
   return (
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
-        <img src="/images/logo.svg" alt="logo" />
-        <p>Your Personal Streaming Oasis</p>
+        <img src="/images/logo.png" alt="logo" />
+        <p>App de Filmes e Series gratuito</p>
       </div>
       <div className={styles.errorData}>
         <h1>503</h1>

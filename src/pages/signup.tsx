@@ -19,15 +19,17 @@ const SignupPage = () => {
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/logo.svg"
+          src="/images/logo.png"
           alt="logo"
           data-tooltip-id="tooltip"
           data-tooltip-content="Rive"
         />
-        <p>Your Personal Streaming Oasis</p>
+        <p>Nunca utilize a mesma Password do Email</p>
+        <p>Utilize uma Password segura e unica para a App</p>
+        <p>Se preferir entre pelo Login Google</p>
       </div>
       <div className={styles.settings}>
-        <h1>Signup</h1>
+        <h1>Criar Conta</h1>
         <div className={styles.group2}>
           <>
             <label htmlFor="username">Username</label>
@@ -58,9 +60,9 @@ const SignupPage = () => {
           </>
         </div>
         <h4>
-          Already a Rive member!{" "}
+          Se ja tens uma conta faz o{" "}
           <Link href="/login" className={styles.highlight}>
-            Login
+            Login!
           </Link>
         </h4>
       </div>

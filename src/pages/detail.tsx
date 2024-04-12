@@ -178,7 +178,7 @@ const DetailPage = () => {
                     data-tooltip-content="Assistir Wzfilme"
                     href={`${type === "movie" ? `/watch?type=${type}&id=${data?.id}` : `/watch?type=${type}&id=${data?.id}&season=1&episode=1`}`}
                   >
-                    watch <FaPlay className={styles.IconsMobileNone} />
+                    Assistir <FaPlay className={styles.IconsMobileNone} />
                   </Link>
                   {trailer && (
                     <Link
