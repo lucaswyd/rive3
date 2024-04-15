@@ -39,6 +39,7 @@
     "@types/node": "^20",
     "@types/nprogress": "^0.2.3",
     "@types/react": "^18",
+    "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18",
     "husky": "^9.0.11",
     "prettier": "^3.2.5",
