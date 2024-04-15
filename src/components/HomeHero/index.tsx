@@ -133,9 +133,9 @@ const HomeHero = () => {
             <p className={styles.type}>
               {data[index] ? (
                 data[index].media_type == "movie" ? (
-                  "MOVIE"
+                  "FILME"
                 ) : (
-                  "SHOW"
+                  "SERIE"
                 )
               ) : (
                 <Skeleton />
@@ -149,7 +149,7 @@ const HomeHero = () => {
                   data-tooltip-id="tooltip"
                   data-tooltip-content="Assistir WZFilme"
                 >
-                  watch <FaPlay />
+                  Assistir <FaPlay />
                 </Link>
                 <Link
                   className={styles.links}
@@ -158,7 +158,7 @@ const HomeHero = () => {
                   data-tooltip-content="Ver mais"
                 >
                   {" "}
-                  detail{" "}
+                  Detalhes{" "}
                 </Link>
 
                 {bookmarked ? (

@@ -258,13 +258,13 @@ const Watch = () => {
         value={source}
         onChange={(e) => setSource(e.target.value)}
       >
-        <option value="AGG">SERVIDOR  : 6 (EM BREVE)</option>
-        <option value="VID">SERVIDOR : 5 (EM BREVE)</option>
-        <option value="PRO">SERVIDOR : 4 (Servidor 4 - Sem Legendas)</option>
+        <option value="AGG">SERVIDOR  : 6 (SERVIDOR - DUBLADO BR)</option>
+        <option value="VID">SERVIDOR : 5 (SERVIDOR -  ANIMES)</option>
+        <option value="PRO">SERVIDOR : 4 (Servidor 4 - Com Legenda)</option>
         <option value="EMB">SERVIDOR : 3 (Servidor 3 - com Legendas)</option>
-        <option value="MULTI">SERVIDOR : 2 (Servidor Secundário - Com Legendas)</option>
+        <option value="MULTI">SERVIDOR : 2 (Servidor 2- Com Legendas)</option>
         <option value="SUP" defaultChecked>
-          SERVIDOR : 1 (Servidor Principal com Legendas)</option>
+          SERVIDOR : 1 (Servidor 1 - com Legendas)</option>
       </select>
       <div className={`${styles.loader} skeleton`}></div>
 
@@ -273,8 +273,8 @@ const Watch = () => {
           scrolling="no"
           src={
             type === "movie"
-              ? `${STREAM_URL_AGG}/embed/${id}`
-              : `${STREAM_URL_AGG}/embed/${id}/${season}/${episode}`
+              ? `${STREAM_URL_AGG}/e/${id}`
+              : `${STREAM_URL_AGG}/e/${id}/${season}/${episode}`
           }
           className={styles.iframe}
           allowFullScreen
@@ -287,7 +287,7 @@ const Watch = () => {
           src={
             type === "movie"
               ? `${STREAM_URL_VID}/filme/${id}`
-              : `${STREAM_URL_VID}/${type}/${id}/${season}/${episode}`
+              : `${STREAM_URL_VID}/serie/${id}/${season}/${episode}`
           }
           className={styles.iframe}
           allowFullScreen

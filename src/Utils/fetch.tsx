@@ -48,6 +48,7 @@ export default async function axiosFetch({
     searchKeyword: `${baseURL}/search/keyword?query=${query}&language=${language}&page=${page}`,
     searchMovie: `${baseURL}/search/movie?query=${query}&language=${language}&page=${page}`,
     searchTv: `${baseURL}/search/tv?query=${query}&language=${language}&page=${page}`,
+    discover: `${baseURL}/discover/tv?with_network=213&${language}&page=${page}`,
 
     // for a ID
     movieData: `${baseURL}/movie/${id}?language=${language}`,

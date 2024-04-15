@@ -82,25 +82,25 @@ const CategorywisePage = ({ categoryType }: any) => {
           className={`${category === "latest" ? styles.active : styles.inactive}`}
           onClick={() => setCategory("latest")}
         >
-          Latest
+          Recentes
         </p>
         <p
           className={`${category === "trending" ? styles.active : styles.inactive}`}
           onClick={() => setCategory("trending")}
         >
-          Trending
+          Tendencias
         </p>
         <p
           className={`${category === "topRated" ? styles.active : styles.inactive}`}
           onClick={() => setCategory("topRated")}
         >
-          Top-Rated
+          Top TMDB
         </p>
         <p
           className={`${category === "filter" ? styles.active : styles.inactive} ${styles.filter}`}
           onClick={handleFilterClick}
         >
-          Filter{" "}
+          Filtro{" "}
           {category === "filter" ? (
             <MdFilterAlt className={styles.active} />
           ) : (

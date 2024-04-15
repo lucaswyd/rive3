@@ -217,7 +217,7 @@ const HomeListAll = () => {
     <div className={styles.HomeListAll}>
       {recommendations.length > 0 ? (
         <>
-          <h1>Recomendação</h1>
+          <h1>Baseado em tuas escolhas</h1>
           <div
             className={styles.HomeListSection}
             data-tooltip-id="tooltip"

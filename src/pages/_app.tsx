@@ -42,10 +42,7 @@ export default function App({ Component, pageProps }: any) {
 
   useEffect(() => {
     // Verificar se estamos no navegador antes de chamar a função DisableDevtool
-    if (typeof window !== 'undefined') {
-      const DisableDevtool = require('disable-devtool');
-      DisableDevtool();
-    }
+
 
     // Adicionar os scripts de analytics
     const script = document.createElement("script");

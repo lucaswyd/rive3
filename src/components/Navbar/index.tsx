@@ -14,6 +14,7 @@ import {
   IoSettingsOutline,
   IoSearchOutline,
   IoSearch,
+  IoChatboxOutline
 } from "react-icons/io5";
 import { PiTelevisionFill, PiTelevisionLight } from "react-icons/pi";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -103,6 +104,14 @@ const Navbar = ({ children }: any) => {
         ) : (
           <IoSettingsOutline className={styles.inactive} />
         )}
+      </Link>
+
+      <Link href="/comentarios"
+        arial-label="comentarios"
+        data-tooltip-id="tooltip"
+        data-tooltip-content="comentarios"
+      >
+        <IoChatboxOutline className={ styles.inactive } />
       </Link>
     </div>
   );
