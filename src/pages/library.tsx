@@ -172,9 +172,7 @@ const Library = () => {
               return <MovieCardSmall data={ele} media_type={subCategory} />;
           })
         ) : ids?.length === 0 || ids === undefined ? (
-            <p>A sua lista esta vazia, adicione o seu conteudo favorito
-              !
-          </p>
+          <p>A sua lista esta vazia, adicione o seu conteudo favorito !</p>
         ) : (
           dummyList.map((ele) => <Skeleton className={styles.loading} />)
         )}

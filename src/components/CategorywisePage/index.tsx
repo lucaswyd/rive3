@@ -58,6 +58,10 @@ const CategorywisePage = ({ categoryType }: any) => {
         if (data.page > data.total_pages) {
           setCurrentPage(data.total_pages);
         }
+        if (currentPage > data.total_pages) {
+          setCurrentPage(data.total_pages);
+          return;
+        }
         setData(data.results);
         setTotalpages(data.total_pages > 500 ? 500 : data.total_pages);
         setLoading(false);
@@ -68,6 +72,10 @@ const CategorywisePage = ({ categoryType }: any) => {
     };
     fetchData();
   }, [category, currentPage, trigger]);
+
+  // useEffect(()=>{
+  //   setCurrentPage(1);
+  // },[category])
 
   const handleFilterClick = () => {
     setCurrentPage(1);
@@ -145,6 +153,7 @@ const CategorywisePage = ({ categoryType }: any) => {
           }
           window.scrollTo(0, 0);
         }}
+        forcePage={currentPage - 1}
         pageCount={totalpages}
         breakLabel=" ... "
         previousLabel={<AiFillLeftCircle className={styles.paginationIcons} />}

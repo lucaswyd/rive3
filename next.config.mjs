@@ -12,5 +12,3 @@
 // module.exports = withPWA({
 //   // next.js config
 // });
-
-

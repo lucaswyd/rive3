@@ -9,7 +9,6 @@ import { BsHddStack, BsHddStackFill } from "react-icons/bs";
 import axiosFetch from "@/Utils/fetch";
 import WatchDetails from "@/components/WatchDetails";
 
-
 const Watch = () => {
   const params = useSearchParams();
   const { back, push } = useRouter();
@@ -89,7 +88,7 @@ const Watch = () => {
     };
   }, [params, id, season, episode]);
   useEffect(() => {
-   /* toast.info(
+    /* toast.info(
       <div>
          Baixe o nosso APP para o Telemovel, leve o Warez contigo a todo sitio
         { " " }
@@ -258,13 +257,14 @@ const Watch = () => {
         value={source}
         onChange={(e) => setSource(e.target.value)}
       >
-        <option value="AGG">SERVIDOR  : 6 (SERVIDOR - DUBLADO BR)</option>
-        <option value="VID">SERVIDOR : 5 (SERVIDOR -  ANIMES)</option>
+        <option value="AGG">SERVIDOR : 6 (SERVIDOR - DUBLADO BR)</option>
+        <option value="VID">SERVIDOR : 5 (SERVIDOR - ANIMES)</option>
         <option value="PRO">SERVIDOR : 4 (Servidor 4 - Com Legenda)</option>
         <option value="EMB">SERVIDOR : 3 (Servidor 3 - com Legendas)</option>
         <option value="MULTI">SERVIDOR : 2 (Servidor 2- Com Legendas)</option>
         <option value="SUP" defaultChecked>
-          SERVIDOR : 1 (Servidor 1 - com Legendas)</option>
+          SERVIDOR : 1 (Servidor 1 - com Legendas)
+        </option>
       </select>
       <div className={`${styles.loader} skeleton`}></div>
 

@@ -46,7 +46,6 @@ const countryData = [
   { name: "Singapore", abbr: "SG" },
   { name: "Malaysia", abbr: "MY" },
   { name: "Philippines", abbr: "PH" },
- 
 ];
 const Filter = ({
   categoryType,

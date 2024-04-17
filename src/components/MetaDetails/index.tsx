@@ -2,12 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./style.module.scss";
 import axiosFetch from "@/Utils/fetch";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+// import { motion, AnimatePresence } from "framer-motion";
 import MovieCardLarge from "../MovieCardLarge";
 import { FaPlay, FaStar } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import ReactPaginate from "react-paginate";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
+
+// react-lazy-load-image-component
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -23,6 +27,7 @@ const MetaDetails = ({ id, type, data }: any) => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalpages, setTotalpages] = useState(1);
+  const [imagePlaceholder, setImagePlaceholder] = useState(false);
   const metaDetailsPage: any = useRef(null);
 
   const genres: Array<string> = [];
@@ -104,7 +109,7 @@ const MetaDetails = ({ id, type, data }: any) => {
               className={`${category === "episodes" ? styles.active : styles.inactive}`}
               onClick={() => setCategory("episodes")}
             >
-              Episodios
+              Episódios
             </p>
           ) : null}
           <p
@@ -192,7 +197,8 @@ const MetaDetails = ({ id, type, data }: any) => {
                       <div
                         className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
                       >
-                        <AnimatePresence mode="sync">
+                        {/* if rllic package is not available, then start using this code again, and comment/delete the rllic code */}
+                        {/* <AnimatePresence mode="sync">
                           <motion.img
                             key={ele?.id}
                             src={`${ele?.still_path !== null && ele?.still_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.still_path : "/images/logo.svg"}`}
@@ -210,7 +216,28 @@ const MetaDetails = ({ id, type, data }: any) => {
                             loading="lazy"
                             // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
                           />
-                        </AnimatePresence>
+                        </AnimatePresence> */}
+
+                        {/* react-lazy-load-image-component */}
+                        <LazyLoadImage
+                          key={ele?.id}
+                          src={`${imagePlaceholder ? "/images/logo.svg" : ele?.still_path !== null && ele?.still_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.still_path : "/images/logo.svg"}`}
+                          height="100%"
+                          width="100%"
+                          useIntersectionObserver={true}
+                          effect="opacity"
+                          className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
+                          onLoad={() => {
+                            setImageLoading(false);
+                          }}
+                          onError={(e) => {
+                            // console.log({ e });
+                            setImagePlaceholder(true);
+                            setImageLoading(false);
+                          }}
+                          loading="lazy"
+                          // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
+                        />
                       </div>
                     </Link>
                     <div className={styles.details}>
@@ -275,7 +302,7 @@ const MetaDetails = ({ id, type, data }: any) => {
               <p>{data?.overview}</p>
               {release_date.getDate() ? (
                 <>
-                  <h3>Release</h3>
+                  <h3>Lançamento</h3>
                   <p>{`${release_date.getDate()} ${monthNames[release_date.getMonth()]} ${release_date.getFullYear()}`}</p>
                 </>
               ) : null}
@@ -294,24 +321,24 @@ const MetaDetails = ({ id, type, data }: any) => {
               ) : null}
               {genres?.length > 0 ? (
                 <>
-                  <h3>Gênero</h3>
+                  <h3>Genero</h3>
                   <p>{genres?.join(", ")}</p>
                 </>
               ) : null}
               {type === "tv" && (
                 <>
-                  <h3>Mostrar detalhes</h3>
+                  <h3>Mostrar Detalhes</h3>
                   {data?.status && <p> Status : {data?.status}</p>}
                   {data?.number_of_seasons && (
-                    <p> Total de temporadas : {data?.number_of_seasons}</p>
+                    <p> Total de Temporadas : {data?.number_of_seasons}</p>
                   )}
                   {data?.number_of_episodes && (
-                    <p> Total de episódios : {data?.number_of_episodes}</p>
+                    <p> Total de Episódios : {data?.number_of_episodes}</p>
                   )}
                   {data?.next_episode_to_air !== null ? (
                     <p>
                       {" "}
-                      Proximo episódio :{" "}
+                      Próximo episódio a ir ao ar :{" "}
                       {data?.next_episode_to_air?.episode_number} (
                       {new Date(data?.next_episode_to_air?.air_date).getDate()}{" "}
                       {
@@ -330,7 +357,7 @@ const MetaDetails = ({ id, type, data }: any) => {
                   {release_date && end_date && (
                     <p>
                       {" "}
-                      Aired :{" "}
+                      Exibido :{" "}
                       {`${release_date.getDate()} ${monthNames[release_date.getMonth()]} ${release_date.getFullYear()}`}{" "}
                       -{" "}
                       {data?.in_production
@@ -342,13 +369,13 @@ const MetaDetails = ({ id, type, data }: any) => {
               )}
               {spoken_languages?.length > 0 ? (
                 <>
-                  <h3>Linguagem falada</h3>
+                  <h3>Línguas faladas</h3>
                   <p>{spoken_languages?.join(", ")}</p>
                 </>
               ) : null}
               {production_countries?.length > 0 ? (
                 <>
-                  <h3>País de produção</h3>
+                  <h3>Países produtores</h3>
                   <p>{production_countries?.join(", ")}</p>
                 </>
               ) : null}
@@ -365,7 +392,7 @@ const MetaDetails = ({ id, type, data }: any) => {
               <p>{data?.biography}</p>
               {birthday.getDate() ? (
                 <>
-                  <h3>Aniversário</h3>
+                  <h3>Aniversario</h3>
                   <p>{`${birthday.getDate()} ${monthNames[birthday.getMonth()]} ${birthday.getFullYear()}`}</p>
                 </>
               ) : null}
@@ -399,7 +426,8 @@ const MetaDetails = ({ id, type, data }: any) => {
                       <div
                         className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
                       >
-                        <AnimatePresence mode="sync">
+                        {/* if rllic package is not available, then start using this code again, and comment/delete the rllic code */}
+                        {/* <AnimatePresence mode="sync">
                           <motion.img
                             key={ele?.id}
                             src={`${ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
@@ -415,9 +443,30 @@ const MetaDetails = ({ id, type, data }: any) => {
                               setImageLoading(false);
                             }}
                             loading="lazy"
-                            // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
+                          // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
                           />
-                        </AnimatePresence>
+                        </AnimatePresence> */}
+
+                        {/* react-lazy-load-image-component */}
+                        <LazyLoadImage
+                          key={ele?.id}
+                          src={`${imagePlaceholder ? "/images/logo.svg" : ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
+                          height="100%"
+                          width="100%"
+                          useIntersectionObserver={true}
+                          effect="opacity"
+                          className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
+                          onLoad={() => {
+                            setImageLoading(false);
+                          }}
+                          onError={(e) => {
+                            // console.log({ e });
+                            setImagePlaceholder(true);
+                            setImageLoading(false);
+                          }}
+                          loading="lazy"
+                          // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
+                        />
                       </div>
                     </Link>
                     <div className={styles.castName}>
@@ -444,7 +493,8 @@ const MetaDetails = ({ id, type, data }: any) => {
                       <div
                         className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
                       >
-                        <AnimatePresence mode="sync">
+                        {/* if rllic package is not available, then start using this code again, and comment/delete the rllic code */}
+                        {/* <AnimatePresence mode="sync">
                           <motion.img
                             key={ele?.id}
                             src={`${ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
@@ -460,9 +510,30 @@ const MetaDetails = ({ id, type, data }: any) => {
                               setImageLoading(false);
                             }}
                             loading="lazy"
-                            // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
+                          // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
                           />
-                        </AnimatePresence>
+                        </AnimatePresence> */}
+
+                        {/* react-lazy-load-image-component */}
+                        <LazyLoadImage
+                          key={ele?.id}
+                          src={`${imagePlaceholder ? "/images/logo.svg" : ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
+                          height="100%"
+                          width="100%"
+                          useIntersectionObserver={true}
+                          effect="opacity"
+                          className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
+                          onLoad={() => {
+                            setImageLoading(false);
+                          }}
+                          onError={(e) => {
+                            // console.log({ e });
+                            setImagePlaceholder(true);
+                            setImageLoading(false);
+                          }}
+                          loading="lazy"
+                          // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
+                        />
                       </div>
                     </Link>
                     <div className={styles.castName}>
@@ -499,7 +570,7 @@ const MetaDetails = ({ id, type, data }: any) => {
                     if (currentPage > totalpages) {
                       setCurrentPage(totalpages);
                     }
-                    // window.scrollTo(0, 0);
+                    window.scrollTo(0, 0);
                     scrollToTop();
                   }}
                   pageCount={totalpages}
@@ -514,7 +585,7 @@ const MetaDetails = ({ id, type, data }: any) => {
               )}
             </>
             {category === "related" && categoryData?.results?.length === 0 && (
-              <p>Sem recomendações</p>
+              <p>Nenhuma recomendação</p>
             )}
             {category === "related" &&
               categoryData === undefined &&
@@ -553,7 +624,7 @@ const MetaDetails = ({ id, type, data }: any) => {
               })}
             {category === "reviews" && categoryData?.results?.length === 0 ? (
               <div className={styles.Review}>
-                <p>Nenhuma avaliação encontrada </p>
+                <p>Nenhum Review encontrado</p>
               </div>
             ) : null}
             {category === "reviews" &&
@@ -562,13 +633,23 @@ const MetaDetails = ({ id, type, data }: any) => {
           </div>
           <div className={styles.MovieList}>
             {category === "movie" &&
-              categoryData?.cast?.map((ele: any) => {
-                return <MovieCardLarge data={ele} media_type="movie" />;
+              categoryData?.cast?.map((ele: any, ind: any) => {
+                return (
+                  <div className={styles.numberedCard}>
+                    <MovieCardLarge data={ele} media_type="movie" />
+                    <span className={styles.number}>{ind + 1}</span>
+                  </div>
+                );
               })}
             {category === "movie" &&
               data?.known_for_department !== "Acting" &&
-              categoryData?.crew?.map((ele: any) => {
-                return <MovieCardLarge data={ele} media_type="movie" />;
+              categoryData?.crew?.map((ele: any, ind: any) => {
+                return (
+                  <div className={styles.numberedCard}>
+                    <MovieCardLarge data={ele} media_type="movie" />
+                    <span className={styles.number}>{ind + 1}</span>
+                  </div>
+                );
               })}
             {category === "movie" &&
               categoryData === undefined &&
@@ -581,13 +662,23 @@ const MetaDetails = ({ id, type, data }: any) => {
           </div>
           <div className={styles.MovieList}>
             {category === "tv" &&
-              categoryData?.cast?.map((ele: any) => {
-                return <MovieCardLarge data={ele} media_type="tv" />;
+              categoryData?.cast?.map((ele: any, ind: any) => {
+                return (
+                  <div className={styles.numberedCard}>
+                    <MovieCardLarge data={ele} media_type="tv" />
+                    <span className={styles.number}>{ind + 1}</span>
+                  </div>
+                );
               })}
             {category === "tv" &&
               data?.known_for_department !== "Acting" &&
-              categoryData?.crew?.map((ele: any) => {
-                return <MovieCardLarge data={ele} media_type="tv" />;
+              categoryData?.crew?.map((ele: any, ind: any) => {
+                return (
+                  <div className={styles.numberedCard}>
+                    <MovieCardLarge data={ele} media_type="tv" />
+                    <span className={styles.number}>{ind + 1}</span>
+                  </div>
+                );
               })}
             {category === "tv" &&
               categoryData === undefined &&

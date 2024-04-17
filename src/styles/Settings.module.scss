@@ -80,28 +80,27 @@
         border: 1px solid transparent; /* Adicionar borda transparente para manter o tamanho do botão consistente */
         border-radius: 0.25rem; /* Adicionar borda arredondada */
         background-color: rgb(3, 3, 3); /* Definir cor de fundo transparente */
-        color:whitesmoke; /* Definir cor do texto */
+        color: whitesmoke; /* Definir cor do texto */
         text-decoration: none; /* Remover sublinhado do link */
         box-shadow: 5px 5px 10px rgba(2, 1, 55, 0.195); /* Aplica efeito de botao com shadows */
         backdrop-filter: blur(6px) inset transparent;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Adicionar transição suave para o efeito hover e clique */
+        transition:
+          background-color 0.3s ease,
+          box-shadow 0.3s ease; /* Adicionar transição suave para o efeito hover e clique */
 
-        &:hover{
-          background-color:#f0f0f0; /* alterar cor de fundo do hover */
-
+        &:hover {
+          background-color: #f0f0f0; /* alterar cor de fundo do hover */
         }
 
         &:active {
-          box-shadow: 0.0.1rem 0.3rem rgba(0,0,0,0.1 ); /*adicionar uma leve sombra ao clicar */
+          box-shadow: 0.1rem 0.3rem rgba(0, 0, 0, 0.1); /*adicionar uma leve sombra ao clicar */
         }
-
-
       }
       .logout {
         color: var(--primary-2);
         cursor: pointer;
         width: 7rem;
-        box-shadow:5px 5px 10px rgba(0, 0, 0, 0);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0);
       }
       .downloadButton {
         width: clamp(12rem, 50%, 20rem);
@@ -157,7 +156,6 @@
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
-  
 }
 .signin {
   cursor: pointer;
@@ -215,7 +213,6 @@
       img {
         padding: 3.5rem;
         width: 15rem;
-
       }
     }
   }
@@ -231,7 +228,7 @@
       width: clamp(20rem, calc(100vw - 2rem), 40rem);
       // background: red;
       display: flex;
-      justify-content:left;
+      justify-content: left;
       flex-direction: column;
       align-items: flex-start;
       padding: 5rem 0;

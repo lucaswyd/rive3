@@ -10,6 +10,14 @@
     outline: none;
     margin-bottom: 0.3rem;
     object-fit: cover;
+    transition: 0.4s ease-in;
+    box-shadow: 5px 5px 10px black;
+  }
+
+  .img:hover {
+    transform: scale(1.1);
+    backdrop-filter: blur(8rem);
+    box-shadow: 10px 10px 15px black;
   }
   p {
     color: var(--primary-2);

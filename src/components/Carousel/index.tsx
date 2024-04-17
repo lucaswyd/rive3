@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./style.module.scss";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Carousel = ({
   imageArr,
@@ -14,6 +16,8 @@ const Carousel = ({
   const [direction, setDirection] = useState("");
   const [imageLoaded, setImageLoaded] = useState(false);
   const [images, setImages] = useState(imageArr);
+  const [imagePlaceholder, setImagePlaceholder] = useState(false);
+
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--carousel-desktop-height",
@@ -27,24 +31,20 @@ const Carousel = ({
       "--carousel-object-fit",
       objectFit,
     );
-    // if (imageArr.length === 0) {
-    //   setImages(["/images/logo.svg"]);
-    // }
     const Interval = setInterval(() => {
-      // setImages(imageArr);
       handleNext();
     }, 15000);
     return () => {
       clearInterval(Interval);
     };
-  });
+  }, []);
+
   useEffect(() => {
     if (imageArr.length === 0) {
       setImages(["/images/logo.svg"]);
     } else {
       setImages(imageArr);
     }
-    // console.log({ len: imageArr.length });
   }, [imageArr]);
 
   const slideVariants = {
@@ -73,8 +73,6 @@ const Carousel = ({
   };
 
   const handleNext = () => {
-    console.log({ images });
-
     setDirection("right");
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : (prevIndex + 1) % images.length,
@@ -97,37 +95,39 @@ const Carousel = ({
   return (
     <div className={styles.carousel}>
       <div
-        className={`${styles.carousel_images} ${!imageLoaded ? "skeleton" : null}`}
+        className={`${styles.carousel_images} ${
+          !imageLoaded ? "skeleton" : null
+        }`}
       >
         <AnimatePresence mode="sync">
           <motion.img
             key={currentIndex}
             alt={"carousel"}
-            src={images[currentIndex]}
+            src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
             initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
             animate="visible"
             exit="exit"
             variants={slideVariants}
             className={`${imageLoaded ? "skeleton" : null}`}
-            // onLoad={() => {
-            //   setImageLoaded(true);
-            // }}
+            onError={() => {
+              setImagePlaceholder(true);
+            }}
             onLoad={() => {
               setTimeout(() => {
                 setImageLoaded(true);
               }, 100);
             }}
             loading="lazy"
-            // style={imageLoaded ? { opacity: 1 } : { opacity: 0 }}
           />
         </AnimatePresence>
+
         <div className={styles.slide_direction}>
           <BsCaretLeftFill className={styles.left} onClick={handlePrevious} />
-
           <BsCaretRightFill className={styles.right} onClick={handleNext} />
         </div>
       </div>
     </div>
   );
 };
+
 export default Carousel;

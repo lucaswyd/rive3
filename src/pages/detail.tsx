@@ -128,8 +128,7 @@ const DetailPage = () => {
   return (
     // carousel
     // detail
-    <div className={ styles.DetailPage }>
-    
+    <div className={styles.DetailPage}>
       <div className={styles.biggerPic}>
         {
           images?.length > 0 ? (
