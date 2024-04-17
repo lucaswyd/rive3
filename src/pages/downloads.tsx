@@ -32,7 +32,6 @@ const LoginPage = () => {
         console.error("Erro ao iniciar o download:", error);
       }
     } else {
-      // Caso o evento beforeinstallprompt não tenha sido capturado
       alert("O seu navegador não suporta a instalação de PWAs.");
     }
   };
@@ -69,14 +68,14 @@ const LoginPage = () => {
             erros serão corrigidos com o tempo.
           </p>
           {/* <p>To download movies/tv shows, go to it's watch page, and use extensions like FetchV</p> */}
-          <h4
+          <button
             className={styles.downloadButton}
             onClick={handleDownload}
             data-tooltip-id="tooltip"
             data-tooltip-content="Download PWA"
           >
             Download
-          </h4>
+          </button>
         </div>
       </div>
     </div>
