@@ -36,9 +36,7 @@ const LoginPage = () => {
             Corrigimos alguns bugs do download do App em alguns navegadores
           </p>
           <p>
-            Experimente fazer o download do APP, se o download nao iniciar desligue a traducao automatica e tente novamente.
-            Se nao inciar o download tente utilizar outro navegador de sua preferencia.
-            Ainda estamos corrigindo alguns bugs na versao IOs, para utilizadores de modelos IOs, pedimos a sua compreesao e paciencia
+          Experimente fazer o download do APP. Se o download não iniciar, desligue a tradução automática e tente novamente. Se ainda assim o download não iniciar, tente utilizar outro navegador de sua preferência. Estamos corrigindo alguns bugs na versão iOS. Para usuários de dispositivos iOS, pedimos sua compreensão e paciência.
           </p>
           <p></p>
           {/* <p>To download movies/tv shows, go to it's watch page, and use extensions like FetchV</p> */}
