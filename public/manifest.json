@@ -34,5 +34,8 @@
       "sizes": "any",
       "type": "image/png"
     }
-  ]
+  ],
+  "start_url": "https://wareztuga.pt",
+  "scope": "https://wareztuga.pt/",
+  "lang": "pt-PT"
 }
