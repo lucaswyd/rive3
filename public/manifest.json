@@ -2,8 +2,8 @@
   "theme_color": "#f4f7fe",
   "background_color": "#f4f7fe",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
+  "scope": "https://wareztuga.pt/",
+  "start_url": "https://wareztuga.pt",
   "name": "Warez",
   "short_name": "WZT",
   "description": "App de Filmes e Series Gratis",
@@ -35,7 +35,5 @@
       "type": "image/png"
     }
   ],
-  "start_url": "https://wareztuga.pt",
-  "scope": "https://wareztuga.pt/",
   "lang": "pt-PT"
 }
