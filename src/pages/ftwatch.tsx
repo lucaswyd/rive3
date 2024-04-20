@@ -80,7 +80,7 @@ const FTWatch = () => {
           className={styles.iframe}
           allowFullScreen
           allow="autoplay"
-          muted={false} // Definindo muted como false
+          muted
           sandbox="allow-same-origin allow-scripts allow-top-navigation=false" 
         ></iframe>
       </div>
