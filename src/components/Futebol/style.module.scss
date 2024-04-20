@@ -1,48 +1,47 @@
-.contentGridContainer {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr)); // Grid com 4 colunas
-    gap: 20px;
-    padding: 20px;
-  
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); // Alterando a largura mínima das colunas para 200px em telas menores que 1200px
-    }
-  
-    @media (max-width: 620px) {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); // Alterando a largura mínima das colunas para 150px em telas menores que 620px
-      gap: 10px; // Reduzindo o espaço entre os itens em telas menores que 620px
-      padding: 10px; // Reduzindo o padding em telas menores que 620px
-    }
+.GridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Alteração da propriedade para alinhar corretamente os itens */
+  gap: 20px;
+  padding: 20px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajuste para telas menores que 1200px */
   }
-  
-  .contentGridContainer .contentItem {
-    transition: transform 0.3s ease; // Efeito de transição ao passar o mouse
-    border-radius: 0.5rem; // Borda arredondada
-    overflow: hidden; // Esconder conteúdo extra
-    border: none; // Sem borda
-    outline: none; // Sem contorno
-    box-shadow: 5px 5px 10px black; // Sombra
-  
-    &:hover {
-      transform: scale(1.1); // Efeito de escala ao passar o mouse
-      box-shadow: 10px 10px 15px black; // Sombra aumentada
-    }
-  
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 0.5rem; // Borda arredondada
-      margin-bottom: 0.3rem; // Margem inferior
-      object-fit: cover; // Cobrir o conteúdo da imagem
-      transition: 0.4s ease-in; // Efeito de transição
-    }
-  
-    h2 {
-      font-size: 1.2rem; // Tamanho da fonte
-      margin: 0; // Margem zero
-      color: var(--primary-2); // Cor do texto
-      text-overflow: ellipsis; // Texto que ultrapassa o contêiner é truncado com reticências
-      overflow: hidden; // Ocultar conteúdo extra
-    }
+
+  @media (max-width: 620px) {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ajuste para telas menores que 620px */
+    gap: 10px; /* Reduzindo o espaço entre os itens em telas menores que 620px */
+    padding: 10px; /* Reduzindo o padding em telas menores que 620px */
   }
-  
+}
+
+.GridContainer .contentItem {
+  transition: transform 0.3s ease; /* Efeito de transição ao passar o mouse */
+  border-radius: 0.5rem; /* Borda arredondada */
+  overflow: hidden; /* Esconder conteúdo extra */
+  border: none; /* Sem borda */
+  outline: none; /* Sem contorno */
+  box-shadow: 5px 5px 10px black; /* Sombra */
+
+  &:hover {
+    transform: scale(1.1); /* Efeito de escala ao passar o mouse */
+    box-shadow: 10px 10px 15px black; /* Sombra aumentada */
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem; /* Borda arredondada */
+    margin-bottom: 0.3rem; /* Margem inferior */
+    object-fit: cover; /* Cobrir o conteúdo da imagem */
+    transition: 0.4s ease-in; /* Efeito de transição */
+  }
+
+  h2 {
+    font-size: 1.2rem; /* Tamanho da fonte */
+    margin: 0; /* Margem zero */
+    color: var(--primary-2); /* Cor do texto */
+    text-overflow: ellipsis; /* Texto que ultrapassa o contêiner é truncado com reticências */
+    overflow: hidden; /* Ocultar conteúdo extra */
+  }
+}
