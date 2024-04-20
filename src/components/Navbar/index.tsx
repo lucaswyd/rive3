@@ -15,6 +15,7 @@ import {
   IoSearchOutline,
   IoSearch,
   IoChatboxOutline,
+  IoFootball,
 } from "react-icons/io5";
 import { PiTelevisionFill, PiTelevisionLight } from "react-icons/pi";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -80,6 +81,15 @@ const Navbar = ({ children }: any) => {
         )}
       </Link>
       <Link
+        href="/futebol"
+        arial-label="futebol"
+        data-tooltip-id="tooltip"
+        data-tooltip-content="futebol"
+      >
+        {/* Usando o ícone de futebol */}
+        <IoFootball className={pathname === "/futebol" ? styles.active : styles.inactive} />
+      </Link>
+      <Link
         href="/library"
         aria-label="Library"
         data-tooltip-id="tooltip"
@@ -112,8 +122,15 @@ const Navbar = ({ children }: any) => {
         data-tooltip-id="tooltip"
         data-tooltip-content="comentarios"
       >
-        <IoChatboxOutline className={styles.inactive} />
+        {/* Adicionando classes active e inactive para o link "comentarios" */}
+        {pathname === "/comentarios" ? (
+          <IoChatboxOutline className={styles.active} />
+        ) : (
+          <IoChatboxOutline className={styles.inactive} />
+        )}
       </Link>
+
+
     </div>
   );
 };

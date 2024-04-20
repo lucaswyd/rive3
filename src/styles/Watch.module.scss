@@ -11,6 +11,36 @@
     position: absolute;
     z-index: 0;
   }
+  .videoContainer{
+    height: 90%;
+    width: 80%;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    z-index: 1;
+    ::-webkit-scrollbar {
+      display: none !important;
+    }
+  }
+  .server{
+    position: absolute;
+    top: 0rem;
+    width: clamp(15rem, 50vw, 20rem);
+    padding: 1rem 2rem;
+    background: var(--bg-color);
+    color: var(--primary-3);
+    outline: none;
+    // border: 1px solid var(--primary-2);
+    border: none;
+    border-radius: 0.5rem;
+    margin: 1rem auto;
+    line-height: 1rem;
+    z-index: 2;
+    // &[selected="true"]{
+    //   color: var(--ascent-color);
+    // }
+    
+  }
   .iframe {
     height: 100%;
     width: 100%;

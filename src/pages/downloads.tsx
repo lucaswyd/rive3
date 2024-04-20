@@ -33,12 +33,12 @@ const LoginPage = () => {
         <div className={styles.group2}>
           <h1>Warez APP</h1>
           <p>
-            Corrigimos alguns bugs do download do App em alguns navegadores
+            Corrigimos o bug do botao nao funcionar em varios dispositivos.
           </p>
           <p>
-          Experimente fazer o download do APP. Se o download não iniciar, desligue a tradução automática e tente novamente. Se ainda assim o download não iniciar, tente utilizar outro navegador de sua preferência. Estamos corrigindo alguns bugs na versão iOS. Para usuários de dispositivos iOS, pedimos sua compreensão e paciência.
+          Experimente fazer o download do APP. Se o download não iniciar, desligue a tradução automática actualize a pagina e tente novamente, isso deve corrigir o problema do download do APP. Se ainda assim o download não iniciar, tente utilizar outro navegador de sua preferência. Estamos corrigindo alguns bugs na versão iOS. Para usuários de dispositivos iOS, pedimos sua compreensão e paciência.
           </p>
-          <p></p>
+          <p>* O nosso APP e totalmente livre de Virus ou Malwares, utilizamos PWa, uma versao simplificada que converte o site em um aplicativo.</p>
           {/* <p>To download movies/tv shows, go to it's watch page, and use extensions like FetchV</p> */}
           <h4
             className={styles.downloadButton}
