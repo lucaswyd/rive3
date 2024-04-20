@@ -15,7 +15,7 @@ const FTWatch = () => {
     }
   }, [router]);
 
-  const handleServerChange = (event) => {
+  const handleServerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedServer(event.target.value);
   };
 
@@ -44,7 +44,8 @@ const FTWatch = () => {
         return process.env.NEXT_PUBLIC_STREAM_URL_ELS3;
       case "BFTV":
         return process.env.NEXT_PUBLIC_STREAM_URL_BFTV;
-      
+      default:
+        return process.env.NEXT_PUBLIC_STREAM_URL_SUP; // Servidor padrão
     }
   };
 
@@ -79,9 +80,8 @@ const FTWatch = () => {
           className={styles.iframe}
           allowFullScreen
           allow="autoplay"
-          muted={false}
+          muted={false} // Definindo muted como false
           sandbox="allow-same-origin allow-scripts allow-top-navigation=false" 
-
         ></iframe>
       </div>
     </div>
