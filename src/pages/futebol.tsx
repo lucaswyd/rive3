@@ -1,5 +1,5 @@
 import React from "react";
-import { GridContainer, contentItem } from "../components/Futebol/style.module.scss";
+import styles from "../components/Futebol/style.module.scss";
 
 const ContentGrid: React.FC = () => {
   // Array de conteúdos fictícios
@@ -16,9 +16,9 @@ const ContentGrid: React.FC = () => {
   ];
 
   return (
-    <div className={GridContainer}>
+    <div className={styles.GridContainer}> {/* Usando a classe corretamente */}
       {contents.map((content) => (
-        <a key={content.id} href={content.link} className={contentItem}>
+        <a key={content.id} href={content.link} className={styles.contentItem}> {/* Usando a classe corretamente */}
           <img
             src={content.image}
             alt={`Futebol ${content.id}`}
