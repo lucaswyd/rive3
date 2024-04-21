@@ -41,7 +41,7 @@ const SettingsPage = ({
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img src="/images/logolmg.png" alt="logo" />
-        <p>WarezTuga v2 Beta App</p>
+        <p>WZTuga é um projeto livre e sem fins lucrativos</p>
       </div>
       <div className={styles.settings}>
         <h1>Conta</h1>
@@ -54,7 +54,7 @@ const SettingsPage = ({
               {/* <Link href="/signup">Signup</Link> */}
             </>
             <h4 className={styles.profileCard}>
-              Ola, essa e a V2 Beta Wztuga!
+              Ola, adicionamos novos recursos e corrigimos varios erros, obrigado por fazeres parte da familia Warez !
             </h4>
           </div>
         ) : (
@@ -137,7 +137,7 @@ const SettingsPage = ({
           >
             Download App
           </Link>
-          <Link href="mailto:tv@wareztuga.pt">Envie-nos a sua opniao</Link>
+          <Link href="mailto:geral@webproject.pt">Envie-nos a sua opniao</Link>
           {/* <Link href="/contact">Contact Us</Link> */}
         </div>
         <h1>Links</h1>
