@@ -8,7 +8,6 @@ import {
   onSnapshot,
   query,
   orderBy,
-  DocumentData,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 import styles from "../components/Comentarios/style.module.scss";
@@ -36,12 +35,12 @@ export default function Comentarios() {
   const [novoComentario, setNovoComentario] = useState("");
   const auth = getAuth();
   const db = getFirestore();
-  const commentContainerRef = useRef<HTMLDivElement>(null); // Referência para o contêiner de comentários
-  const enviarContainerRef = useRef<HTMLDivElement>(null); // Referência para o contêiner de envio de comentários
+  const commentContainerRef = useRef<HTMLDivElement>(null);
+  const enviarContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     console.log("Fetching comments...");
-    const q = query(collection(db, "comentarios"), orderBy("data", "desc")); // Ordena os comentários pela data, em ordem decrescente
+    const q = query(collection(db, "comentarios"), orderBy("data", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const comentariosData: Comment[] = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -50,7 +49,7 @@ export default function Comentarios() {
         data: doc.data().data.toDate(),
       }));
       console.log("Comments:", comentariosData);
-      // Atualizar os comentários e rolar para o final do contêiner
+
       setComentarios(comentariosData);
       scrollToBottom();
     });
@@ -70,7 +69,6 @@ export default function Comentarios() {
     console.log("Submitting comment...");
     const user: User | null = auth.currentUser;
     if (!user) {
-      // Exibir popup ou notificação informando que é necessário fazer login ou registrar-se
       alert("Você precisa estar logado para enviar um comentário.");
       return;
     }
@@ -79,22 +77,10 @@ export default function Comentarios() {
       return;
     }
 
-    // Verificar se já passaram 4 horas desde o último comentário
-    const ultimoComentario = comentarios[0];
-    if (ultimoComentario && ultimoComentario.data) {
-      const ultimaData = ultimoComentario.data;
-      const diferencaEmHoras =
-        (new Date().getTime() - ultimaData.getTime()) / (1000 * 60 * 60);
-      if (diferencaEmHoras < 4) {
-        alert("Você só pode enviar um comentário a cada 4 horas.");
-        return;
-      }
-    }
-
     try {
       const userName = user.displayName || "Anônimo";
       await addDoc(collection(db, "comentarios"), {
-        usuario: userName, // Adiciona o nome do usuário
+        usuario: userName,
         texto: novoComentario,
         data: Timestamp.fromDate(new Date()),
       });
@@ -127,7 +113,7 @@ export default function Comentarios() {
           <textarea
             value={novoComentario}
             onChange={(e) => setNovoComentario(e.target.value)}
-            placeholder="Uma mensagem a cada 4 horas, pense antes de enviar..."
+            placeholder="Deixe seu comentário aqui..."
             className={styles.textarea}
           />
           <button type="submit" className={styles.button}>

@@ -47,6 +47,7 @@ export default function App({ Component, pageProps }: any) {
       DisableDevtool();
     }
 
+
     // Adicionar os scripts de analytics
     const script = document.createElement("script");
     script.id = "_waubyv";

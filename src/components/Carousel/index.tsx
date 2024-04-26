@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./style.module.scss";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/opacity.css";
 
 const Carousel = ({
   imageArr,
@@ -11,6 +9,7 @@ const Carousel = ({
   mobileHeight,
   desktopHeight,
   objectFit,
+  trailerKey, // Chave do vídeo do trailer
 }: any) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("");
@@ -100,25 +99,54 @@ const Carousel = ({
         }`}
       >
         <AnimatePresence mode="sync">
-          <motion.img
-            key={currentIndex}
-            alt={"carousel"}
-            src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
-            initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
-            animate="visible"
-            exit="exit"
-            variants={slideVariants}
-            className={`${imageLoaded ? "skeleton" : null}`}
-            onError={() => {
-              setImagePlaceholder(true);
-            }}
-            onLoad={() => {
-              setTimeout(() => {
-                setImageLoaded(true);
-              }, 100);
-            }}
-            loading="lazy"
-          />
+          {trailerKey ? (
+            <motion.video
+              autoPlay
+              loop
+              muted
+              key={currentIndex}
+              initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
+              animate="visible"
+              exit="exit"
+              variants={slideVariants}
+              className={`${imageLoaded ? "skeleton" : null}`}
+              onError={() => {
+                setImagePlaceholder(true);
+              }}
+              onLoad={() => {
+                setTimeout(() => {
+                  setImageLoaded(true);
+                }, 100);
+              }}
+              loading="lazy"
+            >
+              <source
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`}
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </motion.video>
+          ) : (
+            <motion.img
+              key={currentIndex}
+              alt={"carousel"}
+              src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
+              initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
+              animate="visible"
+              exit="exit"
+              variants={slideVariants}
+              className={`${imageLoaded ? "skeleton" : null}`}
+              onError={() => {
+                setImagePlaceholder(true);
+              }}
+              onLoad={() => {
+                setTimeout(() => {
+                  setImageLoaded(true);
+                }, 100);
+              }}
+              loading="lazy"
+            />
+          )}
         </AnimatePresence>
 
         <div className={styles.slide_direction}>
