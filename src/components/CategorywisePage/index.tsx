@@ -16,12 +16,12 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [trigger, setTrigger] = useState(false);
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
   const [category, setCategory] = useState("trending");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
-  const [filterGenreList, setFilterGenreList] = useState("");
-  const [filterCountry, setFilterCountry] = useState("");
+  const [filterGenreList, setFilterGenreList] = useState<string>("");
+  const [filterCountry, setFilterCountry] = useState<string>("");
   const [filterYear, setFilterYear] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +36,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
             page: currentPage,
             genreKeywords: filterGenreList,
             country: filterCountry,
-            year: filterYear !== null ? filterYear : undefined, // Alteração aqui
+            year: filterYear !== null ? filterYear : undefined,
             sortBy: "popularity.desc",
           });
         } else {
@@ -46,7 +46,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           });
         }
 
-        setData((prevData: never[]) => [...prevData, ...newData.results]);
+        setData((prevData) => [...prevData, ...newData.results]);
         setTotalPages(newData.total_pages);
         setLoading(false);
       } catch (error) {
