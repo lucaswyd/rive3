@@ -119,7 +119,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           setFilterGenreList={setFilterGenreList}
           filterGenreList={filterGenreList}
           filterCountry={filterCountry}
-          filterYear={filterYear}
+          filterYear={filterYear !== null ? filterYear.toString() : ""}
           setCategory={setCategory}
           trigger={trigger}
           setTrigger={setTrigger}
