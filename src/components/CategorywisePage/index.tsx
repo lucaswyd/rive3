@@ -7,12 +7,12 @@ import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import NProgress from "nprogress";
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const CategorywisePage = ({ categoryType }) => {
+const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [trigger, setTrigger] = useState(false);
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
   const [category, setCategory] = useState("trending");
