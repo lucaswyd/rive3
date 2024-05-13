@@ -20,21 +20,21 @@ const Carousel = ({
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--carousel-desktop-height",
-      desktopHeight,
+      desktopHeight
     );
     document.documentElement.style.setProperty(
       "--carousel-mobile-height",
-      mobileHeight,
+      mobileHeight
     );
     document.documentElement.style.setProperty(
       "--carousel-object-fit",
-      objectFit,
+      objectFit
     );
-    const Interval = setInterval(() => {
+    const interval = setInterval(() => {
       handleNext();
     }, 15000);
     return () => {
-      clearInterval(Interval);
+      clearInterval(interval);
     };
   }, []);
 
@@ -74,20 +74,20 @@ const Carousel = ({
   const handleNext = () => {
     setDirection("right");
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : (prevIndex + 1) % images.length,
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
     setIndex((prevIndex: number) =>
-      prevIndex === images.length - 1 ? 0 : (prevIndex + 1) % images.length,
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const handlePrevious = () => {
     setDirection("left");
     setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
+      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
     );
     setIndex((prevIndex: number) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
+      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
@@ -95,10 +95,10 @@ const Carousel = ({
     <div className={styles.carousel}>
       <div
         className={`${styles.carousel_images} ${
-          !imageLoaded ? "skeleton" : null
+          !imageLoaded ? styles.skeleton : ""
         }`}
       >
-        <AnimatePresence mode="sync">
+        <AnimatePresence initial={false} custom={direction}>
           {trailerKey ? (
             <motion.video
               autoPlay
@@ -109,7 +109,7 @@ const Carousel = ({
               animate="visible"
               exit="exit"
               variants={slideVariants}
-              className={`${imageLoaded ? "skeleton" : null}`}
+              className={imageLoaded ? styles.skeleton : ""}
               onError={() => {
                 setImagePlaceholder(true);
               }}
@@ -135,7 +135,7 @@ const Carousel = ({
               animate="visible"
               exit="exit"
               variants={slideVariants}
-              className={`${imageLoaded ? "skeleton" : null}`}
+              className={imageLoaded ? styles.skeleton : ""}
               onError={() => {
                 setImagePlaceholder(true);
               }}
