@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
-import styles from "./style.module.scss";
+import React, { useState, useEffect } from "react";
 import axiosFetch from "@/Utils/fetch";
+import styles from "./style.module.scss";
+import MovieCardSmall from "@/components/MovieCardSmall";
+import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
+import Filter from "../Filter";
+import Skeleton from "react-loading-skeleton";
+import NProgress from "nprogress";
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -11,13 +16,13 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [trigger, setTrigger] = useState(false);
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
   const [category, setCategory] = useState("trending");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
-  const [filterGenreList, setFilterGenreList] = useState("");
-  const [filterCountry, setFilterCountry] = useState("");
-  const [filterYear, setFilterYear] = useState<string | null>(null); // Alteração aqui
+  const [filterGenreList, setFilterGenreList] = useState<string>("");
+  const [filterCountry, setFilterCountry] = useState<string>("");
+  const [filterYear, setFilterYear] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,7 +46,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           });
         }
 
-        setData((prevData: never[]) => [...prevData, ...newData.results]);
+        setData((prevData) => [...prevData, ...newData.results]);
         setTotalPages(newData.total_pages);
         setLoading(false);
       } catch (error) {
