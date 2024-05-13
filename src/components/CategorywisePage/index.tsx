@@ -22,7 +22,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [filterGenreList, setFilterGenreList] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
-  const [filterYear, setFilterYear] = useState<number | null>(null); // Alteração aqui
+  const [filterYear, setFilterYear] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
             page: currentPage,
             genreKeywords: filterGenreList,
             country: filterCountry,
-            year: filterYear, // Alteração aqui
+            year: filterYear !== null ? filterYear : undefined, // Alteração aqui
             sortBy: "popularity.desc",
           });
         } else {
