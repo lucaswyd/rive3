@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import axiosFetch from "@/Utils/fetch";
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
 
 const countryData = [
   { name: "Argentina", abbr: "AR" },
@@ -68,7 +69,7 @@ const Filter = ({
   setFilterGenreList: Function;
   filterGenreList: string;
   filterCountry: string;
-  filterYear: string;
+  filterYear: string | null; // Alteração aqui
   setCategory: Function;
   trigger: boolean;
   setTrigger: Function;
