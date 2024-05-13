@@ -60,6 +60,18 @@ const Filter = ({
   setCategory,
   trigger,
   setTrigger,
+}: {
+  categoryType: string;
+  setShowFilter: Function;
+  setFilterYear: Function;
+  setFilterCountry: Function;
+  setFilterGenreList: Function;
+  filterGenreList: string;
+  filterCountry: string;
+  filterYear: string;
+  setCategory: Function;
+  trigger: boolean;
+  setTrigger: Function;
 }) => {
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
   const [genreData, setGenreData] = useState([]);
@@ -78,13 +90,13 @@ const Filter = ({
     fetchData();
   }, [CapitalCategoryType]);
 
-  const handleGenreSelect = (id) => {
+  const handleGenreSelect = (id: string) => {
     setFilterGenreList(
       filterGenreList === "" ? id + "," : filterGenreList + id + ","
     );
   };
 
-  const handleCountrySelect = (name) => {
+  const handleCountrySelect = (name: string) => {
     setFilterCountry(name);
   };
 
@@ -96,8 +108,8 @@ const Filter = ({
 
   const handleFilterReset = () => {
     setFilterGenreList("");
-    setFilterYear(undefined);
-    setFilterCountry(undefined);
+    setFilterYear("");
+    setFilterCountry("");
   };
 
   return (
