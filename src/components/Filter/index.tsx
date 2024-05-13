@@ -69,7 +69,7 @@ const Filter = ({
   setFilterGenreList: Function;
   filterGenreList: string;
   filterCountry: string;
-  filterYear: string | null; // Alteração aqui
+  filterYear: string | null;
   setCategory: Function;
   trigger: boolean;
   setTrigger: Function;
@@ -112,6 +112,7 @@ const Filter = ({
     setFilterYear(null);
     setFilterCountry("");
   };
+
 
   return (
     <div className={styles.Filter}>
