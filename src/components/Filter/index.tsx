@@ -97,8 +97,8 @@ const Filter = ({
     );
   };
 
-  const handleCountrySelect = (name: string) => {
-    setFilterCountry(name);
+  const handleCountrySelect = (abbr: string) => {
+    setFilterCountry(abbr);
   };
 
   const handleFilterSubmit = () => {
@@ -109,7 +109,7 @@ const Filter = ({
 
   const handleFilterReset = () => {
     setFilterGenreList("");
-    setFilterYear("");
+    setFilterYear(null);
     setFilterCountry("");
   };
 
