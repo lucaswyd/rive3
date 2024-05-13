@@ -1,46 +1,37 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axiosFetch from "@/Utils/fetch";
 import styles from "./style.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
-import ReactPaginate from "react-paginate"; // for pagination
-import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import NProgress from "nprogress";
-// import MoviePoster from '@/components/MoviePoster';
 
-function capitalizeFirstLetter(string: string) {
+function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const CategorywisePage = ({ categoryType }: any) => {
+const CategorywisePage = ({ categoryType }) => {
+  const [trigger, setTrigger] = useState(false);
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
-  const [category, setCategory] = useState("latest"); // latest, trending, topRated
-  const [data, setData] = useState<any>([]);
+  const [category, setCategory] = useState("trending");
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalpages, setTotalpages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [showFilter, setShowFilter] = useState(false);
   const [filterGenreList, setFilterGenreList] = useState("");
-  const [filterCountry, setFiltercountry] = useState();
-  const [filterYear, setFilterYear] = useState();
-  const [trigger, setTrigger] = useState(false);
+  const [filterCountry, setFilterCountry] = useState("");
+  const [filterYear, setFilterYear] = useState("");
   const [loading, setLoading] = useState(true);
-  console.log(capitalizeFirstLetter(categoryType));
+
   useEffect(() => {
-    if (loading) {
-      NProgress.start();
-    } else NProgress.done(false);
-  }, [loading]);
-  useEffect(() => {
-    setLoading(true);
     const fetchData = async () => {
-      // setData([0, 0, 0, 0, 0, 0, 0, 0, 0]); // for blink loading effect
       try {
-        let data;
+        setLoading(true);
+        let newData;
         if (category === "filter") {
-          data = await axiosFetch({
+          newData = await axiosFetch({
             requestID: `${category}${CapitalCategoryType}`,
             page: currentPage,
             genreKeywords: filterGenreList,
@@ -49,60 +40,63 @@ const CategorywisePage = ({ categoryType }: any) => {
             sortBy: "popularity.desc",
           });
         } else {
-          data = await axiosFetch({
+          newData = await axiosFetch({
             requestID: `${category}${CapitalCategoryType}`,
             page: currentPage,
           });
         }
-        // console.log();
-        if (data.page > data.total_pages) {
-          setCurrentPage(data.total_pages);
-        }
-        if (currentPage > data.total_pages) {
-          setCurrentPage(data.total_pages);
-          return;
-        }
-        setData(data.results);
-        setTotalpages(data.total_pages > 500 ? 500 : data.total_pages);
+
+        setData((prevData) => [...prevData, ...newData.results]);
+        setTotalPages(newData.total_pages);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setLoading(false);
       }
     };
-    fetchData();
-  }, [category, currentPage, trigger]);
 
-  // useEffect(()=>{
-  //   setCurrentPage(1);
-  // },[category])
+    fetchData();
+  }, [category, currentPage, filterGenreList, filterCountry, filterYear, CapitalCategoryType]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 50 &&
+        currentPage < totalPages &&
+        !loading
+      ) {
+        setCurrentPage((prevPage) => prevPage + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [currentPage, totalPages, loading]);
 
   const handleFilterClick = () => {
     setCurrentPage(1);
     setCategory("filter");
     setShowFilter(!showFilter);
   };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <div className={styles.MoviePage}>
       <h1>{CapitalCategoryType}</h1>
       <div className={styles.category}>
         <p
-          className={`${category === "latest" ? styles.active : styles.inactive}`}
-          onClick={() => setCategory("latest")}
-        >
-          Recentes
-        </p>
-        <p
           className={`${category === "trending" ? styles.active : styles.inactive}`}
           onClick={() => setCategory("trending")}
         >
           Tendencias
-        </p>
-        <p
-          className={`${category === "topRated" ? styles.active : styles.inactive}`}
-          onClick={() => setCategory("topRated")}
-        >
-          Top TMDB
         </p>
         <p
           className={`${category === "filter" ? styles.active : styles.inactive} ${styles.filter}`}
@@ -116,50 +110,28 @@ const CategorywisePage = ({ categoryType }: any) => {
           )}
         </p>
       </div>
-      {/* <Filter/> */}
       {showFilter && (
         <Filter
           categoryType={categoryType}
           setShowFilter={setShowFilter}
           setFilterYear={setFilterYear}
-          setFiltercountry={setFiltercountry}
+          setFilterCountry={setFilterCountry}
           setFilterGenreList={setFilterGenreList}
           filterGenreList={filterGenreList}
           filterCountry={filterCountry}
           filterYear={filterYear}
           setCategory={setCategory}
-          setTrigger={setTrigger}
           trigger={trigger}
+          setTrigger={setTrigger}
         />
       )}
       <div className={styles.movieList}>
-        {data.map((ele: any) => {
-          return <MovieCardSmall data={ele} media_type={categoryType} />;
-        })}
-        {data?.length === 0 &&
-          dummyList.map((ele) => <Skeleton className={styles.loading} />)}
-        {/* {data?.total_results === 0 &&
-          <h1>No Data Found</h1>} */}
+        {data.map((ele, index) => (
+          <MovieCardSmall key={index} data={ele} media_type={categoryType} />
+        ))}
+        {loading && dummyList.map((ele, index) => <Skeleton key={index} className={styles.loading} />)}
       </div>
-      <ReactPaginate
-        containerClassName={styles.pagination}
-        pageClassName={styles.page_item}
-        activeClassName={styles.paginateActive}
-        onPageChange={(event) => {
-          setCurrentPage(event.selected + 1);
-          console.log({ event });
-          if (currentPage > totalpages) {
-            setCurrentPage(totalpages);
-          }
-          window.scrollTo(0, 0);
-        }}
-        forcePage={currentPage - 1}
-        pageCount={totalpages}
-        breakLabel=" ... "
-        previousLabel={<AiFillLeftCircle className={styles.paginationIcons} />}
-        nextLabel={<AiFillRightCircle className={styles.paginationIcons} />}
-      />
-      ;
+      <button className={styles.scrollToTopButton} onClick={scrollToTop}>Voltar ao Topo</button>
     </div>
   );
 };

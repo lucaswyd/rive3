@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import axiosFetch from "@/Utils/fetch";
 
-function capitalizeFirstLetter(string: string) {
+function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
@@ -47,24 +47,23 @@ const countryData = [
   { name: "Malaysia", abbr: "MY" },
   { name: "Philippines", abbr: "PH" },
 ];
+
 const Filter = ({
   categoryType,
   setShowFilter,
   setFilterYear,
-  setFiltercountry,
+  setFilterCountry,
   setFilterGenreList,
   filterGenreList,
   filterCountry,
   filterYear,
   setCategory,
-  setTrigger,
   trigger,
-}: any) => {
+  setTrigger,
+}) => {
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
   const [genreData, setGenreData] = useState([]);
-  const [selectedCountryCheckbox, setSelectedCountryCheckbox] = useState();
-  // const [countryData, setCountryData] = useState([]);
-  const [yearData, setYearData] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,39 +71,33 @@ const Filter = ({
           requestID: `genres${CapitalCategoryType}`,
         });
         setGenreData(data.genres);
-        // console.log({ data });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-    setSelectedCountryCheckbox(filterCountry);
-    console.log({ filterGenreList });
-  }, []);
-  const handleGenereSelect = (id: any) => {
-    console.log({ id });
+  }, [CapitalCategoryType]);
+
+  const handleGenreSelect = (id) => {
     setFilterGenreList(
-      filterGenreList === "" ? id + "," : filterGenreList + id + ",",
+      filterGenreList === "" ? id + "," : filterGenreList + id + ","
     );
-    // console.log({ filterGenreList });
   };
-  const handleCountrySelect = (name: any) => {
-    console.log({ name });
-    setFiltercountry(name);
-    setSelectedCountryCheckbox(name);
-    // console.log({ filterGenreList });
+
+  const handleCountrySelect = (name) => {
+    setFilterCountry(name);
   };
+
   const handleFilterSubmit = () => {
     setCategory("filter");
     setTrigger(!trigger);
     setShowFilter(false);
-    // console.log({ filterGenreList });
   };
+
   const handleFilterReset = () => {
     setFilterGenreList("");
     setFilterYear(undefined);
-    setFiltercountry(undefined);
-    setSelectedCountryCheckbox(undefined);
+    setFilterCountry(undefined);
   };
 
   return (
@@ -120,13 +113,16 @@ const Filter = ({
       </h1>
 
       <h2>Genres</h2>
-      {genreData.map((ele: any) => {
+      {genreData.map((ele) => {
         const selectedGenres =
           typeof filterGenreList === "string" ? filterGenreList.split(",") : [];
         const isChecked = selectedGenres.includes(ele.id.toString());
         return (
           <div
-            className={`${styles.checkboxDiv} ${isChecked ? styles.active : styles.inactive}`}
+            key={ele.id}
+            className={`${styles.checkboxDiv} ${
+              isChecked ? styles.active : styles.inactive
+            }`}
           >
             <label className={"container"} htmlFor={ele.id}>
               {ele.name}
@@ -135,7 +131,7 @@ const Filter = ({
                 id={ele.id}
                 name={ele.name}
                 value={ele.id}
-                onChange={() => handleGenereSelect(ele.id)}
+                onChange={() => handleGenreSelect(ele.id)}
                 checked={isChecked}
               />
               <span className={"checkmark"}></span>
@@ -143,11 +139,15 @@ const Filter = ({
           </div>
         );
       })}
+
       <h2>Country</h2>
-      {countryData.map((ele: any) => {
+      {countryData.map((ele) => {
         return (
           <div
-            className={`${styles.checkboxDiv} ${selectedCountryCheckbox === ele.abbr ? styles.active : styles.inactive}`}
+            key={ele.abbr}
+            className={`${styles.checkboxDiv} ${
+              filterCountry === ele.abbr ? styles.active : styles.inactive
+            }`}
           >
             <label className={"container"} htmlFor={ele.name}>
               {ele.name}
@@ -157,20 +157,21 @@ const Filter = ({
                 name={ele.name}
                 value={ele.name}
                 onChange={() => handleCountrySelect(ele.abbr)}
-                checked={selectedCountryCheckbox === ele.abbr}
+                checked={filterCountry === ele.abbr}
               />
               <span className={"checkmark"}></span>
             </label>
           </div>
         );
       })}
-      <h2>year</h2>
+
+      <h2>Year</h2>
       <input
         type="text"
         id="input"
         name="input"
         value={filterYear}
-        onChange={(e: any) => {
+        onChange={(e) => {
           setFilterYear(e.target.value);
         }}
         placeholder="Enter Year"
@@ -178,10 +179,10 @@ const Filter = ({
 
       <div className={styles.filterButtons}>
         <div className={styles.filterSubmit} onClick={handleFilterSubmit}>
-          submit
+          Submit
         </div>
         <div className={styles.filterSubmit} onClick={handleFilterReset}>
-          reset
+          Reset
         </div>
       </div>
     </div>
