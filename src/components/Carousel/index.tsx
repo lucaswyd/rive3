@@ -101,51 +101,50 @@ const Carousel = ({
         <AnimatePresence initial={false} custom={direction}>
           {trailerKey ? (
             <motion.video
-              autoPlay
-              loop
-              muted
-              key={currentIndex}
-              initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
-              animate="visible"
-              exit="exit"
-              variants={slideVariants}
-              className={imageLoaded ? styles.skeleton : ""}
-              onError={() => {
-                setImagePlaceholder(true);
-              }}
-              onLoad={() => {
-                setTimeout(() => {
-                  setImageLoaded(true);
-                }, 100);
-              }}
-              loading="lazy"
-            >
-              <source
-                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`}
-                type="video/mp4"
-              />
-              Your browser does not support the video tag.
-            </motion.video>
+            autoPlay
+            loop
+            muted
+            key={currentIndex}
+            initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
+            animate="visible"
+            exit="exit"
+            variants={slideVariants}
+            className={imageLoaded ? styles.skeleton : ""}
+            onError={() => {
+              setImagePlaceholder(true);
+            }}
+            onLoad={() => {
+              setTimeout(() => {
+                setImageLoaded(true);
+              }, 100);
+            }}
+          >
+            <source
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`}
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </motion.video>
+          
           ) : (
             <motion.img
-              key={currentIndex}
-              alt={"carousel"}
-              src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
-              initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
-              animate="visible"
-              exit="exit"
-              variants={slideVariants}
-              className={imageLoaded ? styles.skeleton : ""}
-              onError={() => {
-                setImagePlaceholder(true);
-              }}
-              onLoad={() => {
-                setTimeout(() => {
-                  setImageLoaded(true);
-                }, 100);
-              }}
-              loading="lazy"
-            />
+  key={currentIndex}
+  alt={"carousel"}
+  src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
+  initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
+  animate="visible"
+  exit="exit"
+  variants={slideVariants}
+  className={imageLoaded ? styles.skeleton : ""}
+  onError={() => {
+    setImagePlaceholder(true);
+  }}
+  onLoad={() => {
+    setTimeout(() => {
+      setImageLoaded(true);
+    }, 100);
+  }}
+/>
           )}
         </AnimatePresence>
 
