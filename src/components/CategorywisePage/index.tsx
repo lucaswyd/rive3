@@ -46,7 +46,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           });
         }
 
-        setData((prevData) => [...prevData, ...newData.results]);
+        setData((prevData: never[]) => [...prevData, ...newData.results]);
         setTotalPages(newData.total_pages);
         setLoading(false);
       } catch (error) {
