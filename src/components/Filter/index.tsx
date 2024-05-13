@@ -6,8 +6,11 @@ function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
-const countryData = [
+interface Genre {
+  id: string;
+  name: string;
+}
+const countryData: { abbr: string; name: string }[] = [
   { name: "Argentina", abbr: "AR" },
   { name: "Australia", abbr: "AU" },
   { name: "Austria", abbr: "AT" },
@@ -75,7 +78,7 @@ const Filter = ({
   setTrigger: Function;
 }) => {
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
-  const [genreData, setGenreData] = useState([]);
+  const [genreData, setGenreData] = useState<Genre[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,7 +115,6 @@ const Filter = ({
     setFilterYear(null);
     setFilterCountry("");
   };
-
 
   return (
     <div className={styles.Filter}>
