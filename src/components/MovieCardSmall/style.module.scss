@@ -4,8 +4,8 @@
   .img {
     height: 15rem;
     width: 10rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
+    border-radius: 0.1rem;
+    
     border: none;
     outline: none;
     margin-bottom: 0.3rem;
@@ -15,7 +15,7 @@
   }
 
   .img:hover {
-    transform: scale(1.1);
+    transform: scale(1.01);
     backdrop-filter: blur(8rem);
     box-shadow: 10px 10px 15px black;
   }

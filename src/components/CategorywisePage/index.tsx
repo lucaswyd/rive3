@@ -131,7 +131,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
         ))}
         {loading && dummyList.map((ele, index) => <Skeleton key={index} className={styles.loading} />)}
       </div>
-      <button className={styles.scrollToTopButton} onClick={scrollToTop}>Voltar ao Topo</button>
+      <button className={styles.scrollToTopButton} onClick={scrollToTop}>Carregando mais ....</button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import styles from "@/styles/Watch.module.scss";
+import styles from "@/styles/Watchft.module.scss";
 import { IoReturnDownBack } from "react-icons/io5";
 
 const FTWatch = () => {
