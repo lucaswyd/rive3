@@ -79,8 +79,8 @@ const FTWatch = () => {
           src={getVideoUrl()}
           className={styles.iframe}
           allowFullScreen
-          
-          sandbox="allow-same-origin allow-scripts" 
+          allow="autoplay"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation=false" 
         ></iframe>
       </div>
     </div>
