@@ -12,7 +12,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --ascent-color: gold;
-    --bg-color: rgb(17, 17, 17);
+    --bg-color: rgb(27, 25, 25);
     --bg-gradient: rgba(49, 47, 47, 0.8);
     --primary-1: black;
     --primary-2: rgb(87, 107, 135);
@@ -211,9 +211,8 @@ input {
   // }
 }
 
-/* Ocultando anúncios comuns usando classes */
+// reomving some common ads using classes
 .ad,
-.ads,
 .advertisement,
 .ad-banner,
 .ad-box,
@@ -232,76 +231,6 @@ input {
 .ad-leaderboard,
 .ad-skyscraper,
 .ad-block,
-.ad-label,
-.ad-row,
-.ad-column,
-.ad-placement,
-.ad-space,
-.advertisement-container,
-.advertisement-banner,
-.advertisement-box,
-.advertisement-wrapper,
-.advertisement-unit,
-.ads-container,
-.ads-banner,
-.ads-box,
-.ads-wrapper,
-.ads-unit,
-.ads-slot,
-.sponsored,
-.sponsored-links,
-.sponsored-post,
-.sponsored-content,
-.sponsored-ads,
-.sponsor-banner,
-.sponsor-box,
-.sponsor-wrapper,
-.promo,
-.promo-banner,
-.promo-box,
-.promo-wrapper,
-.promo-unit,
-.promoted,
-.promoted-content,
-.promoted-link,
-.promoted-post,
-.advert,
-.advert-container,
-.advert-banner,
-.advert-box,
-.advert-wrapper,
-.advert-unit,
-.banner-ad,
-.box-ad,
-.wrapper-ad,
-.header-ad,
-.footer-ad,
-.sidebar-ad,
-.inline-ad,
-.popup-ad,
-.overlay-ad,
-.popunder-ad,
-.video-ad,
-.banner-advertisement,
-.box-advertisement,
-.wrapper-advertisement,
-.header-advertisement,
-.footer-advertisement,
-.sidebar-advertisement,
-.inline-advertisement,
-.popup-advertisement,
-.overlay-advertisement,
-.popunder-advertisement,
-.video-advertisement,
-.ad-notice,
-.ad-indicator,
-.advert-notice,
-.advert-indicator,
-.sponsor-notice,
-.sponsor-indicator,
-.promo-notice,
-.promo-indicator,
-.promoted-notice,
-.promoted-indicator {
+.ad-label {
   display: none !important;
 }
