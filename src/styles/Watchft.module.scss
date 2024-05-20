@@ -12,12 +12,12 @@
     z-index: 0;
   }
   .videoContainer{
-    height: 90%;
+    height: 80%;
     width: 80%;
     border: none;
     outline: none;
     overflow: hidden;
-    z-index: 1;
+    z-index: 4;
     ::-webkit-scrollbar {
       display: none !important;
     }
