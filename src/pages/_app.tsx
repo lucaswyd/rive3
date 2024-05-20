@@ -80,10 +80,10 @@ export default function App({ Component, pageProps }: any) {
     <>
       <Head>
         <title>Wareztuga</title>
-        <meta name="description" content="Your Personal Streaming Oasis" />
+        <meta name="description" content="Filmes Online HD Legendado Gratis" />
         <meta
           name="keywords"
-          content="movie, streaming, tv, rive, stream. movie app, tv shows, movie download"
+          content="Filmes, Series, Futebol, SportTV, ELS, Cinema, Warez"
         />
         <link rel="manifest" href="manifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
