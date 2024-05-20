@@ -15,7 +15,7 @@ const FTWatch = () => {
     }
   }, [router]);
 
-  const handleServerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleServerChange = (event) => {
     setSelectedServer(event.target.value);
   };
 
@@ -73,12 +73,12 @@ const FTWatch = () => {
         {/* Adicione mais opções para os outros servidores, conforme necessário */}
       </select>
       <div className={styles.videoContainer}>
-      <iframe
+        <iframe
           key={videoKey} // Use uma chave única para forçar a atualização do iframe
           src={getVideoUrl()}
           className={styles.iframe}
           allowFullScreen
-          
+          sandbox="allow-same-origin allow-scripts"
         ></iframe>
       </div>
     </div>
