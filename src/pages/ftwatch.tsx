@@ -75,11 +75,9 @@ const FTWatch = () => {
       <div className={styles.videoContainer}>
       <iframe
           key={videoKey} // Use uma chave única para forçar a atualização do iframe
-          scrolling="no"
           src={getVideoUrl()}
           className={styles.iframe}
           allowFullScreen
-          allow="autoplay"
           sandbox="allow-same-origin allow-scripts"
         ></iframe>
       </div>
