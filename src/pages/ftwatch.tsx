@@ -80,7 +80,7 @@ const FTWatch = () => {
           className={styles.iframe}
           allowFullScreen
           allow="autoplay"
-          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation"
+          sandbox="allow-same-origin allow-scripts"
         ></iframe>
       </div>
     </div>
