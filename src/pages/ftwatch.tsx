@@ -27,11 +27,11 @@ const FTWatch = () => {
   const getVideoUrl = () => {
     switch (selectedServer) {
       case "STV1":
-        return process.env.NEXT_PUBLIC_STREAM_URL_ST1;
+        return process.env.NEXT_PUBLIC_STREAM_URL_STV1;
       case "STV2":
-        return process.env.NEXT_PUBLIC_STREAM_URL_ST2;
+        return process.env.NEXT_PUBLIC_STREAM_URL_STV2;
       case "STV3":
-        return process.env.NEXT_PUBLIC_STREAM_URL_ST3;
+        return process.env.NEXT_PUBLIC_STREAM_URL_STV3;
       case "STV4":
         return process.env.NEXT_PUBLIC_STREAM_URL_ST4;
       case "STV5":
