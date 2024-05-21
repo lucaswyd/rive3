@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSwipeable } from "react-swipeable";
 import styles from "./style.module.scss";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 
@@ -32,7 +33,7 @@ const Carousel = ({
     );
     const interval = setInterval(() => {
       handleNext();
-    }, 15000);
+    }, 3000);
     return () => {
       clearInterval(interval);
     };
@@ -66,7 +67,7 @@ const Carousel = ({
       opacity: 0,
       x: "-10%",
       transition: {
-        duration: 0.7,
+        duration: 1.5,
       },
     },
   };
@@ -91,8 +92,15 @@ const Carousel = ({
     );
   };
 
+  const handlers = useSwipeable({
+    onSwipedLeft: handleNext,
+    onSwipedRight: handlePrevious,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
   return (
-    <div className={styles.carousel}>
+    <div {...handlers} className={styles.carousel}>
       <div
         className={`${styles.carousel_images} ${
           !imageLoaded ? styles.skeleton : ""
@@ -101,50 +109,49 @@ const Carousel = ({
         <AnimatePresence initial={false} custom={direction}>
           {trailerKey ? (
             <motion.video
-            autoPlay
-            loop
-            muted
-            key={currentIndex}
-            initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
-            animate="visible"
-            exit="exit"
-            variants={slideVariants}
-            className={imageLoaded ? styles.skeleton : ""}
-            onError={() => {
-              setImagePlaceholder(true);
-            }}
-            onLoad={() => {
-              setTimeout(() => {
-                setImageLoaded(true);
-              }, 100);
-            }}
-          >
-            <source
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`}
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </motion.video>
-          
+              autoPlay
+              loop
+              muted
+              key={currentIndex}
+              initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
+              animate="visible"
+              exit="exit"
+              variants={slideVariants}
+              className={imageLoaded ? styles.skeleton : ""}
+              onError={() => {
+                setImagePlaceholder(true);
+              }}
+              onLoad={() => {
+                setTimeout(() => {
+                  setImageLoaded(true);
+                }, 100);
+              }}
+            >
+              <source
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`}
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </motion.video>
           ) : (
             <motion.img
-  key={currentIndex}
-  alt={"carousel"}
-  src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
-  initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
-  animate="visible"
-  exit="exit"
-  variants={slideVariants}
-  className={imageLoaded ? styles.skeleton : ""}
-  onError={() => {
-    setImagePlaceholder(true);
-  }}
-  onLoad={() => {
-    setTimeout(() => {
-      setImageLoaded(true);
-    }, 100);
-  }}
-/>
+              key={currentIndex}
+              alt={"carousel"}
+              src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
+              initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
+              animate="visible"
+              exit="exit"
+              variants={slideVariants}
+              className={imageLoaded ? styles.skeleton : ""}
+              onError={() => {
+                setImagePlaceholder(true);
+              }}
+              onLoad={() => {
+                setTimeout(() => {
+                  setImageLoaded(true);
+                }, 100);
+              }}
+            />
           )}
         </AnimatePresence>
 
