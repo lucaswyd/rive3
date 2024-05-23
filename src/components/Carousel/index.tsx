@@ -95,7 +95,6 @@ const Carousel = ({
   const handlers = useSwipeable({
     onSwipedLeft: handleNext,
     onSwipedRight: handlePrevious,
-    preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
 
@@ -137,7 +136,9 @@ const Carousel = ({
             <motion.img
               key={currentIndex}
               alt={"carousel"}
-              src={`${imagePlaceholder ? "/images/logo.svg" : images[currentIndex]}`}
+              src={`${
+                imagePlaceholder ? "/images/logo.svg" : images[currentIndex]
+              }`}
               initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
               animate="visible"
               exit="exit"
