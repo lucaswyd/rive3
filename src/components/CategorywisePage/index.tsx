@@ -7,7 +7,6 @@ import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import NProgress from "nprogress";
 import InfiniteScroll from "@/pages/InfiniteScroll";
-
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

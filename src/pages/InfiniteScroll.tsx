@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ReactNode } from "react";
 
 interface InfiniteScrollProps {
   loadMore: () => void;
   isLoading: boolean;
   hasMore: boolean;
+  children: ReactNode; // Adicione esta linha
 }
 
 const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ loadMore, isLoading, hasMore, children }) => {
