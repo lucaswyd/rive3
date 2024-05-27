@@ -20,6 +20,7 @@ const FTWatch = () => {
   };
 
   useEffect(() => {
+    // Atualiza a chave do vídeo quando o servidor selecionado muda
     setVideoKey((prevKey) => prevKey + 1);
   }, [selectedServer]);
 
@@ -44,7 +45,7 @@ const FTWatch = () => {
       case "BFTV":
         return process.env.NEXT_PUBLIC_STREAM_URL_BFTV;
       default:
-        return process.env.NEXT_PUBLIC_STREAM_URL_STV1; // Servidor padrão
+        return process.env.NEXT_PUBLIC_STREAM_URL_SUP; // Servidor padrão
     }
   };
 
@@ -72,8 +73,8 @@ const FTWatch = () => {
         {/* Adicione mais opções para os outros servidores, conforme necessário */}
       </select>
       <div className={styles.videoContainer}>
-        <iframe
-          key={videoKey}
+      <iframe
+          key={videoKey} // Use uma chave única para forçar a atualização do iframe
           scrolling="no"
           src={getVideoUrl()}
           className={styles.iframe}
