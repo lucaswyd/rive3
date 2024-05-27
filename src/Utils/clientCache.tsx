@@ -22,3 +22,4 @@ export function getCache(key: any) {
     // console.log(`${cachedData && Date.now() - cachedData.timestamp} : deleting cache`);
     return null;
   }
+}
