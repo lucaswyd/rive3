@@ -7,6 +7,7 @@ import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import NProgress from "nprogress";
 import InfiniteScroll from "@/pages/InfiniteScroll";
+
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -113,7 +114,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
       <InfiniteScroll loadMore={() => setCurrentPage((prevPage) => prevPage + 1)} isLoading={loading} hasMore={currentPage < totalPages}>
         <div className={styles.movieList}>
           {data.map((ele, index) => (
-            <MovieCardSmall key={index} data={ele} media_type={categoryType} />
+            <MovieCardSmall key={ele.id} data={ele} media_type={categoryType} />
           ))}
           {loading && dummyList.map((ele, index) => <Skeleton key={index} className={styles.loading} />)}
         </div>
