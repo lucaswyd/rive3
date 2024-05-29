@@ -73,13 +73,13 @@ const FTWatch = () => {
         {/* Adicione mais opções para os outros servidores, conforme necessário */}
       </select>
       <div className={styles.videoContainer}>
-      <iframe
+        <iframe
           key={videoKey} // Use uma chave única para forçar a atualização do iframe
-          scrolling="no"
           src={getVideoUrl()}
           className={styles.iframe}
           allowFullScreen
           allow="autoplay"
+          loading="lazy" // Adiciona o atributo lazy loading
           sandbox="allow-same-origin allow-scripts"
         ></iframe>
       </div>
