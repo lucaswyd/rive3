@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axiosFetch from "@/Utils/fetch";
 import styles from "./style.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
-import NProgress from "nprogress";
+import InfiniteScroll from "@/pages/InfiniteScroll";
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [trigger, setTrigger] = useState(false);
   const CapitalCategoryType = capitalizeFirstLetter(categoryType);
@@ -25,55 +26,51 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [filterYear, setFilterYear] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        let newData;
-        if (category === "filter") {
-          newData = await axiosFetch({
-            requestID: `${category}${CapitalCategoryType}`,
-            page: currentPage,
-            genreKeywords: filterGenreList,
-            country: filterCountry,
-            year: filterYear !== null ? filterYear : undefined,
-            sortBy: "popularity.desc",
-          });
-        } else {
-          newData = await axiosFetch({
-            requestID: `${category}${CapitalCategoryType}`,
-            page: currentPage,
-          });
-        }
+  const fetchData = useCallback(async () => {
+    const cacheKey = `${category}_${CapitalCategoryType}_${currentPage}_${filterGenreList}_${filterCountry}_${filterYear}`;
+    const cachedData = localStorage.getItem(cacheKey);
 
-        setData((prevData) => [...prevData, ...newData.results]);
-        setTotalPages(newData.total_pages);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
+    if (cachedData) {
+      const parsedData = JSON.parse(cachedData);
+      setData((prevData) => [...prevData, ...parsedData.results]);
+      setTotalPages(parsedData.total_pages);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      let newData;
+      if (category === "filter") {
+        newData = await axiosFetch({
+          requestID: `${category}${CapitalCategoryType}`,
+          page: currentPage,
+          genreKeywords: filterGenreList,
+          country: filterCountry,
+          year: filterYear !== null ? filterYear : undefined,
+          sortBy: "popularity.desc",
+        });
+      } else {
+        newData = await axiosFetch({
+          requestID: `${category}${CapitalCategoryType}`,
+          page: currentPage,
+        });
       }
-    };
 
-    fetchData();
+      setData((prevData) => [...prevData, ...newData.results]);
+      setTotalPages(newData.total_pages);
+      setLoading(false);
+
+      localStorage.setItem(cacheKey, JSON.stringify(newData));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
   }, [category, currentPage, filterGenreList, filterCountry, filterYear, CapitalCategoryType]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 50 &&
-        currentPage < totalPages &&
-        !loading
-      ) {
-        setCurrentPage((prevPage) => prevPage + 1);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [currentPage, totalPages, loading]);
+    fetchData();
+  }, [fetchData]);
 
   const handleFilterClick = () => {
     setCurrentPage(1);
@@ -125,13 +122,21 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           setTrigger={setTrigger}
         />
       )}
-      <div className={styles.movieList}>
-        {data.map((ele, index) => (
-          <MovieCardSmall key={index} data={ele} media_type={categoryType} />
-        ))}
-        {loading && dummyList.map((ele, index) => <Skeleton key={index} className={styles.loading} />)}
-      </div>
-      <button className={styles.scrollToTopButton} onClick={scrollToTop}>Carregando mais ....</button>
+      <InfiniteScroll
+        loadMore={() => setCurrentPage((prevPage) => prevPage + 1)}
+        hasMore={currentPage < totalPages}
+        loading={loading}
+      >
+        <div className={styles.movieList}>
+          {data.map((ele, index) => (
+            <MovieCardSmall key={index} data={ele} media_type={categoryType} />
+          ))}
+          {loading && dummyList.map((ele, index) => <Skeleton key={index} className={styles.loading} />)}
+        </div>
+      </InfiniteScroll>
+      <button className={styles.scrollToTopButton} onClick={scrollToTop}>
+        Carregando mais ....
+      </button>
     </div>
   );
 };
