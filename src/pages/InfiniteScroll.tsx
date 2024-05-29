@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import { useCallback, useRef, useEffect } from "react";
 
 interface InfiniteScrollProps {
   loadMore: () => void;
   hasMore: boolean;
-  children: React.ReactNode;
   loading: boolean;
+  children: React.ReactNode;
 }
 
-const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ loadMore, hasMore, children, loading }) => {
+const InfiniteScroll = ({ loadMore, hasMore, loading, children }: InfiniteScrollProps) => {
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastElementRef = useCallback(
-    (node) => {
+    (node: HTMLElement | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver((entries) => {
+      observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && hasMore) {
           loadMore();
         }
@@ -29,11 +29,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ loadMore, hasMore, chil
   return (
     <div>
       {children}
-      {hasMore && (
-        <div ref={lastElementRef} style={{ height: "20px", margin: "10px" }}>
-          <span>Carregando...</span>
-        </div>
-      )}
+      <div ref={lastElementRef} />
     </div>
   );
 };
