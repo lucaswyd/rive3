@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./style.module.scss";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,6 +6,28 @@ import Skeleton from "react-loading-skeleton";
 
 const MovieCardSmall = ({ data, media_type }: any) => {
   const [imageLoading, setImageLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cachedImageUrl = localStorage.getItem(`image_${data?.id}`);
+    if (cachedImageUrl) {
+      setImageUrl(cachedImageUrl);
+      setImageLoading(false);
+    } else {
+      const imgSrc = process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data?.poster_path;
+      setImageUrl(imgSrc);
+      const img = new Image();
+      img.src = imgSrc;
+      img.onload = () => {
+        localStorage.setItem(`image_${data?.id}`, imgSrc);
+        setImageLoading(false);
+      };
+      img.onerror = (e) => {
+        console.error(e);
+      };
+    }
+  }, [data]);
+
   return (
     <Link
       key={data?.id}
@@ -13,16 +35,13 @@ const MovieCardSmall = ({ data, media_type }: any) => {
       className={styles.MovieCardSmall}
       aria-label={data?.name || "poster"}
     >
-      {/* <img src={process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data.poster_path} alt="" /> */}
       <div
         className={`${styles.img} ${data?.poster_path !== null && data?.poster_path !== undefined ? "skeleton" : null}`}
       >
         <AnimatePresence mode="sync">
           <motion.img
             key={data?.id}
-            src={
-              process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data?.poster_path || null
-            }
+            src={imageUrl || ''}
             initial={{ opacity: 0 }}
             animate={{
               opacity: imageLoading ? 0 : 1,
@@ -39,7 +58,6 @@ const MovieCardSmall = ({ data, media_type }: any) => {
             loading="lazy"
             onError={(e) => console.log(e)}
             alt={data?.id || "sm"}
-            // style={!imageLoading ? { opacity: 1 } : { opacity: 0 }}
           />
         </AnimatePresence>
       </div>
