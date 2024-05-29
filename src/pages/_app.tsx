@@ -41,7 +41,10 @@ export default function App({ Component, pageProps }: any) {
   }, []);
 
   useEffect(() => {
-
+    if (typeof window !== 'undefined') {
+      const DisableDevtool = require('disable-devtool');
+      DisableDevtool();
+    }
 
     
 
