@@ -91,7 +91,7 @@ const Watch = () => {
       push(`/watch?type=tv&id=${id}&season=${parseInt(season) + 1}&episode=${nextSeasonMinEpisodes}`);
   }
 
-  const handleButtonClick = (value) => {
+  const handleButtonClick = (value: string) => {
     setSource(value);
   };
 
