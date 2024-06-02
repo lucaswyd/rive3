@@ -41,7 +41,7 @@ const SettingsPage = ({
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img src="/images/logolmg.png" alt="logo" />
-        <p>WZTuga é um projeto livre e sem fins lucrativos</p>
+        <p>Warez é um projeto livre e sem fins lucrativos</p>
       </div>
       <div className={styles.settings}>
         <h1>Conta</h1>
@@ -54,7 +54,7 @@ const SettingsPage = ({
               {/* <Link href="/signup">Signup</Link> */}
             </>
             <h4 className={styles.profileCard}>
-              Ola, adicionamos novos recursos e corrigimos varios erros, obrigado por fazeres parte da familia Warez !
+              Estamos corrigindo as falhas na Cloud da Watchlist
             </h4>
           </div>
         ) : (
@@ -69,33 +69,38 @@ const SettingsPage = ({
           </div>
         )}
         <h1>Aparencia</h1>
-        <div className={styles.group}>
-          <div>
-            <label htmlFor="mode">Modo</label>
-            <select
-              name="mode"
-              id="mode"
-              value={mode}
-              onChange={(e) => {
-                setMode(e.target.value);
-                handleSelect({ type: "mode", value: e.target.value });
-              }}
-            >
-              <option value="system" defaultChecked>
-                Escolha um modo
-              </option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </div>
-          {/* <div>
-            <label htmlFor="theme">Theme</label>
-            <select name="theme" id="theme" value={theme} onChange={(e) => {setTheme(e.target.value);handleSelect({type:"theme",value:e.target.value})}}>
-              <option value="liquidate" defaultChecked>Liquidate</option>
-              <option value="normal">Normal</option>
-            </select>
-          </div> */}
-          <div>
+<div className={styles.group}>
+  <div>
+    <label htmlFor="mode">Modo</label>
+    <div>
+      <button
+        className={`${mode === "system" ? styles.selected : ""}`}
+        onClick={() => {
+          setMode("system");
+          handleSelect({ type: "mode", value: "system" });
+        }}
+      >
+        Sistema
+      </button>
+      <button
+        className={`${mode === "light" ? styles.selected : ""}`}
+        onClick={() => {
+          setMode("light");
+          handleSelect({ type: "mode", value: "light" });
+        }}
+      >
+        Claro
+      </button>
+      <button
+        className={`${mode === "dark" ? styles.selected : ""}`}
+        onClick={() => {
+          setMode("dark");
+          handleSelect({ type: "mode", value: "dark" });
+        }}
+      >
+        Escuro
+      </button>
+    </div>
             <label htmlFor="ascent">Cores secundarias </label>
             <select
               name="ascent"
@@ -137,7 +142,7 @@ const SettingsPage = ({
           >
             Download App
           </Link>
-          <Link href="mailto:geral@webproject.pt">Envie-nos a sua opniao</Link>
+          <Link href="mailto:geral@webproject.pt">Reportar Erro</Link>
           {/* <Link href="/contact">Contact Us</Link> */}
         </div>
         <h1>Links</h1>

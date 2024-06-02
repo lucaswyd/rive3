@@ -12,7 +12,7 @@ const ContentGrid: React.FC = () => {
     { id: 6, link: "https://wztuga.netlify.app/ftwatch?type=tv&id=6&server=ELS1", image: "/images/futebol/artboard-6.png" },
     { id: 7, link: "https://wztuga.netlify.app/ftwatch?type=tv&id=7&server=ELS2", image: "/images/futebol/artboard-7.png" },
     { id: 8, link: "https://wztuga.netlify.app/ftwatch?type=tv&id=8&server=ELS3", image: "/images/futebol/artboard-8.png" },
-    { id: 9, link: "https://wztuga.netlify.app/ftwatch?type=tv&id=9&server=STV4", image: "/images/futebol/artboard-10.png" },
+    { id: 9, link: "https://wztuga.netlify.app/ftwatch?type=tv&id=9&server=BFTV", image: "/images/futebol/artboard-10.png" },
   ];
 
   return (

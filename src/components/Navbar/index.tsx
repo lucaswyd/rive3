@@ -36,7 +36,7 @@ const Navbar = ({ children }: any) => {
         href="/"
         aria-label="Home"
         data-tooltip-id="tooltip"
-        data-tooltip-content="Home"
+        data-tooltip-content="Inicio"
       >
         {pathname === "/" ? (
           <AiFillHome className={styles.active} />
@@ -48,7 +48,7 @@ const Navbar = ({ children }: any) => {
         href="/search"
         aria-label="Search"
         data-tooltip-id="tooltip"
-        data-tooltip-html="<div>Search <span class='tooltip-btn'>CTRL + K</span></div>"
+        data-tooltip-html="<div>Pesquisar <span class='tooltip-btn'>CTRL + K</span></div>"
       >
         {pathname === "/search" ? (
           <IoSearch className={styles.active} />
@@ -60,7 +60,7 @@ const Navbar = ({ children }: any) => {
         href="/movie"
         aria-label="Movies"
         data-tooltip-id="tooltip"
-        data-tooltip-content="Movies"
+        data-tooltip-content="Filmes"
       >
         {pathname === "/movie" ? (
           <AiFillPlayCircle className={styles.active} />
@@ -72,7 +72,7 @@ const Navbar = ({ children }: any) => {
         href="/tv"
         aria-label="Tv shows"
         data-tooltip-id="tooltip"
-        data-tooltip-content="TV shows"
+        data-tooltip-content="TV Series"
       >
         {pathname === "/tv" ? (
           <PiTelevisionFill className={styles.active} />
@@ -84,7 +84,7 @@ const Navbar = ({ children }: any) => {
         href="/futebol"
         arial-label="futebol"
         data-tooltip-id="tooltip"
-        data-tooltip-content="futebol"
+        data-tooltip-content="Futebol"
       >
         {/* Usando o ícone de futebol */}
         <IoFootball className={pathname === "/futebol" ? styles.active : styles.inactive} />
@@ -93,7 +93,7 @@ const Navbar = ({ children }: any) => {
         href="/library"
         aria-label="Library"
         data-tooltip-id="tooltip"
-        data-tooltip-content="Library"
+        data-tooltip-content="WatchList"
       >
         {pathname === "/library" ? (
           <IoLibrary className={styles.active} />
@@ -120,7 +120,7 @@ const Navbar = ({ children }: any) => {
         href="/comentarios"
         arial-label="comentarios"
         data-tooltip-id="tooltip"
-        data-tooltip-content="comentarios"
+        data-tooltip-content="Comentarios"
       >
         {/* Adicionando classes active e inactive para o link "comentarios" */}
         {pathname === "/comentarios" ? (

@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   .loader {
     height: 100vh;
     width: 100vw;
@@ -22,23 +23,7 @@
       display: none !important;
     }
   }
-  .server{
-    position: absolute;
-    top: 0rem;
-    width: clamp(15rem, 50vw, 20rem);
-    padding: 1rem 2rem;
-    background: var(--bg-color);
-    color: var(--primary-3);
-    outline: none;
-    // border: 1px solid var(--primary-2);
-    border: none;
-    border-radius: 0.5rem;
-    margin: 1rem auto;
-    line-height: 1rem;
-    z-index: 2;
-    // &[selected="true"]{
-    //   color: var(--ascent-color);
-    // }
+
     
   }
   .iframe {
@@ -54,21 +39,40 @@
   }
   .source {
     position: absolute;
+    flex-direction: row;
     top: 0rem;
-    width: clamp(15rem, 50vw, 20rem);
-    padding: 1rem 2rem;
     background: var(--bg-color);
-    color: var(--primary-3);
+    color: var(--ascent-color);
     outline: none;
-    // border: 1px solid var(--primary-2);
+    //border: 1px solid var(--primary-2);
     border: none;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: row;
     border-radius: 0.5rem;
     margin: 1rem auto;
     line-height: 1rem;
     z-index: 2;
-    // &[selected="true"]{
-    //   color: var(--ascent-color);
-    // }
+
+    .sourceButton {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      background: var(--ascent-color);
+      color: var(--watchPageBtn);
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: var(--button-hover-bg);
+      }
+    }
+
+    .active {
+      background: var(--button-active-bg);
+      color: var(--button-active-text);
+    }
   }
   .backBtn {
     position: absolute;
@@ -107,22 +111,66 @@
       opacity: 1;
     }
   }
-}
 
-@media (max-width: 769px) {
-  .watch {
-    padding-left: unset;
-    padding: 1.5rem 0.5rem;
-    padding-bottom: 5rem;
-    .iframe {
-      height: 80%;
-      width: 100%;
-      border: none;
+
+  @media (max-width: 769px) {
+    .source {
+      position: absolute;
+      top: 6rem;
+      width: 100%; /* Garante que a largura seja 100% */
+      background: var(--bg-color);
+      color: var(--ascent-color);
       outline: none;
+      border: none;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-wrap: wrap; /* Permite que os botões quebrem para a linha seguinte se necessário */
+      justify-content: center; /* Centraliza os botões */
+      margin: 1rem auto;
+      padding: 0.5rem; /* Adiciona um pouco de espaçamento interno */
+      z-index: 2;
+      
+    
+  
+      .sourceButton {
+        flex: 1 1 auto; /* Permite que os botões cresçam e encolham conforme necessário */
+        min-width: 100px; /* Define uma largura mínima para os botões */
+        padding: 0.5rem 1rem;
+        margin: 0.25rem; /* Ajusta o espaçamento entre os botões */
+        background: var(--ascent-color);
+        color: var(--watchPageBtn);
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+  
+        &:hover {
+          background: var(--button-hover-bg);
+        }
+      }
+  
+      .active {
+        background: var(--button-active-bg);
+        color: var(--button-active-text);
+      }
     }
-    :where(.backBtn, .episodeControl) svg {
-      margin-top: 1rem;
-      font-size: 1.3rem;
+  
+    .watch {
+      padding-left: unset;
+      padding: 1.5rem 0.5rem;
+      padding-bottom: 5rem;
+  
+      .iframe {
+        height: 80%;
+        width: 100%;
+        border: none;
+        outline: none;
+      }
+  
+      :where(.backBtn, .episodeControl) svg {
+        margin-top: 1rem;
+        font-size: 1.3rem;
+      }
     }
   }
-}
+  
