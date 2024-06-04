@@ -16,7 +16,7 @@ interface Fetch {
 export default async function axiosFetch({
   requestID,
   id,
-  language = "pt-PT",
+  language,
   page = 1,
   genreKeywords,
   sortBy,
@@ -30,7 +30,7 @@ export default async function axiosFetch({
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const baseURL = "https://api.themoviedb.org/3";
   const requests: any = {
-    latestMovie: `${baseURL}/movie/now_playing?language=${language}&page=${page}`, //nowPlayingMovie
+    latestMovie: `${baseURL}/movie/now_playing?language=pt-PT&page=${page}`, //nowPlayingMovie
     latestTv: `${baseURL}/tv/airing_today?language=${language}&page=${page}`, // airingTodayTv
     popularMovie: `${baseURL}/movie/popular?language=${language}&page=${page}&sort_by=${sortBy}`, // current popular, so similar to latestMovie data
     popularTv: `${baseURL}/tv/popular?language=${language}&page=${page}&sort_by=${sortBy}`,
@@ -51,8 +51,8 @@ export default async function axiosFetch({
     discover: `${baseURL}/discover/tv?with_network=213&${language}&page=${page}`,
 
     // for a ID
-    movieData: `${baseURL}/movie/${id}?language=${language}`,
-    tvData: `${baseURL}/tv/${id}?language=${language}`,
+    movieData: `${baseURL}/movie/${id}?language=pt-PT`,
+    tvData: `${baseURL}/tv/${id}?language=pt-PT`,
     personData: `${baseURL}/person/${id}?language=${language}`,
     movieVideos: `${baseURL}/movie/${id}/videos?language=${language}`,
     tvVideos: `${baseURL}/tv/${id}/videos?language=${language}`,

@@ -7,7 +7,7 @@ import {
   AiFillPlayCircle,
   AiOutlinePlayCircle,
 } from "react-icons/ai";
-import {
+import {IoHome,
   IoLibrary,
   IoLibraryOutline,
   IoSettings,
@@ -17,8 +17,11 @@ import {
   IoChatboxOutline,
   IoFootball,
 } from "react-icons/io5";
-import { PiTelevisionFill, PiTelevisionLight } from "react-icons/pi";
+import { PiTelevisionFill, PiTelevisionLight, PiMonitorLight,PiMonitorPlayFill  } from "react-icons/pi";
 import { usePathname, useSearchParams } from "next/navigation";
+import { MdLocalMovies, MdOutlineLocalMovies, MdOutlineSettingsSuggest, MdSettings } from "react-icons/md";
+import { IoIosFootball } from "react-icons/io";
+import { TbPlayFootball } from "react-icons/tb";
 
 const Navbar = ({ children }: any) => {
   const path = usePathname();
@@ -39,7 +42,7 @@ const Navbar = ({ children }: any) => {
         data-tooltip-content="Inicio"
       >
         {pathname === "/" ? (
-          <AiFillHome className={styles.active} />
+          <IoHome className={styles.active} />
         ) : (
           <AiOutlineHome className={styles.inactive} />
         )}
@@ -63,9 +66,9 @@ const Navbar = ({ children }: any) => {
         data-tooltip-content="Filmes"
       >
         {pathname === "/movie" ? (
-          <AiFillPlayCircle className={styles.active} />
+          <MdLocalMovies className={styles.active} />
         ) : (
-          <AiOutlinePlayCircle className={styles.inactive} />
+          <MdOutlineLocalMovies className={styles.inactive} />
         )}
       </Link>
       <Link
@@ -75,9 +78,9 @@ const Navbar = ({ children }: any) => {
         data-tooltip-content="TV Series"
       >
         {pathname === "/tv" ? (
-          <PiTelevisionFill className={styles.active} />
+          <PiMonitorPlayFill  className={styles.active} />
         ) : (
-          <PiTelevisionLight className={styles.inactive} />
+          <PiMonitorLight  className={styles.inactive} />
         )}
       </Link>
       <Link
@@ -87,7 +90,11 @@ const Navbar = ({ children }: any) => {
         data-tooltip-content="Futebol"
       >
         {/* Usando o ícone de futebol */}
-        <IoFootball className={pathname === "/futebol" ? styles.active : styles.inactive} />
+        {pathname === "/futebol" ? (
+          <IoIosFootball  className={styles.active} />
+        ) : (
+          <TbPlayFootball  className={styles.inactive} />
+        )}
       </Link>
       <Link
         href="/library"
@@ -110,9 +117,9 @@ const Navbar = ({ children }: any) => {
         {pathname === "/settings" ||
         pathname === "/signup" ||
         pathname === "/login" ? (
-          <IoSettings className={styles.active} />
+          <MdSettings className={styles.active} />
         ) : (
-          <IoSettingsOutline className={styles.inactive} />
+          <MdOutlineSettingsSuggest  className={styles.inactive} />
         )}
       </Link>
 
