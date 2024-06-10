@@ -25,21 +25,22 @@ const Hlswatch = () => {
     setVideoKey((prevKey) => prevKey + 1);
   }, [selectedServer]);
 
-  const getVideoUrl = () => {
+  const getVideoUrl = (): string => {
     switch (selectedServer) {
       case "SIC":
-        return process.env.NEXT_PUBLIC_STREAM_URL_SIC;
+        return process.env.NEXT_PUBLIC_STREAM_URL_SIC || "";
       case "TVI":
-        return process.env.NEXT_PUBLIC_STREAM_URL_TVI;
+        return process.env.NEXT_PUBLIC_STREAM_URL_TVI || "";
       default:
         return "";
     }
   };
 
   useEffect(() => {
-    if (Hls.isSupported() && videoRef.current) {
+    const videoUrl = getVideoUrl();
+    if (Hls.isSupported() && videoRef.current && videoUrl) {
       const hls = new Hls();
-      hls.loadSource(getVideoUrl());
+      hls.loadSource(videoUrl);
       hls.attachMedia(videoRef.current);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         videoRef.current.play();
@@ -52,7 +53,7 @@ const Hlswatch = () => {
       videoRef.current &&
       videoRef.current.canPlayType("application/vnd.apple.mpegurl")
     ) {
-      videoRef.current.src = getVideoUrl();
+      videoRef.current.src = videoUrl;
       videoRef.current.addEventListener("loadedmetadata", () => {
         videoRef.current.play();
       });
