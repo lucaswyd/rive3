@@ -43,7 +43,9 @@ const Hlswatch = () => {
       hls.loadSource(videoUrl);
       hls.attachMedia(videoRef.current);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        videoRef.current.play();
+        if (videoRef.current) {
+          videoRef.current.play();
+        }
       });
 
       return () => {
@@ -55,7 +57,9 @@ const Hlswatch = () => {
     ) {
       videoRef.current.src = videoUrl;
       videoRef.current.addEventListener("loadedmetadata", () => {
-        videoRef.current.play();
+        if (videoRef.current) {
+          videoRef.current.play();
+        }
       });
     }
   }, [selectedServer]);
