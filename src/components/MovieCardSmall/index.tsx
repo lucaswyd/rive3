@@ -41,7 +41,7 @@ const MovieCardSmall = ({ data, media_type }: any) => {
         <AnimatePresence mode="sync">
           <motion.img
             key={data?.id}
-            src={imageUrl || ''}
+            src={imageUrl || ""}
             initial={{ opacity: 0 }}
             animate={{
               opacity: imageLoading ? 0 : 1,

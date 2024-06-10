@@ -66,7 +66,14 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
       console.error("Error fetching data:", error);
       setLoading(false);
     }
-  }, [category, currentPage, filterGenreList, filterCountry, filterYear, CapitalCategoryType]);
+  }, [
+    category,
+    currentPage,
+    filterGenreList,
+    filterCountry,
+    filterYear,
+    CapitalCategoryType,
+  ]);
 
   useEffect(() => {
     fetchData();
@@ -81,7 +88,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
@@ -131,7 +138,10 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           {data.map((ele, index) => (
             <MovieCardSmall key={index} data={ele} media_type={categoryType} />
           ))}
-          {loading && dummyList.map((ele, index) => <Skeleton key={index} className={styles.loading} />)}
+          {loading &&
+            dummyList.map((ele, index) => (
+              <Skeleton key={index} className={styles.loading} />
+            ))}
         </div>
       </InfiniteScroll>
       <button className={styles.scrollToTopButton} onClick={scrollToTop}>

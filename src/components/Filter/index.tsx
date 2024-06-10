@@ -96,7 +96,7 @@ const Filter = ({
 
   const handleGenreSelect = (id: string) => {
     setFilterGenreList(
-      filterGenreList === "" ? id + "," : filterGenreList + id + ","
+      filterGenreList === "" ? id + "," : filterGenreList + id + ",",
     );
   };
 
@@ -183,15 +183,15 @@ const Filter = ({
 
       <h2>Year</h2>
       <input
-     type="text"
-     id="input"
-     name="input"
-     value={filterYear || ''}
-     onChange={(e) => {
-    setFilterYear(e.target.value);
-  }}
-  placeholder="Enter Year"
-/>
+        type="text"
+        id="input"
+        name="input"
+        value={filterYear || ""}
+        onChange={(e) => {
+          setFilterYear(e.target.value);
+        }}
+        placeholder="Enter Year"
+      />
 
       <div className={styles.filterButtons}>
         <div className={styles.filterSubmit} onClick={handleFilterSubmit}>

@@ -2,12 +2,18 @@ import React from "react";
 import Link from "next/link";
 import styles from "../components/Televisao/style.module.scss";
 
-
 const ContentGrid: React.FC = () => {
   const contents = [
-    { id: 1, link: "/hlswatch?type=tv&id=1&server=SIC", image: "/images/TV/sic.png" },
-    { id: 2, link: "/hlswatch?type=tv&id=2&server=TVI", image: "/images/TV/tvi.png" },
-
+    {
+      id: 1,
+      link: "/hlswatch?type=tv&id=1&server=SIC",
+      image: "/images/TV/sic.png",
+    },
+    {
+      id: 2,
+      link: "/hlswatch?type=tv&id=2&server=TVI",
+      image: "/images/TV/tvi.png",
+    },
   ];
 
   return (

@@ -11,7 +11,7 @@
     position: absolute;
     z-index: 0;
   }
-  .videoContainer{
+  .videoContainer {
     height: 80%;
     width: 80%;
     border: none;
@@ -22,7 +22,7 @@
       display: none !important;
     }
   }
-  .server{
+  .server {
     position: absolute;
     top: 0rem;
     width: clamp(15rem, 50vw, 20rem);
@@ -39,7 +39,6 @@
     // &[selected="true"]{
     //   color: var(--ascent-color);
     // }
-    
   }
   .iframe {
     height: 80%;
@@ -50,7 +49,6 @@
       display: none !important;
     }
   }
-
 }
 
 @media (max-width: 769px) {
@@ -64,6 +62,5 @@
       border: none;
       outline: none;
     }
-
   }
 }

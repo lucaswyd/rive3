@@ -193,7 +193,7 @@ const WatchDetails = ({
                         {/* <AnimatePresence mode="sync">
                           <motion.img
                             key={ele?.id}
-                            src={`${ele?.still_path !== null && ele?.still_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.still_path : "/images/logo.svg"}`}
+                            src={`${ele?.still_path !== null && ele?.still_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.still_path : "/images/logo.png"}`}
                             initial={{ opacity: 0 }}
                             animate={{
                               opacity: imageLoading ? 0 : 1,
@@ -213,7 +213,7 @@ const WatchDetails = ({
                         {/* react-lazy-load-image-component */}
                         <LazyLoadImage
                           key={ele?.id}
-                          src={`${imagePlaceholder ? "/images/logo.svg" : ele?.still_path !== null && ele?.still_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.still_path : "/images/logo.svg"}`}
+                          src={`${imagePlaceholder ? "/images/logo.png" : ele?.still_path !== null && ele?.still_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.still_path : "/images/logo.png"}`}
                           height="100%"
                           width="100%"
                           useIntersectionObserver={true}
@@ -304,7 +304,7 @@ const WatchDetails = ({
                         {/* <AnimatePresence mode="sync">
                           <motion.img
                             key={ele?.id}
-                            src={`${ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
+                            src={`${ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.png"}`}
                             initial={{ opacity: 0 }}
                             animate={{
                               opacity: imageLoading ? 0 : 1,
@@ -324,7 +324,7 @@ const WatchDetails = ({
                         {/* react-lazy-load-image-component */}
                         <LazyLoadImage
                           key={ele?.id}
-                          src={`${imagePlaceholder ? "/images/logo.svg" : ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
+                          src={`${imagePlaceholder ? "/images/logo.png" : ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.png"}`}
                           height="100%"
                           width="100%"
                           useIntersectionObserver={true}
@@ -384,7 +384,7 @@ const WatchDetails = ({
                         {/* <AnimatePresence mode="sync">
                           <motion.img
                             key={ele?.id}
-                            src={`${ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
+                            src={`${ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.png"}`}
                             initial={{ opacity: 0 }}
                             animate={{
                               opacity: imageLoading ? 0 : 1,
@@ -404,7 +404,7 @@ const WatchDetails = ({
                         {/* react-lazy-load-image-component */}
                         <LazyLoadImage
                           key={ele?.id}
-                          src={`${imagePlaceholder ? "/images/logo.svg" : ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.svg"}`}
+                          src={`${imagePlaceholder ? "/images/logo.png" : ele?.profile_path !== null && ele?.profile_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele?.profile_path : "/images/logo.png"}`}
                           height="100%"
                           width="100%"
                           useIntersectionObserver={true}

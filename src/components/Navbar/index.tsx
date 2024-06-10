@@ -7,7 +7,8 @@ import {
   AiFillPlayCircle,
   AiOutlinePlayCircle,
 } from "react-icons/ai";
-import {IoHome,
+import {
+  IoHome,
   IoLibrary,
   IoLibraryOutline,
   IoSettings,
@@ -17,9 +18,19 @@ import {IoHome,
   IoChatboxOutline,
   IoFootball,
 } from "react-icons/io5";
-import { PiTelevisionFill, PiTelevisionLight, PiMonitorLight,PiMonitorPlayFill  } from "react-icons/pi";
+import {
+  PiTelevisionFill,
+  PiTelevisionLight,
+  PiMonitorLight,
+  PiMonitorPlayFill,
+} from "react-icons/pi";
 import { usePathname, useSearchParams } from "next/navigation";
-import { MdLocalMovies, MdOutlineLocalMovies, MdOutlineSettingsSuggest, MdSettings } from "react-icons/md";
+import {
+  MdLocalMovies,
+  MdOutlineLocalMovies,
+  MdOutlineSettingsSuggest,
+  MdSettings,
+} from "react-icons/md";
 import { IoIosFootball } from "react-icons/io";
 import { TbPlayFootball } from "react-icons/tb";
 
@@ -78,9 +89,9 @@ const Navbar = ({ children }: any) => {
         data-tooltip-content="TV Series"
       >
         {pathname === "/tv" ? (
-          <PiMonitorPlayFill  className={styles.active} />
+          <PiMonitorPlayFill className={styles.active} />
         ) : (
-          <PiMonitorLight  className={styles.inactive} />
+          <PiMonitorLight className={styles.inactive} />
         )}
       </Link>
       <Link
@@ -91,9 +102,9 @@ const Navbar = ({ children }: any) => {
       >
         {/* Usando o ícone de futebol */}
         {pathname === "/futebol" ? (
-          <IoIosFootball  className={styles.active} />
+          <IoIosFootball className={styles.active} />
         ) : (
-          <TbPlayFootball  className={styles.inactive} />
+          <TbPlayFootball className={styles.inactive} />
         )}
       </Link>
       <Link
@@ -104,7 +115,7 @@ const Navbar = ({ children }: any) => {
       >
         {/* Usando o ícone de futebol */}
         {pathname === "/televisao" ? (
-          <PiTelevisionFill  className={styles.active} />
+          <PiTelevisionFill className={styles.active} />
         ) : (
           <PiTelevisionLight className={styles.inactive} />
         )}
@@ -132,7 +143,7 @@ const Navbar = ({ children }: any) => {
         pathname === "/login" ? (
           <MdSettings className={styles.active} />
         ) : (
-          <MdOutlineSettingsSuggest  className={styles.inactive} />
+          <MdOutlineSettingsSuggest className={styles.inactive} />
         )}
       </Link>
 
@@ -149,8 +160,6 @@ const Navbar = ({ children }: any) => {
           <IoChatboxOutline className={styles.inactive} />
         )}
       </Link>
-
-
     </div>
   );
 };

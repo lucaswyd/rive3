@@ -21,15 +21,15 @@ const Carousel = ({
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--carousel-desktop-height",
-      desktopHeight
+      desktopHeight,
     );
     document.documentElement.style.setProperty(
       "--carousel-mobile-height",
-      mobileHeight
+      mobileHeight,
     );
     document.documentElement.style.setProperty(
       "--carousel-object-fit",
-      objectFit
+      objectFit,
     );
     const interval = setInterval(() => {
       handleNext();
@@ -41,7 +41,7 @@ const Carousel = ({
 
   useEffect(() => {
     if (imageArr.length === 0) {
-      setImages(["/images/logo.svg"]);
+      setImages(["/images/logo.png"]);
     } else {
       setImages(imageArr);
     }
@@ -75,20 +75,20 @@ const Carousel = ({
   const handleNext = () => {
     setDirection("right");
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
     setIndex((prevIndex: number) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
   const handlePrevious = () => {
     setDirection("left");
     setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
+      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
     );
     setIndex((prevIndex: number) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1
+      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
     );
   };
 
@@ -137,7 +137,7 @@ const Carousel = ({
               key={currentIndex}
               alt={"carousel"}
               src={`${
-                imagePlaceholder ? "/images/logo.svg" : images[currentIndex]
+                imagePlaceholder ? "/images/logo.png" : images[currentIndex]
               }`}
               initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
               animate="visible"

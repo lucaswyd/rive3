@@ -25,11 +25,13 @@ const Watch = () => {
   const [source, setSource] = useState("MULTI");
   const nextBtn: any = useRef(null);
   const backBtn: any = useRef(null);
-  
+
   if (type === null && params.get("id") !== null) setType(params.get("type"));
   if (id === null && params.get("id") !== null) setId(params.get("id"));
-  if (season === null && params.get("season") !== null) setSeason(params.get("season"));
-  if (episode === null && params.get("episode") !== null) setEpisode(params.get("episode"));
+  if (season === null && params.get("season") !== null)
+    setSeason(params.get("season"));
+  if (episode === null && params.get("episode") !== null)
+    setEpisode(params.get("episode"));
 
   useEffect(() => {
     setLoading(true);
@@ -47,7 +49,9 @@ const Watch = () => {
         id: id,
         season: season,
       });
-      setMaxEpisodes(seasonData?.episodes[seasonData?.episodes?.length - 1]?.episode_number);
+      setMaxEpisodes(
+        seasonData?.episodes[seasonData?.episodes?.length - 1]?.episode_number,
+      );
       setMinEpisodes(seasonData?.episodes[0]?.episode_number);
       if (parseInt(episode) >= maxEpisodes - 1) {
         const nextseasonData = await axiosFetch({
@@ -81,14 +85,20 @@ const Watch = () => {
 
   function handleBackward() {
     if (episode > minEpisodes)
-      push(`/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) - 1}`);
+      push(
+        `/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) - 1}`,
+      );
   }
 
   function handleForward() {
     if (episode < maxEpisodes)
-      push(`/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) + 1}`);
+      push(
+        `/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) + 1}`,
+      );
     else if (parseInt(season) + 1 <= maxSeason)
-      push(`/watch?type=tv&id=${id}&season=${parseInt(season) + 1}&episode=${nextSeasonMinEpisodes}`);
+      push(
+        `/watch?type=tv&id=${id}&season=${parseInt(season) + 1}&episode=${nextSeasonMinEpisodes}`,
+      );
   }
 
   const handleButtonClick = (value: string) => {
@@ -105,62 +115,117 @@ const Watch = () => {
   return (
     <div className={styles.watch}>
       <div onClick={() => back()} className={styles.backBtn}>
-        <IoReturnDownBack data-tooltip-id="tooltip" data-tooltip-content="go back" />
+        <IoReturnDownBack
+          data-tooltip-id="tooltip"
+          data-tooltip-content="go back"
+        />
       </div>
       <div className={styles.episodeControl}>
         {type === "tv" && (
           <>
             <div
               ref={backBtn}
-              onClick={() => { if (episode > 1) handleBackward(); }}
+              onClick={() => {
+                if (episode > 1) handleBackward();
+              }}
               data-tooltip-id="tooltip"
-              data-tooltip-html={episode > minEpisodes ? "<div>Previous episode <span class='tooltip-btn'>SHIFT + P</span></div>" : `Start of season ${season}`}
+              data-tooltip-html={
+                episode > minEpisodes
+                  ? "<div>Previous episode <span class='tooltip-btn'>SHIFT + P</span></div>"
+                  : `Start of season ${season}`
+              }
             >
-              <FaBackwardStep className={`${episode <= minEpisodes ? styles.inactive : null}`} />
+              <FaBackwardStep
+                className={`${episode <= minEpisodes ? styles.inactive : null}`}
+              />
             </div>
             <div
               ref={nextBtn}
-              onClick={() => { if (episode < maxEpisodes || parseInt(season) + 1 <= maxSeason) handleForward(); }}
+              onClick={() => {
+                if (episode < maxEpisodes || parseInt(season) + 1 <= maxSeason)
+                  handleForward();
+              }}
               data-tooltip-id="tooltip"
-              data-tooltip-html={episode < maxEpisodes ? "<div>Next episode <span class='tooltip-btn'>SHIFT + N</span></div>" : parseInt(season) + 1 <= maxSeason ? `<div>Start season ${parseInt(season) + 1} <span class='tooltip-btn'>SHIFT + N</span></div>` : `End of season ${season}`}
+              data-tooltip-html={
+                episode < maxEpisodes
+                  ? "<div>Next episode <span class='tooltip-btn'>SHIFT + N</span></div>"
+                  : parseInt(season) + 1 <= maxSeason
+                    ? `<div>Start season ${parseInt(season) + 1} <span class='tooltip-btn'>SHIFT + N</span></div>`
+                    : `End of season ${season}`
+              }
             >
-              <FaForwardStep className={`${episode >= maxEpisodes && season >= maxSeason ? styles.inactive : null} ${episode >= maxEpisodes && season < maxSeason ? styles.nextSeason : null}`} />
+              <FaForwardStep
+                className={`${episode >= maxEpisodes && season >= maxSeason ? styles.inactive : null} ${episode >= maxEpisodes && season < maxSeason ? styles.nextSeason : null}`}
+              />
             </div>
           </>
         )}
-        <div onClick={() => setWatchDetails(!watchDetails)} data-tooltip-id="tooltip" data-tooltip-content="More">
+        <div
+          onClick={() => setWatchDetails(!watchDetails)}
+          data-tooltip-id="tooltip"
+          data-tooltip-content="More"
+        >
           {watchDetails ? <BsHddStackFill /> : <BsHddStack />}
         </div>
       </div>
       {watchDetails && (
-        <WatchDetails id={id} type={type} data={data} season={season} episode={episode} setWatchDetails={setWatchDetails} />
+        <WatchDetails
+          id={id}
+          type={type}
+          data={data}
+          season={season}
+          episode={episode}
+          setWatchDetails={setWatchDetails}
+        />
       )}
       <div className={styles.source}>
-  <button className={`${styles.sourceButton} ${source === 'MULTI' ? styles.active : ''}`} onClick={() => handleButtonClick('MULTI')}>
-    SERVIDOR : 1 
-  </button>
-  <button className={`${styles.sourceButton} ${source === 'SUP' ? styles.active : ''}`} onClick={() => handleButtonClick('SUP')}>
-    SERVIDOR : 2
-  </button>
-  <button className={`${styles.sourceButton} ${source === 'EMB' ? styles.active : ''}`} onClick={() => handleButtonClick('EMB')}>
-    SERVIDOR : 3 
-  </button>
-  <button className={`${styles.sourceButton} ${source === 'PRO' ? styles.active : ''}`} onClick={() => handleButtonClick('PRO')}>
-    SERVIDOR : 4 
-  </button>
-  <button className={`${styles.sourceButton} ${source === 'VID' ? styles.active : ''}`} onClick={() => handleButtonClick('VID')}>
-    SERVIDOR : 5 
-  </button>
-  <button className={`${styles.sourceButton} ${source === 'AGG' ? styles.active : ''}`} onClick={() => handleButtonClick('AGG')}>
-    SERVIDOR : 6
-  </button>
-</div>
+        <button
+          className={`${styles.sourceButton} ${source === "MULTI" ? styles.active : ""}`}
+          onClick={() => handleButtonClick("MULTI")}
+        >
+          SERVIDOR : 1
+        </button>
+        <button
+          className={`${styles.sourceButton} ${source === "SUP" ? styles.active : ""}`}
+          onClick={() => handleButtonClick("SUP")}
+        >
+          SERVIDOR : 2
+        </button>
+        <button
+          className={`${styles.sourceButton} ${source === "EMB" ? styles.active : ""}`}
+          onClick={() => handleButtonClick("EMB")}
+        >
+          SERVIDOR : 3
+        </button>
+        <button
+          className={`${styles.sourceButton} ${source === "PRO" ? styles.active : ""}`}
+          onClick={() => handleButtonClick("PRO")}
+        >
+          SERVIDOR : 4
+        </button>
+        <button
+          className={`${styles.sourceButton} ${source === "VID" ? styles.active : ""}`}
+          onClick={() => handleButtonClick("VID")}
+        >
+          SERVIDOR : 5
+        </button>
+        <button
+          className={`${styles.sourceButton} ${source === "AGG" ? styles.active : ""}`}
+          onClick={() => handleButtonClick("AGG")}
+        >
+          SERVIDOR : 6
+        </button>
+      </div>
 
       <div className={`${styles.loader} skeleton`}></div>
       {source === "AGG" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
-          src={type === "movie" ? `${STREAM_URL_AGG}/e/${id}` : `${STREAM_URL_AGG}/e/${id}/${season}/${episode}`}
+          src={
+            type === "movie"
+              ? `${STREAM_URL_AGG}/e/${id}`
+              : `${STREAM_URL_AGG}/e/${id}/${season}/${episode}`
+          }
           className={styles.iframe}
           allowFullScreen
         ></iframe>
@@ -168,7 +233,11 @@ const Watch = () => {
       {source === "VID" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
-          src={type === "movie" ? `${STREAM_URL_VID}/filme/${id}` : `${STREAM_URL_VID}/serie/${id}/${season}/${episode}`}
+          src={
+            type === "movie"
+              ? `${STREAM_URL_VID}/filme/${id}`
+              : `${STREAM_URL_VID}/serie/${id}/${season}/${episode}`
+          }
           className={styles.iframe}
           allowFullScreen
         ></iframe>
@@ -176,7 +245,11 @@ const Watch = () => {
       {source === "PRO" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
-          src={type === "movie" ? `${STREAM_URL_PRO}/embed/${type}/${id}` : `${STREAM_URL_PRO}/embed/${type}/${id}/${season}/${episode}`}
+          src={
+            type === "movie"
+              ? `${STREAM_URL_PRO}/embed/${type}/${id}`
+              : `${STREAM_URL_PRO}/embed/${type}/${id}/${season}/${episode}`
+          }
           className={styles.iframe}
           allowFullScreen
         ></iframe>
@@ -184,7 +257,11 @@ const Watch = () => {
       {source === "EMB" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
-          src={type === "movie" ? `${STREAM_URL_EMB}/embed/movie/${id}` : `${STREAM_URL_EMB}/embed/${type}/${id}/${season}/${episode}`}
+          src={
+            type === "movie"
+              ? `${STREAM_URL_EMB}/embed/movie/${id}`
+              : `${STREAM_URL_EMB}/embed/${type}/${id}/${season}/${episode}`
+          }
           className={styles.iframe}
           allowFullScreen
         ></iframe>
@@ -192,7 +269,11 @@ const Watch = () => {
       {source === "MULTI" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
-          src={type === "movie" ? `${STREAM_URL_MULTI}/embed/movie?tmdb=${id}` : `${STREAM_URL_MULTI}/embed/${type}/${id}/${season}/${episode}`}
+          src={
+            type === "movie"
+              ? `${STREAM_URL_MULTI}/embed/movie?tmdb=${id}`
+              : `${STREAM_URL_MULTI}/embed/${type}/${id}/${season}/${episode}`
+          }
           className={styles.iframe}
           allowFullScreen
         ></iframe>
@@ -200,7 +281,11 @@ const Watch = () => {
       {source === "SUP" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
-          src={type === "movie" ? `${STREAM_URL_SUP}/embed/movie/${id}` : `${STREAM_URL_SUP}/embed/${type}/${id}/${season}/${episode}`}
+          src={
+            type === "movie"
+              ? `${STREAM_URL_SUP}/embed/movie/${id}`
+              : `${STREAM_URL_SUP}/embed/${type}/${id}/${season}/${episode}`
+          }
           className={styles.iframe}
           allowFullScreen
         ></iframe>

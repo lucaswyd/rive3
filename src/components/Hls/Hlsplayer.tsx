@@ -1,5 +1,5 @@
-import React from 'react';
-import HlsPlayer from 'react-hls-player';
+import React from "react";
+import HlsPlayer from "react-hls-player";
 
 interface HlsPlayerProps {
   src: string;
@@ -7,7 +7,11 @@ interface HlsPlayerProps {
   height?: string;
 }
 
-const HlsVideoPlayer: React.FC<HlsPlayerProps> = ({ src, width = '100%', height = 'auto' }) => {
+const HlsVideoPlayer: React.FC<HlsPlayerProps> = ({
+  src,
+  width = "100%",
+  height = "auto",
+}) => {
   return (
     <HlsPlayer
       src={src}

@@ -7,7 +7,12 @@ interface InfiniteScrollProps {
   children: React.ReactNode;
 }
 
-const InfiniteScroll = ({ loadMore, hasMore, loading, children }: InfiniteScrollProps) => {
+const InfiniteScroll = ({
+  loadMore,
+  hasMore,
+  loading,
+  children,
+}: InfiniteScrollProps) => {
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastElementRef = useCallback(
@@ -15,7 +20,7 @@ const InfiniteScroll = ({ loadMore, hasMore, loading, children }: InfiniteScroll
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           loadMore();
         }
@@ -23,7 +28,7 @@ const InfiniteScroll = ({ loadMore, hasMore, loading, children }: InfiniteScroll
 
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, loadMore]
+    [loading, hasMore, loadMore],
   );
 
   return (

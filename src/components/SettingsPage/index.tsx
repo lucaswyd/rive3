@@ -69,38 +69,38 @@ const SettingsPage = ({
           </div>
         )}
         <h1>Aparencia</h1>
-<div className={styles.group}>
-  <div>
-    <label htmlFor="mode">Modo</label>
-    <div>
-      <button
-        className={`${mode === "system" ? styles.selected : ""}`}
-        onClick={() => {
-          setMode("system");
-          handleSelect({ type: "mode", value: "system" });
-        }}
-      >
-        Sistema
-      </button>
-      <button
-        className={`${mode === "light" ? styles.selected : ""}`}
-        onClick={() => {
-          setMode("light");
-          handleSelect({ type: "mode", value: "light" });
-        }}
-      >
-        Claro
-      </button>
-      <button
-        className={`${mode === "dark" ? styles.selected : ""}`}
-        onClick={() => {
-          setMode("dark");
-          handleSelect({ type: "mode", value: "dark" });
-        }}
-      >
-        Escuro
-      </button>
-    </div>
+        <div className={styles.group}>
+          <div>
+            <label htmlFor="mode">Modo</label>
+            <div>
+              <button
+                className={`${mode === "system" ? styles.selected : ""}`}
+                onClick={() => {
+                  setMode("system");
+                  handleSelect({ type: "mode", value: "system" });
+                }}
+              >
+                Sistema
+              </button>
+              <button
+                className={`${mode === "light" ? styles.selected : ""}`}
+                onClick={() => {
+                  setMode("light");
+                  handleSelect({ type: "mode", value: "light" });
+                }}
+              >
+                Claro
+              </button>
+              <button
+                className={`${mode === "dark" ? styles.selected : ""}`}
+                onClick={() => {
+                  setMode("dark");
+                  handleSelect({ type: "mode", value: "dark" });
+                }}
+              >
+                Escuro
+              </button>
+            </div>
             <label htmlFor="ascent">Cores secundarias </label>
             <select
               name="ascent"

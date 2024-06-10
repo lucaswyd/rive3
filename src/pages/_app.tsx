@@ -41,15 +41,10 @@ export default function App({ Component, pageProps }: any) {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const DisableDevtool = require('disable-devtool');
+    if (typeof window !== "undefined") {
+      const DisableDevtool = require("disable-devtool");
       DisableDevtool();
     }
-
-    
-
-
-
 
     // Adicionar os scripts de analytics
     const script = document.createElement("script");

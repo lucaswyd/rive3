@@ -52,7 +52,10 @@ const FTWatch = () => {
   return (
     <div className={styles.watch}>
       <div className={styles.backBtn}>
-        <IoReturnDownBack data-tooltip-id="tooltip" data-tooltip-content="Voltar" />
+        <IoReturnDownBack
+          data-tooltip-id="tooltip"
+          data-tooltip-content="Voltar"
+        />
       </div>
       <select
         name="server"

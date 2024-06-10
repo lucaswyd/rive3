@@ -1,15 +1,24 @@
 .GridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Alteração da propriedade para alinhar corretamente os itens */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Alteração da propriedade para alinhar corretamente os itens */
   gap: 20px;
   padding: 20px;
 
   @media (max-width: 1200px) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajuste para telas menores que 1200px */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(150px, 1fr)
+    ); /* Ajuste para telas menores que 1200px */
   }
 
   @media (max-width: 620px) {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ajuste para telas menores que 620px */
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(100px, 1fr)
+    ); /* Ajuste para telas menores que 620px */
     gap: 10px; /* Reduzindo o espaço entre os itens em telas menores que 620px */
     padding: 10px; /* Reduzindo o padding em telas menores que 620px */
   }
