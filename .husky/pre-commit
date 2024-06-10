@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Use o caminho absoluto para o npx.cmd
+"C:/Program Files/nodejs/npx.cmd" --no-install prettier --write .
 
 echo "commenting in Rive"
 echo "Running formatting script..."
-npx prettier --write .
+"C:/Program Files/nodejs/npx.cmd" prettier --write .
 echo "Staging changes..."
 git add .
