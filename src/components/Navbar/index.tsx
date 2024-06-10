@@ -97,6 +97,19 @@ const Navbar = ({ children }: any) => {
         )}
       </Link>
       <Link
+        href="/televisao"
+        arial-label="televisao"
+        data-tooltip-id="tooltip"
+        data-tooltip-content="Televisao"
+      >
+        {/* Usando o ícone de futebol */}
+        {pathname === "/televisao" ? (
+          <PiTelevisionFill  className={styles.active} />
+        ) : (
+          <PiTelevisionLight className={styles.inactive} />
+        )}
+      </Link>
+      <Link
         href="/library"
         aria-label="Library"
         data-tooltip-id="tooltip"

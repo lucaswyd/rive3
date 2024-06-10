@@ -22,7 +22,7 @@ const Watch = () => {
   const [loading, setLoading] = useState(true);
   const [watchDetails, setWatchDetails] = useState(false);
   const [data, setData] = useState<any>();
-  const [source, setSource] = useState("SUP");
+  const [source, setSource] = useState("MULTI");
   const nextBtn: any = useRef(null);
   const backBtn: any = useRef(null);
   
@@ -136,10 +136,10 @@ const Watch = () => {
         <WatchDetails id={id} type={type} data={data} season={season} episode={episode} setWatchDetails={setWatchDetails} />
       )}
       <div className={styles.source}>
-  <button className={`${styles.sourceButton} ${source === 'SUP' ? styles.active : ''}`} onClick={() => handleButtonClick('SUP')}>
+  <button className={`${styles.sourceButton} ${source === 'MULTI' ? styles.active : ''}`} onClick={() => handleButtonClick('MULTI')}>
     SERVIDOR : 1 
   </button>
-  <button className={`${styles.sourceButton} ${source === 'MULTI' ? styles.active : ''}`} onClick={() => handleButtonClick('MULTI')}>
+  <button className={`${styles.sourceButton} ${source === 'SUP' ? styles.active : ''}`} onClick={() => handleButtonClick('SUP')}>
     SERVIDOR : 2
   </button>
   <button className={`${styles.sourceButton} ${source === 'EMB' ? styles.active : ''}`} onClick={() => handleButtonClick('EMB')}>
