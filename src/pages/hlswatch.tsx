@@ -5,7 +5,7 @@ import styles from "@/styles/Watchft.module.scss";
 import { IoReturnDownBack } from "react-icons/io5";
 
 const Hlswatch = () => {
-  const [selectedServer, setSelectedServer] = useState("SUP");
+  const [selectedServer, setSelectedServer] = useState("SIC");
   const [videoKey, setVideoKey] = useState(0);
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -38,14 +38,24 @@ const Hlswatch = () => {
 
   useEffect(() => {
     const videoUrl = getVideoUrl();
+    console.log("Selected Server:", selectedServer);
+    console.log("Video URL:", videoUrl);
+
     if (Hls.isSupported() && videoRef.current && videoUrl) {
       const hls = new Hls();
       hls.loadSource(videoUrl);
       hls.attachMedia(videoRef.current);
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        console.log("Manifest parsed successfully");
         if (videoRef.current) {
-          videoRef.current.play();
+          videoRef.current.play().catch((error) => {
+            console.error("Failed to play video:", error);
+          });
         }
+      });
+
+      hls.on(Hls.Events.ERROR, (event, data) => {
+        console.error("HLS error:", event, data);
       });
 
       return () => {
@@ -57,10 +67,15 @@ const Hlswatch = () => {
     ) {
       videoRef.current.src = videoUrl;
       videoRef.current.addEventListener("loadedmetadata", () => {
+        console.log("Metadata loaded");
         if (videoRef.current) {
-          videoRef.current.play();
+          videoRef.current.play().catch((error) => {
+            console.error("Failed to play video:", error);
+          });
         }
       });
+    } else {
+      console.error("HLS is not supported in this browser.");
     }
   }, [selectedServer]);
 
