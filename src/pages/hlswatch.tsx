@@ -6,9 +6,9 @@ import { IoReturnDownBack } from "react-icons/io5";
 
 const Hlswatch = () => {
   const [selectedServer, setSelectedServer] = useState("SIC");
-  const [videoKey, setVideoKey] = useState(0);
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hlsRef = useRef<Hls | null>(null);
 
   useEffect(() => {
     const { query } = router;
@@ -20,10 +20,6 @@ const Hlswatch = () => {
   const handleServerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedServer(event.target.value);
   };
-
-  useEffect(() => {
-    setVideoKey((prevKey) => prevKey + 1);
-  }, [selectedServer]);
 
   const getVideoUrl = (): string => {
     switch (selectedServer) {
@@ -38,13 +34,16 @@ const Hlswatch = () => {
 
   useEffect(() => {
     const videoUrl = getVideoUrl();
-    console.log("Selected Server:", selectedServer);
-    console.log("Video URL:", videoUrl);
-
     if (Hls.isSupported() && videoRef.current && videoUrl) {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+      }
+
       const hls = new Hls();
+      hlsRef.current = hls;
       hls.loadSource(videoUrl);
       hls.attachMedia(videoRef.current);
+
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         console.log("Manifest parsed successfully");
         if (videoRef.current) {
@@ -99,11 +98,11 @@ const Hlswatch = () => {
       </select>
       <div className={styles.videoContainer}>
         <video
-          key={videoKey}
           ref={videoRef}
           controls
           width="100%"
           height="auto"
+          autoPlay={false}
         />
       </div>
     </div>
