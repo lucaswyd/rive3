@@ -59,24 +59,26 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
 }) => {
   const [user, setUser] = useState<any>(false);
   const [loading, setLoading] = useState(true);
-  const [colors, setColors] = useState<Colors>(() => {
-    if (typeof window !== "undefined") {
-      const savedColors = localStorage.getItem("colors");
-      return savedColors
-        ? JSON.parse(savedColors)
-        : { ...defaultColors, ascent_color };
-    }
-    return { ...defaultColors, ascent_color };
+  const [colors, setColors] = useState<Colors>({
+    ...defaultColors,
+    ascent_color,
   });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedColors = localStorage.getItem("colors");
       if (savedColors) {
-        setColors(JSON.parse(savedColors));
+        const parsedColors = JSON.parse(savedColors);
+        setColors(parsedColors);
+        Object.keys(parsedColors).forEach((color) => {
+          document.documentElement.style.setProperty(
+            `--${color.replace(/_/g, "-")}`,
+            parsedColors[color as keyof Colors],
+          );
+        });
       }
     }
-  }, []);
+  }, [ascent_color]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
