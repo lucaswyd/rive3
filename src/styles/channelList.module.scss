@@ -1,0 +1,60 @@
+// styles/ChannelList.module.scss
+.channelListContainer {
+  width: 100%;
+  max-width: 400px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+  color: #333;
+  font-family: "Arial", sans-serif;
+}
+
+.fileInput {
+  display: block;
+  margin: 10px auto;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.channelList {
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background: #f9f9f9;
+}
+
+.group {
+  margin-bottom: 15px;
+}
+
+.groupHeader {
+  margin: 0;
+  padding: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.channelGroup {
+  list-style: none;
+  padding: 0;
+}
+
+.channelItem {
+  padding: 8px;
+  margin: 5px 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.channelItem:hover {
+  background: #e0e0e0;
+}
