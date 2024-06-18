@@ -165,16 +165,23 @@
       position: relative;
     }
 
-    :where(.backBtn, .episodeControl) svg {
-      margin-top: 3.4rem;
+    :where(.episodeControl) svg {
+      margin-top: 3rem;
       font-size: 2rem;
       z-index: 1;
       position: relative;
       margin-left: 4rem;
       pointer-events: auto; /* Garantir que o svg em si seja clicável */
     }
+    .backBtn svg {
+      margin-right: 2rem;
 
-    :where(.backBtn, .episodeControl) {
+      font-size: 3rem;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    :where(.episodeControl) {
       pointer-events: none; /* Desativar eventos de clique para o contêiner */
     }
   }
