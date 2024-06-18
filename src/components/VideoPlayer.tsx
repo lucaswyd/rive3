@@ -11,7 +11,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, type }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (Hls.isSupported()) {
+    if (
+      Hls.isSupported() &&
+      (type === "application/x-mpegURL" ||
+        type === "application/vnd.apple.mpegurl")
+    ) {
       const hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(videoRef.current as HTMLVideoElement);
@@ -31,11 +35,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, type }) => {
   }, [src, type]);
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <video
         ref={videoRef}
         controls
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
     </div>
   );

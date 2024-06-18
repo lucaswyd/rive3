@@ -65,12 +65,14 @@ const ChannelList: React.FC<ChannelListProps> = ({ onSelectChannel }) => {
     lines.forEach((line) => {
       if (line.startsWith("#EXTINF:")) {
         const attrs = line.split(",");
-        currentItem.name = attrs[1].trim();
+        currentItem.name = attrs[1]?.trim() || "Unknown Channel";
         const tvgAttrs = attrs[0].match(
           /tvg-id="([^"]*)".*tvg-name="([^"]*)".*tvg-logo="([^"]*)".*group-title="([^"]*)"/,
         );
         if (tvgAttrs) {
           currentItem.group = tvgAttrs[4];
+        } else {
+          currentItem.group = "Unknown Group";
         }
       } else if (line && !line.startsWith("#")) {
         currentItem.url = line.trim();
@@ -100,7 +102,7 @@ const ChannelList: React.FC<ChannelListProps> = ({ onSelectChannel }) => {
                 .filter((channel) => channel.group === group)
                 .map((channel, index) => (
                   <li
-                    key={index}
+                    key={`${channel.name}-${index}`}
                     onClick={() => onSelectChannel(channel.url)}
                     className={styles.channelItem}
                   >
