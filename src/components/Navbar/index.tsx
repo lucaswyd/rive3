@@ -160,6 +160,20 @@ const Navbar = ({ children }: any) => {
           <IoChatboxOutline className={styles.inactive} />
         )}
       </Link>
+
+      <Link
+        href="/player"
+        arial-label="player"
+        data-tooltip-id="tooltip"
+        data-tooltip-content="Comentarios"
+      >
+        {/* Adicionando classes active e inactive para o link "comentarios" */}
+        {pathname === "/player" ? (
+          <IoChatboxOutline className={styles.active} />
+        ) : (
+          <IoChatboxOutline className={styles.inactive} />
+        )}
+      </Link>
     </div>
   );
 };

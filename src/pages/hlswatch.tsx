@@ -27,6 +27,8 @@ const Hlswatch = () => {
         return process.env.NEXT_PUBLIC_STREAM_URL_SIC || "";
       case "TVI":
         return process.env.NEXT_PUBLIC_STREAM_URL_TVI || "";
+      case "UFC":
+        return process.env.NEXT_PUBLIC_STREAM_URL_UFC || "";
       default:
         return "";
     }
@@ -95,6 +97,7 @@ const Hlswatch = () => {
       >
         <option value="SIC">SIC</option>
         <option value="TVI">TVI</option>
+        <option value="UFC">UFC</option>
       </select>
       <div className={styles.videoContainer}>
         <video
