@@ -6,6 +6,8 @@ import Skeleton from "react-loading-skeleton";
 import MovieCardSmall from "../MovieCardSmall";
 import { getContinueWatching } from "@/Utils/continueWatching";
 import { useInView } from "react-intersection-observer";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const externalImageLoader = ({ src }: { src: string }) =>
   `${process.env.NEXT_PUBLIC_TMBD_IMAGE_URL}${src}`;
@@ -122,6 +124,24 @@ const HomeListAll = () => {
       }
     };
     fetchData();
+    toast.info("Novas funções em modo beta disponíveis nas definições!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    toast.info("IPTV será adicionado em breve!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }, []);
 
   useEffect(() => {
@@ -215,6 +235,7 @@ const HomeListAll = () => {
 
   return (
     <div className={styles.HomeListAll}>
+      <ToastContainer />
       {recommendations.length > 0 ? (
         <>
           <h1>Baseado em tuas escolhas</h1>

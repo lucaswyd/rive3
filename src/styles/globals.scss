@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100..700&display=swap");
+
 // :root{
 //   --ascent-color:gold;
 //   --bg-color:rgb(27, 25, 25);
@@ -21,6 +22,7 @@
     --watchPageBtn: var(--primary-3);
   }
 }
+
 @media (prefers-color-scheme: light) {
   :root {
     --ascent-color: gold;
@@ -34,7 +36,7 @@
   }
 }
 
-.dark {
+.theme-dark {
   // --ascent-color:gold;
   --bg-color: rgb(17, 17, 17);
   --bg-gradient: rgba(49, 47, 47, 0.8);
@@ -44,7 +46,8 @@
   --primary-4: white;
   --watchPageBtn: var(--primary-3);
 }
-.light {
+
+.theme-light {
   // --ascent-color:gold;
   --bg-color: #f4f7fe;
   --bg-gradient: rgba(238, 235, 235, 0.8);
@@ -53,6 +56,30 @@
   --primary-3: #52525b;
   --primary-4: black;
   --watchPageBtn: var(--primary-1);
+}
+
+.theme-purple {
+  --bg-color: #f3e5f5;
+  --primary-1: #9c27b0;
+  --primary-2: #f0dcf3;
+  --primary-3: #8e24aa;
+  --primary-4: white;
+}
+
+.theme-blue {
+  --bg-color: #e3f2fd;
+  --primary-1: #2196f3;
+  --primary-2: #42a5f5;
+  --primary-3: #1e88e5;
+  --primary-4: white;
+}
+
+.theme-green {
+  --bg-color: #e8f5e9;
+  --primary-1: #4caf50;
+  --primary-2: #66bb6a;
+  --primary-3: #43a047;
+  --primary-4: white;
 }
 
 // :root{
@@ -73,10 +100,12 @@
   user-select: none;
   scroll-behavior: smooth;
 }
+
 a {
   text-decoration: none;
   color: var(--primary-2);
 }
+
 .react-loading-skeleton {
   --base-color: var(--primary-1) !important;
   --highlight-color: var(--bg-color) !important;
@@ -124,6 +153,7 @@ h1 {
 input {
   caret-color: var(--ascent-color) !important;
 }
+
 // select{
 //   cursor: pointer;
 // }
@@ -170,6 +200,7 @@ input {
     border-right: 1px solid var(--bg-color);
   }
 }
+
 .tooltip-btn {
   padding: 0.2rem 0.5rem;
   border-radius: 0.3rem;
@@ -183,12 +214,15 @@ input {
   * {
     font-size: 0.9rem;
   }
+
   h1 {
     font-size: 1.2rem;
   }
+
   :not(h1) {
     letter-spacing: -0.5px;
   }
+
   .react-tooltip,
   .tooltip {
     display: none;
@@ -197,6 +231,7 @@ input {
   .sooner-toast-mobile {
     display: flex;
   }
+
   .sooner-toast-desktop {
     display: none;
   }
