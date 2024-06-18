@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "@/styles/Settings.module.scss";
 import Link from "next/link";
 import { FaGithub, FaGlobe } from "react-icons/fa";
@@ -43,10 +43,7 @@ const SettingsPage = ({
     const savedColors = localStorage.getItem("colors");
     return savedColors
       ? JSON.parse(savedColors)
-      : {
-          ...defaultColors,
-          ascent_color: ascent_color,
-        };
+      : { ...defaultColors, ascent_color };
   });
 
   useEffect(() => {
@@ -61,7 +58,10 @@ const SettingsPage = ({
     });
   }, []);
 
-  const handleColorChange = (e, colorName) => {
+  const handleColorChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    colorName: string,
+  ) => {
     const newColors = { ...colors, [colorName]: e.target.value };
     setColors(newColors);
     document.documentElement.style.setProperty(
@@ -86,7 +86,7 @@ const SettingsPage = ({
         newColors =
           systemTheme === "dark"
             ? { ...darkColors, ascent_color }
-            : { ...defaultColors, ascent_color };
+            : { ...defaultColors, ascentC_color };
       } else {
         document.documentElement.className = `theme-${value}`;
         newColors =
@@ -108,7 +108,6 @@ const SettingsPage = ({
     }
   };
 
-  // Atualiza a variável CSS com as cores selecionadas
   useEffect(() => {
     Object.keys(colors).forEach((color) => {
       document.documentElement.style.setProperty(
@@ -118,7 +117,6 @@ const SettingsPage = ({
     });
   }, [colors]);
 
-  // Atualiza a classe do tema e adiciona listener para mudanças de tema do sistema
   useEffect(() => {
     const updateSystemTheme = () => {
       if (mode === "system") {
@@ -165,7 +163,6 @@ const SettingsPage = ({
               <p className={styles.logout} onClick={() => logoutUser()}>
                 Sair
               </p>
-              {/* <Link href="/signup">Signup</Link> */}
             </>
             <h4 className={styles.profileCard}>
               Estamos corrigindo as falhas na Cloud da Watchlist
@@ -268,7 +265,7 @@ const SettingsPage = ({
               />
             </div>
             <div className={styles.colorPicker}>
-              <label htmlFor="watchPageBtn">Botão do proximo episodio </label>
+              <label htmlFor="watchPageBtn">Botão do próximo episódio </label>
               <input
                 type="color"
                 id="watchPageBtn"
@@ -288,7 +285,6 @@ const SettingsPage = ({
             Download App
           </Link>
           <Link href="mailto:geral@webproject.pt">Reportar Erro</Link>
-          {/* <Link href="/contact">Contact Us</Link> */}
         </div>
         <h1>Links</h1>
         <div className={styles.group}>
