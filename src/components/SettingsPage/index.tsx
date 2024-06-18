@@ -39,22 +39,21 @@ const SettingsPage = ({
 }: any) => {
   const [user, setUser] = useState<any>(false);
   const [loading, setLoading] = useState(true);
-  const [colors, setColors] = useState(() => {
-    const savedColors = localStorage.getItem("colors");
-    return savedColors
-      ? JSON.parse(savedColors)
-      : { ...defaultColors, ascent_color };
-  });
+  const [colors, setColors] = useState(defaultColors);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedColors = localStorage.getItem("colors");
+      if (savedColors) {
+        setColors(JSON.parse(savedColors));
+      }
+    }
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        setLoading(false);
-      } else {
-        setUser(false);
-        setLoading(false);
-      }
+      setUser(user ? user : false);
+      setLoading(false);
     });
   }, []);
 
@@ -64,11 +63,13 @@ const SettingsPage = ({
   ) => {
     const newColors = { ...colors, [colorName]: e.target.value };
     setColors(newColors);
-    document.documentElement.style.setProperty(
-      `--${colorName.replace(/_/g, "-")}`,
-      e.target.value,
-    );
-    localStorage.setItem("colors", JSON.stringify(newColors));
+    if (typeof window !== "undefined") {
+      document.documentElement.style.setProperty(
+        `--${colorName.replace(/_/g, "-")}`,
+        e.target.value,
+      );
+      localStorage.setItem("colors", JSON.stringify(newColors));
+    }
   };
 
   const handleSelect = ({ type, value }: any) => {
@@ -95,7 +96,9 @@ const SettingsPage = ({
             : { ...defaultColors, ascent_color };
       }
       setColors(newColors);
-      localStorage.setItem("colors", JSON.stringify(newColors));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("colors", JSON.stringify(newColors));
+      }
     } else if (type === "theme") {
       setSettings({ values: { ...prevVal, theme: value } });
       setTheme(value);
@@ -109,12 +112,14 @@ const SettingsPage = ({
   };
 
   useEffect(() => {
-    Object.keys(colors).forEach((color) => {
-      document.documentElement.style.setProperty(
-        `--${color.replace(/_/g, "-")}`,
-        colors[color],
-      );
-    });
+    if (typeof window !== "undefined") {
+      Object.keys(colors).forEach((color) => {
+        document.documentElement.style.setProperty(
+          `--${color.replace(/_/g, "-")}`,
+          colors[color],
+        );
+      });
+    }
   }, [colors]);
 
   useEffect(() => {
@@ -130,7 +135,9 @@ const SettingsPage = ({
             ? { ...darkColors, ascent_color }
             : { ...defaultColors, ascent_color };
         setColors(newColors);
-        localStorage.setItem("colors", JSON.stringify(newColors));
+        if (typeof window !== "undefined") {
+          localStorage.setItem("colors", JSON.stringify(newColors));
+        }
       } else {
         document.documentElement.className = `theme-${theme}`;
       }
@@ -138,7 +145,7 @@ const SettingsPage = ({
 
     updateSystemTheme();
 
-    if (mode === "system") {
+    if (mode === "system" && typeof window !== "undefined") {
       const darkModeMediaQuery = window.matchMedia(
         "(prefers-color-scheme: dark)",
       );
