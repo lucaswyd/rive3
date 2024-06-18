@@ -29,17 +29,45 @@ const darkColors = {
   watchPageBtn: "rgb(164, 179, 201)",
 };
 
-const SettingsPage = ({
+interface SettingsPageProps {
+  mode: string;
+  theme: string;
+  ascent_color: string;
+  setMode: (mode: string) => void;
+  setTheme: (theme: string) => void;
+  setAscent_color: (color: string) => void;
+}
+
+interface Colors {
+  ascent_color: string;
+  bg_color: string;
+  bg_gradient: string;
+  primary_1: string;
+  primary_2: string;
+  primary_3: string;
+  primary_4: string;
+  watchPageBtn: string;
+}
+
+const SettingsPage: React.FC<SettingsPageProps> = ({
   mode,
   theme,
   ascent_color,
   setMode,
   setTheme,
   setAscent_color,
-}: any) => {
+}) => {
   const [user, setUser] = useState<any>(false);
   const [loading, setLoading] = useState(true);
-  const [colors, setColors] = useState(defaultColors);
+  const [colors, setColors] = useState<Colors>(() => {
+    if (typeof window !== "undefined") {
+      const savedColors = localStorage.getItem("colors");
+      return savedColors
+        ? JSON.parse(savedColors)
+        : { ...defaultColors, ascent_color };
+    }
+    return { ...defaultColors, ascent_color };
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -59,7 +87,7 @@ const SettingsPage = ({
 
   const handleColorChange = (
     e: ChangeEvent<HTMLInputElement>,
-    colorName: string,
+    colorName: keyof Colors,
   ) => {
     const newColors = { ...colors, [colorName]: e.target.value };
     setColors(newColors);
@@ -116,7 +144,7 @@ const SettingsPage = ({
       Object.keys(colors).forEach((color) => {
         document.documentElement.style.setProperty(
           `--${color.replace(/_/g, "-")}`,
-          colors[color],
+          colors[color as keyof Colors],
         );
       });
     }
