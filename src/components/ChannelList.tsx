@@ -1,6 +1,6 @@
 // components/ChannelList.tsx
 import React, { useState, useEffect } from "react";
-import styles from "../styles/ChannelList.module.scss";
+import styles from "../styles/channelList.module.scss";
 
 interface ChannelListProps {
   onSelectChannel: (url: string) => void;
