@@ -19,7 +19,7 @@ const ChannelList: React.FC<ChannelListProps> = ({ onSelectChannel }) => {
   useEffect(() => {
     const loadDefaultPlaylist = async () => {
       try {
-        const response = await fetch("/ZEBRA.M3U");
+        const response = await fetch("/iptv.m3u8");
         if (!response.ok) {
           throw new Error("Failed to fetch the default playlist");
         }
