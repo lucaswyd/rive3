@@ -92,7 +92,7 @@ const SettingsPage = ({
         newColors =
           value === "dark"
             ? { ...darkColors, ascent_color }
-            : { ...defaultColors, ascent_name };
+            : { ...defaultColors, ascent_color };
       }
       setColors(newColors);
       localStorage.setItem("colors", JSON.stringify(newColors));
