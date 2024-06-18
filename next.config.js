@@ -1,20 +1,21 @@
-// /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 // const nextConfig = {
 //   reactStrictMode: true,
 // };
 // export default nextConfig;
 
-// const withPWA = require("next-pwa")({
-//   dest: "public",
-//   register: true,
-//   skipWaiting: true,
-// });
-// module.exports = withPWA({
-//   // next.js config
-// });
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+});
 
-// next.config.js
-module.exports = {
+const { createProxyMiddleware } = require("http-proxy-middleware");
+
+module.exports = withPWA({
+  // next.js config
+  reactStrictMode: true,
+
   async headers() {
     return [
       {
@@ -41,4 +42,26 @@ module.exports = {
       },
     ];
   },
-};
+
+  async rewrites() {
+    return [
+      {
+        source: "/proxy/:path*",
+        destination: "http://:path*",
+      },
+    ];
+  },
+
+  webpackDevMiddleware: (config) => {
+    config.proxy = {
+      "/proxy": {
+        target: "http://",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/proxy": "",
+        },
+      },
+    };
+    return config;
+  },
+});
