@@ -113,7 +113,7 @@
 @media (max-width: 769px) {
   .source {
     position: absolute;
-    top: -1rem;
+    top: -2rem;
     width: 80%; /* Garante que a largura seja 100% */
     background: var(--bg-color);
     color: var(--ascent-color);
@@ -130,7 +130,7 @@
     .sourceButton {
       flex: 1 1 auto; /* Permite que os botões cresçam e encolham conforme necessário */
       min-width: 100px; /* Define uma largura mínima para os botões */
-      padding: 0.5rem 1rem;
+      padding: 0.2rem 1rem;
       margin: 0.25rem; /* Ajusta o espaçamento entre os botões */
       background: var(--ascent-color);
       color: var(--watchPageBtn);
@@ -154,6 +154,7 @@
     padding-left: unset;
     padding: 1.5rem 0.5rem;
     padding-bottom: 5rem;
+    position: relative;
 
     .iframe {
       padding: 3rem 1rem;
@@ -161,12 +162,20 @@
       width: 100%;
       border: none;
       outline: none;
+      position: relative;
     }
 
     :where(.backBtn, .episodeControl) svg {
-      margin-top: 3.5rem;
-      font-size: 1.3rem;
+      margin-top: 3.4rem;
+      font-size: 2rem;
       z-index: 1;
+      position: relative;
+      margin-left: 4rem;
+      pointer-events: auto; /* Garantir que o svg em si seja clicável */
+    }
+
+    :where(.backBtn, .episodeControl) {
+      pointer-events: none; /* Desativar eventos de clique para o contêiner */
     }
   }
 }

@@ -19,7 +19,7 @@ const ChannelList: React.FC<ChannelListProps> = ({ onSelectChannel }) => {
   useEffect(() => {
     const loadDefaultPlaylist = async () => {
       try {
-        const response = await fetch("/iptv.m3u8");
+        const response = await fetch("/DESPORTO.m3u");
         if (!response.ok) {
           throw new Error("Failed to fetch the default playlist");
         }

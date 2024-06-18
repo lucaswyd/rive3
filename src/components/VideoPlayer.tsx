@@ -11,11 +11,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, type }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (
-      Hls.isSupported() &&
-      (type === "application/x-mpegURL" ||
-        type === "application/vnd.apple.mpegurl")
-    ) {
+    if (Hls.isSupported() && type === "application/x-mpegURL") {
       const hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(videoRef.current as HTMLVideoElement);

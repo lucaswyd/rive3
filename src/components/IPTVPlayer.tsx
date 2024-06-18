@@ -19,8 +19,7 @@ const IPTVPlayer: React.FC<IPTVPlayerProps> = ({ src }) => {
     } else if (url.includes(".ts")) {
       return "video/MP2T";
     } else {
-      // Outros formatos comuns de IPTV podem ser tratados aqui
-      return "application/octet-stream"; // Tipo de arquivo genérico
+      return "video/mp4";
     }
   };
 
