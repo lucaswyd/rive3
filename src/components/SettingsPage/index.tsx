@@ -70,15 +70,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
       if (savedColors) {
         const parsedColors = JSON.parse(savedColors);
         setColors(parsedColors);
-        Object.keys(parsedColors).forEach((color) => {
-          document.documentElement.style.setProperty(
-            `--${color.replace(/_/g, "-")}`,
-            parsedColors[color as keyof Colors],
-          );
-        });
+        applyColors(parsedColors);
       }
     }
-  }, [ascent_color]);
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -86,6 +81,15 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
       setLoading(false);
     });
   }, []);
+
+  const applyColors = (colors: Colors) => {
+    Object.keys(colors).forEach((color) => {
+      document.documentElement.style.setProperty(
+        `--${color.replace(/_/g, "-")}`,
+        colors[color as keyof Colors],
+      );
+    });
+  };
 
   const handleColorChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -142,14 +146,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      Object.keys(colors).forEach((color) => {
-        document.documentElement.style.setProperty(
-          `--${color.replace(/_/g, "-")}`,
-          colors[color as keyof Colors],
-        );
-      });
-    }
+    applyColors(colors);
   }, [colors]);
 
   useEffect(() => {
