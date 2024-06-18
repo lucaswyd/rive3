@@ -44,8 +44,8 @@ const SettingsPage = ({
     return savedColors
       ? JSON.parse(savedColors)
       : {
-          ascent_color: ascent_color,
           ...defaultColors,
+          ascent_color: ascent_color,
         };
   });
 
@@ -205,7 +205,7 @@ const SettingsPage = ({
               </button>
             </div>
             <div className={styles.colorPicker}>
-              <label htmlFor="ascent_color">Botões </label>
+              <label htmlFor="ascent_color">Cor Secundária </label>
               <input
                 type="color"
                 id="ascent_color"
@@ -250,7 +250,7 @@ const SettingsPage = ({
               />
             </div>
             <div className={styles.colorPicker}>
-              <label htmlFor="primary_3">Titulos </label>
+              <label htmlFor="primary_3">Titulo </label>
               <input
                 type="color"
                 id="primary_3"
