@@ -86,13 +86,13 @@ const SettingsPage = ({
         newColors =
           systemTheme === "dark"
             ? { ...darkColors, ascent_color }
-            : { ...defaultColors, ascentC_color };
+            : { ...defaultColors, ascent_color };
       } else {
         document.documentElement.className = `theme-${value}`;
         newColors =
           value === "dark"
             ? { ...darkColors, ascent_color }
-            : { ...defaultColors, ascent_color };
+            : { ...defaultColors, ascent_name };
       }
       setColors(newColors);
       localStorage.setItem("colors", JSON.stringify(newColors));
