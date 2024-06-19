@@ -10,6 +10,26 @@ import NProgress from "nprogress";
 import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
 
+const defaultColors = {
+  ascent_color: "gold",
+  bg_color: "#f4f7fe",
+  bg_gradient: "rgba(238, 235, 235, 0.8)",
+  primary_1: "rgb(255, 255, 255)",
+  primary_2: "#64748b",
+  primary_3: "#52525b",
+  primary_4: "black",
+  watchPageBtn: "rgb(255, 255, 255)",
+};
+
+const applyColors = (colors: any) => {
+  Object.keys(colors).forEach((color) => {
+    document.documentElement.style.setProperty(
+      `--${color.replace(/_/g, "-")}`,
+      colors[color],
+    );
+  });
+};
+
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
   NProgress.configure({ showSpinner: false });
@@ -44,15 +64,24 @@ export default function App({ Component, pageProps }: any) {
     if (typeof window !== "undefined") {
       const DisableDevtool = require("disable-devtool");
       DisableDevtool();
+
+      // Recupera as cores personalizadas do localStorage e aplica
+      const savedColors = localStorage.getItem("colors");
+      if (savedColors) {
+        const parsedColors = JSON.parse(savedColors);
+        applyColors(parsedColors);
+      } else {
+        applyColors(defaultColors);
+      }
     }
 
     // Adicionar os scripts de analytics
     const script = document.createElement("script");
     script.id = "_waubyv";
     script.innerHTML = `
-    var _wau = _wau || [];
-    _wau.push(["dynamic", "8vab3h8jp8", "byv", "c4302bffffff", "small"]);
-  `;
+      var _wau = _wau || [];
+      _wau.push(["dynamic", "8vab3h8jp8", "byv", "c4302bffffff", "small"]);
+    `;
     document.head.appendChild(script);
 
     const asyncScript = document.createElement("script");
@@ -63,11 +92,11 @@ export default function App({ Component, pageProps }: any) {
     // Adicionar estilo para display: none ao elemento de analytics
     const style = document.createElement("style");
     style.innerHTML = `
-    #_waubyv, // id do primeiro script
-    script[src="//waust.at/d.js"] { // script async
-      display: none;
-    }
-  `;
+      #_waubyv,
+      script[src="//waust.at/d.js"] {
+        display: none;
+      }
+    `;
     document.head.appendChild(style);
 
     // Retornar a função de cleanup para remover os scripts e estilos ao desmontar o componente
