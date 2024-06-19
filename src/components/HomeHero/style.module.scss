@@ -16,7 +16,7 @@
       height: calc(80vh - 1rem);
       width: 100%;
       margin: 1rem 0 0 0;
-      border-radius: 2rem;
+      border-radius: 1rem;
       position: relative;
     }
     .curvy {
@@ -64,7 +64,7 @@
     position: absolute;
     bottom: 0;
     margin-bottom: -2.5rem;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     outline: 0.7rem solid var(--bg-color);
     background: var(--primary-1);
     padding: 1rem;
