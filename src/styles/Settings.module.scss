@@ -4,13 +4,15 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding-left: 5rem;
-  // font-size: 1.2rem;
+
   h4 {
     color: var(--primary-2);
   }
+
   .highlight {
     color: var(--primary-3);
   }
+
   .logo {
     width: clamp(20rem, calc(100vw - 2rem), 40rem);
     position: absolute;
@@ -20,105 +22,149 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+
     img {
       width: 20rem;
+      filter: drop-shadow(
+        0 4px 8px rgba(0, 0, 0, 0.1)
+      ); /* Adiciona uma sombra ao logo */
     }
+
     p {
       position: relative;
       top: -5rem;
+      text-align: center;
     }
   }
+
   .settings {
     max-height: 100%;
     width: clamp(20rem, calc(100vw - 2rem), 35rem);
-    // background: red;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: flex-start;
     padding: 4rem 4rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: var(--primary-1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
     .group {
       width: 100%;
-      margin: 1rem 0 3rem 1rem;
+      margin: 1rem 0 4rem 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
       position: relative;
+
       div {
         width: 100%;
         justify-content: space-between;
         align-items: center;
         color: var(--primary-2);
-        select {
-          width: clamp(12rem, 50%, 20rem);
-          padding: 1rem 2rem;
-          // background: var(--primary-1);
-          background: var(--bg-color);
-          color: var(--primary-3);
-          outline: none;
+
+        select,
+        input[type="color"],
+        button {
+          width: clamp(24rem, 20%, 30rem);
+
+          flex-direction: column;
+          justify-content: center;
+          padding-top: 0.8rem;
+          outline: invert;
           border: 1px solid var(--primary-2);
           border-radius: 0.5rem;
-          margin: 0rem 0;
-          // span{
-          //   height: 5rem !important;
-          //   width: 5rem !important;
-          //   display: block;
-          // }
-          // &[selected="true"]{
-          //   color: var(--ascent-color);
-          // }
+          margin: 0;
+          box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra interna */
+          transition:
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+
+          &:hover {
+            background: var(--primary-2);
+            color: var(--primary-1);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+          }
+
+          &:active {
+            background: var(--primary-3);
+            color: var(--primary-4);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+          }
+        }
+
+        button {
+          cursor: pointer;
+          padding: 2rem 1rem;
         }
       }
+
       a {
         display: flex;
         justify-content: flex-start;
         align-items: center;
         gap: 1rem;
-        display: flex;
-        width: 7rem; /* Tornar ligeiramente maior */
-        padding: 0.5rem 1rem; /* Adicionar preenchimento para tornar o botão mais visível e clicável */
-        border: 1px solid transparent; /* Adicionar borda transparente para manter o tamanho do botão consistente */
-        border-radius: 0.25rem; /* Adicionar borda arredondada */
-        background-color: rgb(3, 3, 3); /* Definir cor de fundo transparente */
-        color: whitesmoke; /* Definir cor do texto */
-        text-decoration: none; /* Remover sublinhado do link */
-        box-shadow: 5px 5px 10px rgba(2, 1, 55, 0.195); /* Aplica efeito de botao com shadows */
-        backdrop-filter: blur(6px) inset transparent;
+        width: 20rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        background-color: rgb(3, 3, 3);
+        color: whitesmoke;
+        text-decoration: none;
+        box-shadow: 5px 5px 10px rgba(2, 1, 55, 0.195);
         transition:
           background-color 0.3s ease,
-          box-shadow 0.3s ease; /* Adicionar transição suave para o efeito hover e clique */
+          box-shadow 0.3s ease;
 
         &:hover {
-          background-color: #f0f0f0; /* alterar cor de fundo do hover */
+          background-color: #f0f0f0;
+          color: #333;
         }
 
         &:active {
-          box-shadow: 0.1rem 0.3rem rgba(0, 0, 0, 0.1); /*adicionar uma leve sombra ao clicar */
+          box-shadow: 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
         }
       }
+
       .logout {
         color: var(--primary-2);
         cursor: pointer;
         width: 7rem;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0);
+
+        &:hover {
+          background-color: #f0f0f0;
+          color: #333;
+        }
+
+        &:active {
+          box-shadow: 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
+        }
       }
+
       .downloadButton {
         width: clamp(12rem, 50%, 20rem);
         padding: 1rem 2rem;
-        // background: var(--primary-1);
         background: var(--bg-color);
         color: var(--primary-3);
         outline: none;
         border: 1px solid var(--primary-2);
         border-radius: 0.5rem;
-        margin: 0rem 0;
+        margin: 0;
         text-align: center;
         cursor: pointer;
       }
     }
+
     .group2 {
       @extend .group;
       color: var(--primary-2);
+
       input,
       select,
       button {
@@ -132,18 +178,18 @@
         cursor: pointer;
       }
     }
+
     .profileCard {
       position: absolute;
       right: 0;
       width: clamp(12rem, 50%, 20rem);
       padding: 1rem 2rem;
-      // background: var(--primary-1);
       background: var(--bg-color);
       color: var(--primary-3);
       outline: none;
       border: 1px solid var(--primary-2);
       border-radius: 0.5rem;
-      // margin: 1rem 0;
+
       span {
         color: var(--ascent-color);
       }
@@ -157,6 +203,7 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
 .signin {
   cursor: pointer;
   padding: 0.5rem 1rem;
@@ -166,8 +213,17 @@
   width: clamp(12rem, 50%, 20rem);
   background: var(--primary-1);
   color: var(--primary-3);
-  cursor: pointer;
   margin: 1rem 0 3rem 1rem;
+
+  &:hover {
+    background-color: var(--primary-2);
+    color: var(--primary-1);
+  }
+
+  &:active {
+    background-color: var(--primary-3);
+    color: var(--primary-4);
+  }
 }
 
 .errorData {
@@ -176,14 +232,16 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  // margin: 7rem 0;
+
   h1 {
     font-size: clamp(2rem, 50vw, 3.5rem);
   }
+
   p,
   summary {
     color: var(--primary-3);
   }
+
   h4 {
     color: var(--primary-3);
     margin-top: 1rem;
@@ -196,10 +254,10 @@
 
 @media (max-width: 1200px) {
   .settingsPage {
-    // min-height: 100vh;
     height: auto;
     position: relative;
     top: -1rem;
+
     .logo {
       width: clamp(10rem, calc(100vw - 2rem), 40rem);
       position: unset;
@@ -209,7 +267,7 @@
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      // margin-bottom: 4rem;
+
       img {
         padding: 3.5rem;
         width: 15rem;
@@ -217,16 +275,17 @@
     }
   }
 }
+
 @media (max-width: 769px) {
   .settingsPage {
     padding-left: unset;
     padding: 0 1rem;
     padding-bottom: 2.7rem;
     overflow-x: hidden;
+
     .settings {
       height: 100%;
       width: clamp(20rem, calc(100vw - 2rem), 40rem);
-      // background: red;
       display: flex;
       justify-content: left;
       flex-direction: column;
@@ -238,6 +297,7 @@
       padding-bottom: 0;
     }
   }
+
   .errorData {
     margin: 7rem 0;
   }

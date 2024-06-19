@@ -236,7 +236,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
               </button>
             </div>
             <div className={styles.colorPicker}>
-              <label htmlFor="ascent_color">Cor Secundária </label>
+              <label htmlFor="ascent_color">Botões </label>
               <input
                 type="color"
                 id="ascent_color"
@@ -290,7 +290,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
               />
             </div>
             <div className={styles.colorPicker}>
-              <label htmlFor="primary_4">Cor Primária 4</label>
+              <label htmlFor="primary_4">Efeitos</label>
               <input
                 type="color"
                 id="primary_4"
