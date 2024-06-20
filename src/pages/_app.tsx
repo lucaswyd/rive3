@@ -1,7 +1,7 @@
 import "@/styles/globals.scss";
 import Layout from "@/components/Layout";
 import Head from "next/head";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import Router from "next/router";
@@ -73,6 +73,14 @@ export default function App({ Component, pageProps }: any) {
       } else {
         applyColors(defaultColors);
       }
+
+      // Exibe o toast de manutenção
+      toast.info(
+        "Dentro de 10 minutos iremos realizar uma manutenção no servidor que irá demorar 1 hora. O serviço pode ficar inativo durante esse período. Entre em nosso canal do Discord para saber mais sobre a atualização.",
+        {
+          duration: 60000,
+        },
+      );
     }
 
     // Adicionar os scripts de analytics

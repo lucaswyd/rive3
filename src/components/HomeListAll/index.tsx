@@ -123,25 +123,25 @@ const HomeListAll = () => {
         setLoading(false);
       }
     };
-    fetchData();
-    toast.info("Novas funções em modo beta disponíveis nas definições!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    toast.info("IPTV será adicionado em breve!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    //fetchData();
+    // toast.info("Novas funções em modo beta disponíveis nas definições!", {
+    // position: "top-right",
+    //  autoClose: 5000,
+    //    hideProgressBar: false,
+    //    closeOnClick: true,
+    //    pauseOnHover: true,
+    //    draggable: true,
+    //    progress: undefined,
+    //   });
+    //   toast.info("IPTV será adicionado em breve!", {
+    //   position: "top-right",
+    //    autoClose: 5000,
+    //  hideProgressBar: false,
+    //  closeOnClick: true,
+    //    pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   });
   }, []);
 
   useEffect(() => {
