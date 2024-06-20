@@ -21,7 +21,7 @@ const LoginPage = () => {
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
         <img
-          src="/images/logo.png"
+          src="/images/logolmg.svg"
           alt="logo"
           data-tooltip-id="tooltip"
           data-tooltip-content="Rive"

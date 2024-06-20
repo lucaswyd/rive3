@@ -24,7 +24,7 @@ const MoviePoster = ({ data, media_type }: any) => {
           <motion.img
             key={data?.id}
             alt={data?.id || "sm"}
-            src={`${imagePlaceholder ? "/images/logo.png" : data?.poster_path !== null && data?.poster_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data?.poster_path : "/images/logo.png"}`}
+            src={`${imagePlaceholder ? "/images/logolmg.svg" : data?.poster_path !== null && data?.poster_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data?.poster_path : "/images/logolmg.svg"}`}
             initial={{ opacity: 0 }}
             animate={{
               opacity: imageLoading ? 0 : 1,
@@ -49,7 +49,7 @@ const MoviePoster = ({ data, media_type }: any) => {
         <LazyLoadImage
           key={data?.id}
           alt={data?.id || "sm"}
-          src={`${imagePlaceholder ? "/images/logo.png" : data?.poster_path !== null && data?.poster_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data?.poster_path : "/images/logo.png"}`}
+          src={`${imagePlaceholder ? "/images/logolmg.svg" : data?.poster_path !== null && data?.poster_path !== undefined ? process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + data?.poster_path : "/images/logolmg.svg"}`}
           height="100%"
           width="100%"
           useIntersectionObserver={true}

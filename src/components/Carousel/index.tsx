@@ -41,7 +41,7 @@ const Carousel = ({
 
   useEffect(() => {
     if (imageArr.length === 0) {
-      setImages(["/images/logo.png"]);
+      setImages(["/images/logolmg.svg"]);
     } else {
       setImages(imageArr);
     }
@@ -137,7 +137,7 @@ const Carousel = ({
               key={currentIndex}
               alt={"carousel"}
               src={`${
-                imagePlaceholder ? "/images/logo.png" : images[currentIndex]
+                imagePlaceholder ? "/images/logolmg.svg" : images[currentIndex]
               }`}
               initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
               animate="visible"

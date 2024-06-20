@@ -186,7 +186,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
   return (
     <div className={`${styles.settingsPage} ${styles.authPage}`}>
       <div className={styles.logo}>
-        <img src="/images/logolmg.png" alt="logo" />
+        <img src="/images/logolmg.svg" alt="logo" />
         <p>Warez é um projeto livre e sem fins lucrativos</p>
       </div>
       <div className={styles.settings}>

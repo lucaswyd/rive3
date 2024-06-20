@@ -75,9 +75,7 @@ export default function App({ Component, pageProps }: any) {
       }
 
       // Exibe o toast de manutenção
-      toast.info("Atualização concluida com sucesso..", {
-        duration: 6000,
-      });
+      toast.info("Atualização concluida com sucesso..", {});
     }
 
     // Adicionar os scripts de analytics
@@ -126,12 +124,12 @@ export default function App({ Component, pageProps }: any) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Rive" />
-        <link rel="icon" href="/images/logo512.png" />
-        <link rel="apple-touch-icon" href="/images/logo512.png" />
+        <link rel="icon" href="/images/logolmg.svg.png" />
+        <link rel="apple-touch-icon" href="/images/logolmg.svg.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#f4f7fe" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="shortcut icon" href="/images/logo512.png" />
+        <link rel="shortcut icon" href="/images/logolmg.svg.png" />
       </Head>
       <Layout>
         <Toaster

@@ -68,7 +68,7 @@ const DetailPage = () => {
         //     if (i < 10) arr.push(process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele.file_path);
         //   });
         // }
-        if (arr.length === 0) arr.push("/images/logo.png");
+        if (arr.length === 0) arr.push("/images/logolmg.svg");
         setImages(arr);
         setLoading(false);
       } catch (error) {
