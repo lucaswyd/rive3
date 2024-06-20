@@ -75,12 +75,10 @@ export default function App({ Component, pageProps }: any) {
       }
 
       // Exibe o toast de manutenção
-      toast.info(
-        "Servidor em atualização. O serviço pode ficar inativo durante esse período. Entre em nosso canal do Discord para saber mais sobre a atualização.",
-        {
-          duration: 60000,
-        },
-      );
+      toast.info("Atualização concluida com sucesso..", {
+        duration: 60000,
+        autoClose: 5000,
+      });
     }
 
     // Adicionar os scripts de analytics
