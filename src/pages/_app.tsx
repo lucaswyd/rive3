@@ -76,8 +76,7 @@ export default function App({ Component, pageProps }: any) {
 
       // Exibe o toast de manutenção
       toast.info("Atualização concluida com sucesso..", {
-        duration: 60000,
-        autoClose: 5000,
+        duration: 6000,
       });
     }
 
