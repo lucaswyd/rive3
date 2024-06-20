@@ -1,16 +1,22 @@
 {
+  "id": "com.example.warez",
   "theme_color": "#f4f7fe",
   "background_color": "#f4f7fe",
   "display": "standalone",
+  "orientation": "any",
   "scope": "/",
   "start_url": "/",
   "name": "Warez",
   "short_name": "Warez",
-  "description": "App de Filmes e Series Gratis",
+  "description": "App de Filmes e Séries Grátis",
+  "categories": ["entertainment", "movies", "tv"],
+  "iarc_rating_id": "IARC-ID",
+  "lang": "pt-BR",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
-      "sizes": "any",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
@@ -34,7 +40,9 @@
       "sizes": "any",
       "type": "image/png"
     }
-  ]
+  ],
+  "launch_handler": {
+    "route_to": "auto"
+  },
+  "scope_extension": "/extended-scope"
 }
-
-
