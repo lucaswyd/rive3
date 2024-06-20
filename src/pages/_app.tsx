@@ -76,7 +76,7 @@ export default function App({ Component, pageProps }: any) {
 
       // Exibe o toast de manutenção
       toast.info(
-        "Dentro de 10 minutos iremos realizar uma manutenção no servidor que irá demorar 1 hora. O serviço pode ficar inativo durante esse período. Entre em nosso canal do Discord para saber mais sobre a atualização.",
+        "Servidor em atualização. O serviço pode ficar inativo durante esse período. Entre em nosso canal do Discord para saber mais sobre a atualização.",
         {
           duration: 60000,
         },
