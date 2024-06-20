@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axiosFetch from "@/Utils/fetch";
 import styles from "./style.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
@@ -6,6 +6,7 @@ import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import InfiniteScroll from "@/pages/InfiniteScroll";
+import debounce from "lodash/debounce";
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -25,55 +26,65 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [filterCountry, setFilterCountry] = useState<string>("");
   const [filterYear, setFilterYear] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const fetching = useRef(false);
 
-  const fetchData = useCallback(async () => {
-    const cacheKey = `${category}_${CapitalCategoryType}_${currentPage}_${filterGenreList}_${filterCountry}_${filterYear}`;
-    const cachedData = localStorage.getItem(cacheKey);
+  const fetchData = useCallback(
+    debounce(async () => {
+      if (fetching.current) return;
+      fetching.current = true;
 
-    if (cachedData) {
-      const parsedData = JSON.parse(cachedData);
-      setData((prevData) => [...prevData, ...parsedData.results]);
-      setTotalPages(parsedData.total_pages);
-      setLoading(false);
-      return;
-    }
+      const cacheKey = `${category}_${CapitalCategoryType}_${currentPage}_${filterGenreList}_${filterCountry}_${filterYear}`;
+      const cachedData = localStorage.getItem(cacheKey);
 
-    try {
-      setLoading(true);
-      let newData;
-      if (category === "filter") {
-        newData = await axiosFetch({
-          requestID: `${category}${CapitalCategoryType}`,
-          page: currentPage,
-          genreKeywords: filterGenreList,
-          country: filterCountry,
-          year: filterYear !== null ? filterYear : undefined,
-          sortBy: "popularity.desc",
-        });
-      } else {
-        newData = await axiosFetch({
-          requestID: `${category}${CapitalCategoryType}`,
-          page: currentPage,
-        });
+      if (cachedData) {
+        const parsedData = JSON.parse(cachedData);
+        setData((prevData) => [...prevData, ...parsedData.results]);
+        setTotalPages(parsedData.total_pages);
+        setLoading(false);
+        fetching.current = false;
+        return;
       }
 
-      setData((prevData) => [...prevData, ...newData.results]);
-      setTotalPages(newData.total_pages);
-      setLoading(false);
+      try {
+        setLoading(true);
+        let newData;
+        if (category === "filter") {
+          newData = await axiosFetch({
+            requestID: `${category}${CapitalCategoryType}`,
+            page: currentPage,
+            genreKeywords: filterGenreList,
+            country: filterCountry,
+            year: filterYear !== null ? filterYear : undefined,
+            sortBy: "popularity.desc",
+          });
+        } else {
+          newData = await axiosFetch({
+            requestID: `${category}${CapitalCategoryType}`,
+            page: currentPage,
+          });
+        }
 
-      localStorage.setItem(cacheKey, JSON.stringify(newData));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    }
-  }, [
-    category,
-    currentPage,
-    filterGenreList,
-    filterCountry,
-    filterYear,
-    CapitalCategoryType,
-  ]);
+        setData((prevData) => [...prevData, ...newData.results]);
+        setTotalPages(newData.total_pages);
+        setLoading(false);
+
+        localStorage.setItem(cacheKey, JSON.stringify(newData));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      } finally {
+        fetching.current = false;
+      }
+    }, 300),
+    [
+      category,
+      currentPage,
+      filterGenreList,
+      filterCountry,
+      filterYear,
+      CapitalCategoryType,
+    ],
+  );
 
   useEffect(() => {
     fetchData();
