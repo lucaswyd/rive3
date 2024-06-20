@@ -4,24 +4,25 @@
   .img {
     height: 15rem;
     width: 10rem;
-    border-radius: 0.1rem;
+    border-radius: 0.9rem;
 
     border: none;
     outline: none;
     margin-bottom: 0.3rem;
     object-fit: cover;
-    transition: 0.4s ease-in;
-    box-shadow: 5px 5px 10px black;
+
+    box-shadow: 5px 3px 18px 1px black;
   }
 
   .img:hover {
-    transform: scale(1.01);
-    backdrop-filter: blur(8rem);
+    transform: scale(0.96);
+    backdrop-filter: blur(9rem);
     box-shadow: 10px 10px 15px black;
+    transition: 0.2s ease-in-out;
   }
   p {
+    display: none;
     color: var(--primary-2);
-    width: 100%;
     margin-left: 0.2rem;
     height: 4ch;
     text-overflow: ellipsis;
@@ -39,8 +40,8 @@
       width: 7rem;
     }
     p {
+      display: none;
       color: var(--primary-2);
-      width: 80%;
     }
   }
 }
