@@ -82,30 +82,6 @@ a {
   color: var(--primary-2);
 }
 
-.react-loading-skeleton {
-  --base-color: var(--primary-1) !important;
-  --highlight-color: var(--bg-color) !important;
-  display: block;
-  background-color: var(--primary-1) !important;
-  background-image: linear-gradient(
-    90deg,
-    var(--bg-color),
-    var(--primary-1),
-    var(--bg-color)
-  ) !important;
-  // border: 1px solid var(--bg-gradient);
-  // border-radius: 1rem;
-}
-
-.skeleton {
-  // width: 100%;
-  // height: 100%;
-  margin: 0;
-  padding: 0;
-  // opacity: 0.7;
-  animation: skeleton-loading 0.4s linear infinite alternate;
-}
-
 @keyframes skeleton-loading {
   0% {
     background: var(--bg-color);

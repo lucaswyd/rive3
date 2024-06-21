@@ -39,6 +39,7 @@
     "react-swipeable": "^7.0.1",
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.26.3",
+    "react-window": "^1.8.10",
     "sass": "^1.74.1",
     "sonner": "^1.4.41",
     "video.js": "^8.12.0"
