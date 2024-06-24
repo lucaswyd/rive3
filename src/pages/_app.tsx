@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }: any) {
       }
 
       // Exibe o toast de manutenção
-      toast.info("Atualização concluida com sucesso..", {});
+      // toast.info("Atualização concluida com sucesso..", {});
     }
 
     // Adicionar os scripts de analytics

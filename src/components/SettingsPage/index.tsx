@@ -6,6 +6,7 @@ import { getSettings, setSettings } from "@/Utils/settings";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/Utils/firebase";
 import { logoutUser } from "@/Utils/firebaseUser";
+import { toast } from "sonner";
 
 const defaultColors = {
   ascent_color: "gold",
@@ -72,6 +73,13 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
         setColors(parsedColors);
         applyColors(parsedColors);
       }
+
+      toast.info(
+        "Atenção: as configurações de mudança de layout estão em modo de teste. Isso pode causar conflitos com algumas cores. Deixe sua opinião sobre o beta em nosso canal do Discord.",
+        {
+          duration: 10000, // duração em milissegundos (10 segundos)
+        },
+      );
     }
   }, []);
 
