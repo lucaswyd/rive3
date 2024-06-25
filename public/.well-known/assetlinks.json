@@ -1,0 +1,13 @@
+[
+    {
+        "relation": ...,
+        "target": {
+            "namespace": ...,
+            "package_name": ...,
+            "sha256_cert_fingerprints": [
+                "...",
+                "02:3A:2A:D5:74:25:31:46:EC:16:40:9A:B9:AD:CD:32:15:AB:F3:F5:80:9B:B1:85:DC:17:55:DD:D7:7C:38:8C"
+            ]
+        }
+    }
+]

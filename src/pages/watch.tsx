@@ -235,7 +235,7 @@ const Watch = () => {
           scrolling="no"
           src={
             type === "movie"
-              ? `${STREAM_URL_VID}/filme/${id}`
+              ? `${STREAM_URL_VID}/filme/tt${id}`
               : `${STREAM_URL_VID}/serie/${id}/${season}/${episode}`
           }
           className={styles.iframe}
