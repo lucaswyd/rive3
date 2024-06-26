@@ -2,7 +2,7 @@
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
     "namespace": "android_app",
-    "package_name": "com.wareztuga.wzt",
-    "sha256_cert_fingerprints": ["9B:B6:03:88:09:F6:DA:38:0D:B0:3A:25:9A:B8:87:F1:30:30:D7:28:48:D2:A4:61:FF:0E:C7:FC:80:6E:5D:00"]
+    "package_name": "pt.wareztuga.app",
+    "sha256_cert_fingerprints": ["3C:9E:3E:53:BE:32:E2:5E:40:1B:93:20:B7:91:F1:BA:58:30:AD:E1:14:97:8B:9C:9E:B0:AD:03:F5:EA:E0:07"]
   }
 }]
