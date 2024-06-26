@@ -1,8 +1,11 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.wareztuga.wzt",
-    "sha256_cert_fingerprints": ["9B:B6:03:88:09:F6:DA:38:0D:B0:3A:25:9A:B8:87:F1:30:30:D7:28:48:D2:A4:61:FF:0E:C7:FC:80:6E:5D:00"]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.wareztuga.wzt",
+      "sha256_cert_fingerprints":
+        ["1A:A6:27:60:AF:AF:E4:A2:30:66:09:93:C3:A9:01:32:22:10:83:0D:D8:80:C7:C3:8D:58:E7:C5:EC:60:21:14"]
+    }
   }
-}]
+]
