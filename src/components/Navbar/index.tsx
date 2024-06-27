@@ -95,19 +95,7 @@ const Navbar = ({ children }: any) => {
           <PiMonitorLight className={styles.inactive} />
         )}
       </Link>
-      <Link
-        href="/futebol"
-        arial-label="futebol"
-        data-tooltip-id="tooltip"
-        data-tooltip-content="Futebol"
-      >
-        {/* Usando o ícone de futebol */}
-        {pathname === "/futebol" ? (
-          <IoIosFootball className={styles.active} />
-        ) : (
-          <TbPlayFootball className={styles.inactive} />
-        )}
-      </Link>
+
       <Link
         href="/televisao"
         arial-label="televisao"
