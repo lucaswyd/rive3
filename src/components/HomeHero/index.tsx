@@ -26,13 +26,13 @@ const externalImageLoader = ({ src }: { src: string }) =>
   `${process.env.NEXT_PUBLIC_TMBD_IMAGE_URL}${src}`;
 
 const HomeHero = () => {
-  const [data, setData] = useState<any>([]);
-  const [images, setImages] = useState<any>([]);
-  const [loading, setLoading] = useState<any>(true);
-  const [index, setIndex] = useState(0);
-  const [bookmarked, setBookmarked] = useState<any>(false);
+  const [data, setData] = useState<any[]>([]);
+  const [images, setImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [index, setIndex] = useState<number>(0);
+  const [bookmarked, setBookmarked] = useState<boolean>(false);
   const [user, setUser] = useState<any>();
-  const [bookmarkList, setBookmarkList] = useState<any>();
+  const [bookmarkList, setBookmarkList] = useState<any[]>();
   console.log({ index });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const HomeHero = () => {
       try {
         const response = await axiosFetch({ requestID: "trending" });
         setData(response.results);
-        let arr: any = [];
+        let arr: string[] = [];
         response.results.map((ele: any) => {
           arr.push(process.env.NEXT_PUBLIC_TMBD_IMAGE_URL + ele.backdrop_path);
         });
@@ -100,7 +100,7 @@ const HomeHero = () => {
     navigatorShare({ text: data[index].title, url: url });
   };
 
-  const truncateText = (text, maxLength) => {
+  const truncateText = (text: string, maxLength: number): string => {
     if (!text) return "";
     if (text.length <= maxLength) return text;
     return text.substr(0, maxLength) + "...";
@@ -152,7 +152,7 @@ const HomeHero = () => {
           <div className={styles.HomeHeroMetaRow2}>
             <p className={styles.type}>
               {data[index] ? (
-                data[index].media_type == "movie" ? (
+                data[index].media_type === "movie" ? (
                   "FILME"
                 ) : (
                   "SERIE"
@@ -165,7 +165,11 @@ const HomeHero = () => {
               <>
                 <Link
                   className={styles.links}
-                  href={`${data[index]?.media_type === "movie" ? `/watch?type=${data[index]?.media_type}&id=${data[index]?.id}` : `/watch?type=${data[index]?.media_type}&id=${data[index]?.id}&season=1&episode=1`}`}
+                  href={`${
+                    data[index]?.media_type === "movie"
+                      ? `/watch?type=${data[index]?.media_type}&id=${data[index]?.id}`
+                      : `/watch?type=${data[index]?.media_type}&id=${data[index]?.id}&season=1&episode=1`
+                  }`}
                   data-tooltip-id="tooltip"
                   data-tooltip-content="Assistir WZFilme"
                 >
