@@ -1,40 +1,29 @@
 import React, { useState, useEffect } from "react";
 import styles from "./style.module.scss";
 import axiosFetch from "@/Utils/fetch";
-import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 import MovieCardSmall from "../MovieCardSmall";
-import { getContinueWatching } from "@/Utils/continueWatching";
 import { useInView } from "react-intersection-observer";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const externalImageLoader = ({ src }: { src: string }) =>
-  `${process.env.NEXT_PUBLIC_TMBD_IMAGE_URL}${src}`;
-
-function shuffle(array: any) {
-  let currentIndex = array.length,
-    randomIndex;
-  while (currentIndex != 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-  return array;
-}
+import {
+  getContinueWatching,
+  setContinueWatching,
+  removeContinueWatching,
+  checkContinueWatching,
+} from "@/Utils/continueWatching"; // Import the continue watching functions
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 const HomeListAll = () => {
   const [latestMovie, setLatestMovie] = useState([]);
   const [latestTv, setLatestTv] = useState([]);
   const [popularMovie, setPopularMovie] = useState([]);
   const [popularTv, setPopularTv] = useState([]);
+  const [continueWatching, setContinueWatchingList] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [continueWatching, setContinueWatching] = useState<any>();
-  const [recommendations, setRecommendations] = useState([]);
+
   const [latestMovieRef, latestMovieInView] = useInView({
     triggerOnce: true,
   });
@@ -52,102 +41,6 @@ const HomeListAll = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // const lM = await axiosFetch({ requestID: "trendingMovie" });
-        // const lT = await axiosFetch({ requestID: "trendingTvDay" });
-        // const pM = await axiosFetch({
-        //   requestID: "popularMovie",
-        //   sortBy: "vote_average.asc",
-        // });
-        // const pT = await axiosFetch({
-        //   requestID: "trendingTv",
-        //   sortBy: "vote_average.asc",
-        // });
-        // setLatestMovie(lM.results);
-        // setLatestTv(lT.results);
-        // setPopularMovie(pM.results);
-        // setPopularTv(pT.results);
-        // console.log({ pM });
-
-        const continueWatching = await getContinueWatching();
-        const asyncFunc = async () => {
-          let arr: any[] = [];
-          let i = 0;
-          if (
-            continueWatching &&
-            (continueWatching?.tv?.length > 0 ||
-              continueWatching?.movie?.length > 0)
-          ) {
-            for (const ele of continueWatching?.tv) {
-              if (i < 5) {
-                const res = await axiosFetch({
-                  requestID: "tvRelated",
-                  id: ele,
-                });
-                arr.push(res?.results);
-                i++;
-              }
-            }
-            for (const ele of continueWatching?.movie) {
-              if (i < 10) {
-                const res = await axiosFetch({
-                  requestID: "movieRelated",
-                  id: ele,
-                });
-                arr.push(res?.results);
-                i++;
-              }
-            }
-          }
-          return arr;
-        };
-        asyncFunc().then((arr) => {
-          const shuffledArray = shuffle(arr.flat(Infinity));
-          const uniqueArray: any = [];
-          const usedIds = new Set();
-
-          shuffledArray.forEach((item: any) => {
-            if (!usedIds.has(item.id)) {
-              uniqueArray.push(item);
-              usedIds.add(item.id);
-            }
-          });
-          // console.log({ uniqueArray });
-          const shuffledUniqueArray = shuffle(uniqueArray);
-          // console.log({ shuffledArray });
-          setRecommendations(shuffledUniqueArray);
-        });
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
-    //fetchData();
-    // toast.info("Novas funções em modo beta disponíveis nas definições!", {
-    // position: "top-right",
-    //  autoClose: 5000,
-    //    hideProgressBar: false,
-    //    closeOnClick: true,
-    //    pauseOnHover: true,
-    //    draggable: true,
-    //    progress: undefined,
-    //   });
-    //   toast.info("IPTV será adicionado em breve!", {
-    //   position: "top-right",
-    //    autoClose: 5000,
-    //  hideProgressBar: false,
-    //  closeOnClick: true,
-    //    pauseOnHover: true,
-    //   draggable: true,
-    //   progress: undefined,
-    //   });
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
         const lM = await axiosFetch({ requestID: "trendingMovie" });
         setLatestMovie(lM.results);
         setLoading(false);
@@ -158,6 +51,7 @@ const HomeListAll = () => {
     };
     if (latestMovieInView) fetchData();
   }, [latestMovieInView]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -169,6 +63,7 @@ const HomeListAll = () => {
     };
     if (latestTvInView) fetchData();
   }, [latestTvInView]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -183,6 +78,7 @@ const HomeListAll = () => {
     };
     if (popularMovieInView) fetchData();
   }, [popularMovieInView]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -198,100 +94,192 @@ const HomeListAll = () => {
     if (popularTvInView) fetchData();
   }, [popularTvInView]);
 
-  // useEffect(() => {
-  //   const asyncFunc = async () => {
-  //     let arr: any[] = [];
-  //     let i = 0;
-  //     if (
-  //       continueWatching &&
-  //       (continueWatching?.tv?.length > 0 ||
-  //         continueWatching?.movie?.length > 0)
-  //     ) {
-  //       if (i < 5) {
-  //         for (const ele of continueWatching?.tv) {
-  //           const res = await axiosFetch({ requestID: "tvRelated", id: ele });
-  //           arr.push(res?.results);
-  //           i++;
-  //         }
-  //       }
-  //       if (i < 10) {
-  //         for (const ele of continueWatching?.movie) {
-  //           const res = await axiosFetch({
-  //             requestID: "movieRelated",
-  //             id: ele,
-  //           });
-  //           arr.push(res?.results);
-  //           i++;
-  //         }
-  //       }
-  //     }
-  //     return arr;
-  //   };
-  //   asyncFunc().then((arr) => {
-  //     const shuffledArray = shuffle(arr.flat(Infinity));
-  //     setRecommendations(shuffledArray);
-  //   });
-  // }, [continueWatching]);
+  useEffect(() => {
+    const fetchContinueWatchingData = async () => {
+      const continueWatchingData = getContinueWatching();
+      const continueWatchingMovies = await Promise.all(
+        continueWatchingData.movie.map(async (id) => {
+          const response = await axiosFetch({ requestID: "movieData", id });
+          return response;
+        }),
+      );
+      const continueWatchingTv = await Promise.all(
+        continueWatchingData.tv.map(async (id) => {
+          const response = await axiosFetch({ requestID: "tvData", id });
+          return response;
+        }),
+      );
+      setContinueWatchingList([
+        ...continueWatchingMovies,
+        ...continueWatchingTv,
+      ]);
+    };
+    fetchContinueWatchingData();
+  }, []);
 
   return (
     <div className={styles.HomeListAll}>
       <ToastContainer />
-      {recommendations.length > 0 ? (
-        <>
-          <h1>Baseado em tuas escolhas</h1>
-          <div
-            className={styles.HomeListSection}
+
+      <h1 className={styles.sectionTitle}>
+        Continue Assistindo
+        <div className={styles.navigation}>
+          <MdChevronLeft
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[0]
+                .scrollBy(-700, 0);
+            }}
             data-tooltip-id="tooltip"
-            data-tooltip-content="recomendação baseada no que você assistiu!"
-          >
-            {recommendations[0] !== undefined &&
-              recommendations?.map((ele: any, i) => {
-                return i < 20 ? (
-                  <MovieCardSmall data={ele} media_type={ele?.media_type} />
-                ) : null;
-              })}
-            {recommendations[0] === undefined &&
-              dummyList.map((ele, i) => (
-                <Skeleton className={styles.loading} key={i} />
-              ))}
-          </div>
-        </>
-      ) : null}
-      <h1 ref={latestMovieRef}>Últimos filmes</h1>
+            data-tooltip-content="Swipe Left"
+          />
+          <MdChevronRight
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[0]
+                .scrollBy(700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Right"
+          />
+        </div>
+      </h1>
       <div className={styles.HomeListSection}>
-        {latestMovie?.map((ele) => {
-          return <MovieCardSmall data={ele} media_type="movie" />;
-        })}
+        {continueWatching?.map((ele, index) => (
+          <MovieCardSmall key={index} data={ele} media_type={ele.media_type} />
+        ))}
+        {continueWatching?.length === 0 &&
+          dummyList.map((ele, i) => (
+            <Skeleton className={styles.loading} key={i} />
+          ))}
+      </div>
+
+      <h1 ref={latestMovieRef} className={styles.sectionTitle}>
+        Últimos Filmes
+        <div className={styles.navigation}>
+          <MdChevronLeft
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[1]
+                .scrollBy(-700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Left"
+          />
+          <MdChevronRight
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[1]
+                .scrollBy(700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Right"
+          />
+        </div>
+      </h1>
+      <div className={styles.HomeListSection}>
+        {latestMovie?.map((ele) => (
+          <MovieCardSmall key={ele.id} data={ele} media_type="movie" />
+        ))}
         {latestMovie?.length === 0 &&
           dummyList.map((ele, i) => (
             <Skeleton className={styles.loading} key={i} />
           ))}
       </div>
-      <h1 ref={latestTvRef}>Últimas Series</h1>
+
+      <h1 ref={latestTvRef} className={styles.sectionTitle}>
+        Últimas Séries
+        <div className={styles.navigation}>
+          <MdChevronLeft
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[2]
+                .scrollBy(-700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Left"
+          />
+          <MdChevronRight
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[2]
+                .scrollBy(700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Right"
+          />
+        </div>
+      </h1>
       <div className={styles.HomeListSection}>
-        {latestTv?.map((ele) => {
-          return <MovieCardSmall data={ele} media_type="tv" />;
-        })}
+        {latestTv?.map((ele) => (
+          <MovieCardSmall key={ele.id} data={ele} media_type="tv" />
+        ))}
         {latestTv?.length === 0 &&
           dummyList.map((ele, i) => (
             <Skeleton className={styles.loading} key={i} />
           ))}
       </div>
-      <h1 ref={popularMovieRef}>Filmes Populares</h1>
+
+      <h1 ref={popularMovieRef} className={styles.sectionTitle}>
+        Filmes Populares
+        <div className={styles.navigation}>
+          <MdChevronLeft
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[3]
+                .scrollBy(-700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Left"
+          />
+          <MdChevronRight
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[3]
+                .scrollBy(700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Right"
+          />
+        </div>
+      </h1>
       <div className={styles.HomeListSection}>
-        {popularMovie?.map((ele) => {
-          return <MovieCardSmall data={ele} media_type="movie" />;
-        })}
+        {popularMovie?.map((ele) => (
+          <MovieCardSmall key={ele.id} data={ele} media_type="movie" />
+        ))}
         {popularMovie?.length === 0 &&
           dummyList.map((ele, i) => (
             <Skeleton className={styles.loading} key={i} />
           ))}
       </div>
-      <h1 ref={popularTvRef}>Series Populares</h1>
+
+      <h1 ref={popularTvRef} className={styles.sectionTitle}>
+        Séries Populares
+        <div className={styles.navigation}>
+          <MdChevronLeft
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[4]
+                .scrollBy(-700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Left"
+          />
+          <MdChevronRight
+            onClick={() => {
+              document
+                .querySelectorAll(`.${styles.HomeListSection}`)[4]
+                .scrollBy(700, 0);
+            }}
+            data-tooltip-id="tooltip"
+            data-tooltip-content="Swipe Right"
+          />
+        </div>
+      </h1>
       <div className={styles.HomeListSection}>
-        {popularTv?.map((ele) => {
-          return <MovieCardSmall data={ele} media_type="tv" />;
-        })}
+        {popularTv?.map((ele) => (
+          <MovieCardSmall key={ele.id} data={ele} media_type="tv" />
+        ))}
         {popularTv?.length === 0 &&
           dummyList.map((ele, i) => (
             <Skeleton className={styles.loading} key={i} />

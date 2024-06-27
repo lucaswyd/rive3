@@ -10,7 +10,7 @@ import {
   BsFillBookmarkCheckFill,
   BsShare,
 } from "react-icons/bs";
-import { FaInfo, FaPlay } from "react-icons/fa";
+import { FaInfo, FaPlay, FaStar } from "react-icons/fa";
 import {
   setBookmarks,
   checkBookmarks,
@@ -34,6 +34,7 @@ const HomeHero = () => {
   const [user, setUser] = useState<any>();
   const [bookmarkList, setBookmarkList] = useState<any>();
   console.log({ index });
+
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
@@ -56,8 +57,6 @@ const HomeHero = () => {
       if (user) {
         const userID = user.uid;
         setUser(userID);
-        // setBookmarkList(await getBookmarks({ userId: userID }));
-        // setBookmarkList(getBookmarks(userID));
         setLoading(false);
       } else {
         setLoading(true);
@@ -81,8 +80,6 @@ const HomeHero = () => {
   }, [index, data, user]);
 
   const handleBookmarkAdd = () => {
-    console.log({ user });
-
     setBookmarks({
       userId: user,
       type: data[index]?.media_type,
@@ -102,6 +99,18 @@ const HomeHero = () => {
     const url = `/detail?type=${data[index].media_type}&id=${data[index].id}`;
     navigatorShare({ text: data[index].title, url: url });
   };
+
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    if (text.length <= maxLength) return text;
+    return text.substr(0, maxLength) + "...";
+  };
+
+  const releaseDate = new Date(
+    data[index]?.release_date || data[index]?.first_air_date,
+  );
+  const formattedDate = `${releaseDate.getDate()} ${releaseDate.toLocaleString("default", { month: "long" })} ${releaseDate.getFullYear()}`;
+
   return (
     <div className={styles.HomeHero}>
       <div className={styles.HomeCarousel}>
@@ -116,10 +125,7 @@ const HomeHero = () => {
         ) : (
           <Skeleton className={styles.CarouselLoading} />
         )}
-        <div className={styles.curvy}></div>
-        <div className={styles.curvy2}></div>
-        <div className={styles.curvy3}></div>
-        <div className={styles.curvy4}></div>
+
         <div className={styles.HomeHeroMeta}>
           <h1
             data-tooltip-id="tooltip"
@@ -129,6 +135,20 @@ const HomeHero = () => {
           >
             {data[index]?.title || data[index]?.name || <Skeleton />}
           </h1>
+          <p className={styles.description}>
+            {data[index] ? (
+              truncateText(data[index]?.overview, 130)
+            ) : (
+              <Skeleton count={3} />
+            )}
+          </p>
+          <p className={styles.releaseDate}>
+            {data[index] ? formattedDate : <Skeleton width={100} />}
+          </p>
+          <p className={styles.rating}>
+            <FaStar />{" "}
+            {data[index]?.vote_average?.toFixed(1) || <Skeleton width={30} />}
+          </p>
           <div className={styles.HomeHeroMetaRow2}>
             <p className={styles.type}>
               {data[index] ? (
@@ -173,7 +193,7 @@ const HomeHero = () => {
                     className={styles.HomeHeroIcons}
                     onClick={handleBookmarkAdd}
                     data-tooltip-id="tooltip"
-                    data-tooltip-content="adicionar a Watchlist"
+                    data-tooltip-content="Adicionar a Watchlist"
                   />
                 )}
                 <BsShare

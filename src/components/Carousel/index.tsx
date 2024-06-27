@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSwipeable } from "react-swipeable";
 import styles from "./style.module.scss";
@@ -10,13 +10,17 @@ const Carousel = ({
   mobileHeight,
   desktopHeight,
   objectFit,
-  trailerKey, // Chave do vídeo do trailer
-}: any) => {
+  trailerKey,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("");
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [images, setImages] = useState(imageArr);
   const [imagePlaceholder, setImagePlaceholder] = useState(false);
+
+  const images = useMemo(
+    () => (imageArr.length === 0 ? ["/images/logolmg.svg"] : imageArr),
+    [imageArr],
+  );
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -31,72 +35,49 @@ const Carousel = ({
       "--carousel-object-fit",
       objectFit,
     );
-    const interval = setInterval(() => {
-      handleNext();
-    }, 3000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
 
-  useEffect(() => {
-    if (imageArr.length === 0) {
-      setImages(["/images/logolmg.svg"]);
-    } else {
-      setImages(imageArr);
-    }
-  }, [imageArr]);
+    const interval = setInterval(handleNext, 6000);
+    return () => clearInterval(interval);
+  }, [desktopHeight, mobileHeight, objectFit]);
 
   const slideVariants = {
-    hiddenRight: {
-      x: "10%",
-      opacity: 0,
-    },
-    hiddenLeft: {
-      x: "-10%",
-      opacity: 0,
-    },
-    visible: {
-      x: "0",
-      opacity: imageLoaded ? 1 : 0,
-      transition: {
-        duration: 1,
-      },
-    },
-    exit: {
-      opacity: 0,
-      x: "-10%",
-      transition: {
-        duration: 1.5,
-      },
-    },
+    hiddenRight: { x: "100%", opacity: 0 },
+    hiddenLeft: { x: "-100%", opacity: 0 },
+    visible: { x: "0", opacity: 1, transition: { duration: 1 } },
+    exit: { opacity: 0, transition: { duration: 1.5 } },
   };
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setDirection("right");
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
-    setIndex((prevIndex: number) =>
+    setIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
-  };
+  }, [images.length, setIndex]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     setDirection("left");
     setCurrentIndex((prevIndex) =>
       prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
     );
-    setIndex((prevIndex: number) =>
+    setIndex((prevIndex) =>
       prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
     );
-  };
+  }, [images.length, setIndex]);
 
   const handlers = useSwipeable({
     onSwipedLeft: handleNext,
     onSwipedRight: handlePrevious,
     trackMouse: true,
   });
+
+  const handleImageError = () => setImagePlaceholder(true);
+
+  const handleImageLoad = () => {
+    setTimeout(() => setImageLoaded(true), 100);
+  };
 
   return (
     <div {...handlers} className={styles.carousel}>
@@ -117,14 +98,8 @@ const Carousel = ({
               exit="exit"
               variants={slideVariants}
               className={imageLoaded ? styles.skeleton : ""}
-              onError={() => {
-                setImagePlaceholder(true);
-              }}
-              onLoad={() => {
-                setTimeout(() => {
-                  setImageLoaded(true);
-                }, 100);
-              }}
+              onError={handleImageError}
+              onLoad={handleImageLoad}
             >
               <source
                 src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&mute=1`}
@@ -136,33 +111,40 @@ const Carousel = ({
             <motion.img
               key={currentIndex}
               alt={"carousel"}
-              src={`${
+              src={
                 imagePlaceholder ? "/images/logolmg.svg" : images[currentIndex]
-              }`}
+              }
               initial={direction === "right" ? "hiddenRight" : "hiddenLeft"}
               animate="visible"
               exit="exit"
               variants={slideVariants}
               className={imageLoaded ? styles.skeleton : ""}
-              onError={() => {
-                setImagePlaceholder(true);
-              }}
-              onLoad={() => {
-                setTimeout(() => {
-                  setImageLoaded(true);
-                }, 100);
-              }}
+              onError={handleImageError}
+              onLoad={handleImageLoad}
             />
           )}
         </AnimatePresence>
-
         <div className={styles.slide_direction}>
           <BsCaretLeftFill className={styles.left} onClick={handlePrevious} />
           <BsCaretRightFill className={styles.right} onClick={handleNext} />
         </div>
       </div>
+      <div className={styles.dots}>
+        {images.map((_, index) => (
+          <div
+            key={index}
+            className={`${styles.dot} ${
+              currentIndex === index ? styles.active : ""
+            }`}
+            onClick={() => {
+              setCurrentIndex(index);
+              setIndex(index);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
 
-export default Carousel;
+export default React.memo(Carousel);

@@ -9,7 +9,9 @@
   overflow: hidden;
   border-radius: 0 0 2rem 2rem;
   // background-attachment: fixed;
+  position: relative; /* Para permitir posicionamento absoluto do gradiente */
 }
+
 .carousel_images img {
   width: 100%;
   height: 100%;
@@ -19,21 +21,64 @@
   border-radius: 0 0 2rem 2rem;
   transition: opacity 2s ease;
   border: none;
+  position: relative; /* Para que o gradiente seja sobreposto à imagem */
 }
+
+.carousel_images::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 2rem 2rem;
+  background-image: radial-gradient(
+    circle at 66% 48%,
+    transparent 10%,
+    #0a0a0a 75%
+  );
+  pointer-events: none; /* Para garantir que o gradiente não interfira na interação com a imagem */
+}
+
 .slide_direction {
   display: flex;
   justify-content: space-between;
   display: none;
 }
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 1rem;
+  width: 100%;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--ascent-color);
+}
+
 .left,
 .right {
   font-size: 1.5rem;
   color: var(--ascent-color);
   z-index: 3;
 }
+
 .left {
   left: 0;
 }
+
 .right {
   right: 0;
 }
@@ -41,6 +86,7 @@
 .loading {
   opacity: 0 !important;
 }
+
 .loaded {
   opacity: 1 !important;
 }

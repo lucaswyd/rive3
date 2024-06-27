@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import NProgress from "nprogress";
 import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
+import { QueryClient, QueryClientProvider } from "react-query"; // Import react-query
+import Navbar from "@/components/Navbar"; // Importar o Navbar
 
 const defaultColors = {
   ascent_color: "gold",
@@ -32,6 +34,8 @@ const applyColors = (colors: any) => {
 
 export default function App({ Component, pageProps }: any) {
   const [isLoading, setIsLoading] = useState(false);
+  const [queryClient] = useState(() => new QueryClient()); // Initialize QueryClient
+
   NProgress.configure({ showSpinner: false });
 
   useEffect(() => {
@@ -124,29 +128,34 @@ export default function App({ Component, pageProps }: any) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Rive" />
-        <link rel="icon" href="/images/logolmg.svg.png" />
-        <link rel="apple-touch-icon" href="/images/logolmg.svg.png" />
+        <link rel="icon" href="/images/logolmg.svg" />
+        <link rel="apple-touch-icon" href="/images/logolmg.svg" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#f4f7fe" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="shortcut icon" href="/images/logolmg.svg.png" />
+        <link rel="shortcut icon" href="/images/logolmg.svg" />
       </Head>
-      <Layout>
-        <Toaster
-          toastOptions={{
-            className: "sooner-toast-desktop",
-          }}
-          position="bottom-right"
-        />
-        <Toaster
-          toastOptions={{
-            className: "sooner-toast-mobile",
-          }}
-          position="top-center"
-        />
-        <Tooltip id="tooltip" className="react-tooltip" />
-        <Component {...pageProps} />
-      </Layout>
+      <QueryClientProvider client={queryClient}>
+        {" "}
+        {/* Provide QueryClient */}
+        <Layout>
+          <Navbar /> {/* Adicionar Navbar aqui */}
+          <Toaster
+            toastOptions={{
+              className: "sooner-toast-desktop",
+            }}
+            position="bottom-right"
+          />
+          <Toaster
+            toastOptions={{
+              className: "sooner-toast-mobile",
+            }}
+            position="top-center"
+          />
+          <Tooltip id="tooltip" className="react-tooltip" />
+          <Component {...pageProps} />
+        </Layout>
+      </QueryClientProvider>
     </>
   );
 }

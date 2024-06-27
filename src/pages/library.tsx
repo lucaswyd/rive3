@@ -15,7 +15,7 @@ import { BsFillBookmarkXFill } from "react-icons/bs";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/Utils/firebase";
 import NProgress from "nprogress";
-// import MoviePoster from '@/components/MoviePoster';
+import { useQuery, useQueryClient } from "react-query";
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -25,102 +25,75 @@ const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const Library = () => {
   const [category, setCategory] = useState("watchlist"); // latest, trending, topRated
   const [subCategory, setSubCategory] = useState("movie");
-  const [ids, setIds] = useState([]);
-  const [data, setData] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [trigger, setTrigger] = useState(true);
+  const [ids, setIds] = useState<any[]>([]);
   const [user, setUser] = useState<any>();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userID = user.uid;
         setUser(userID);
-        // setIds(await getBookmarks(userID)?.movie)
-        // setLoading(false);
       } else {
-        // setLoading(true);
+        setUser(null);
       }
     });
   }, []);
 
-  useEffect(() => {
-    if (loading) {
-      NProgress.start();
-    } else NProgress.done(false);
-  }, [loading]);
+  const fetchData = async (ids: any[], subCategory: string) => {
+    let arr: any = [];
+    try {
+      const promises = ids.map((id) =>
+        axiosFetch({
+          requestID: `${subCategory}Data`,
+          id,
+        }),
+      );
+      const results = await Promise.all(promises);
+      arr = results.filter((data) => data !== undefined);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    return arr;
+  };
+
+  const { data, isLoading } = useQuery(
+    ["movieData", ids, subCategory],
+    () => fetchData(ids, subCategory),
+    {
+      enabled: ids.length > 0,
+    },
+  );
 
   useEffect(() => {
-    setLoading(true);
-    setData([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    const fetchData = async () => {
-      let arr: any = [];
-      try {
-        for (const ele of ids) {
-          const data = await axiosFetch({
-            requestID: `${subCategory}Data`,
-            id: ele,
-          });
-          if (data !== undefined) await arr.push(data);
-          console.log({ arr });
-          // setLoading(false);
-        }
-        // if (ids.length === 0 || ids === null || ids === undefined)
-        //   setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-      return arr;
-    };
-    fetchData().then((res) => {
-      console.log({ res });
-      setData(res);
-      setLoading(false);
-    });
-  }, [ids]);
-
-  useEffect(() => {
-    // fetch bookmarks
-    // console.log(getBookmarks());
-    const fetch = async () => {
+    const fetchBookmarks = async () => {
       if (category === "watchlist") {
-        if (user !== null && user !== undefined)
-          getBookmarks(user).then((res: any) => {
-            subCategory === "movie" ? setIds(res?.movie) : setIds(res?.tv);
-          });
-        else {
-          subCategory === "movie"
-            ? setIds(getBookmarks(null)?.movie)
-            : setIds(getBookmarks(null)?.tv);
+        if (user !== null) {
+          const res = await getBookmarks(user);
+          setIds(subCategory === "movie" ? res?.movie || [] : res?.tv || []);
         }
       } else if (category === "continueWatching") {
-        subCategory === "movie"
-          ? setIds(getContinueWatching()?.movie)
-          : setIds(getContinueWatching()?.tv);
+        setIds(
+          subCategory === "movie"
+            ? getContinueWatching()?.movie || []
+            : getContinueWatching()?.tv || [],
+        );
       }
     };
-    if (user !== null) fetch();
-  }, [category, subCategory, trigger, user]);
+    fetchBookmarks();
+  }, [category, subCategory, user]);
 
-  const handleWatchlistremove = async ({ type, id }: any) => {
-    if (user !== null && user !== undefined)
-      removeBookmarks({ userId: user, type: type, id: id })?.then((res): any =>
-        setTimeout(() => {
-          setTrigger(!trigger);
-        }, 500),
-      );
-    else {
-      removeBookmarks({ userId: null, type: type, id: id });
-      setTrigger(!trigger);
+  const handleWatchlistRemove = async ({ type, id }: any) => {
+    if (user !== null) {
+      await removeBookmarks({ userId: user, type, id });
+    } else {
+      removeBookmarks({ userId: null, type, id });
     }
+    queryClient.invalidateQueries("movieData");
   };
-  console.log({ ids });
 
   return (
     <div className={styles.MoviePage}>
-      {/* if login, "hello username" */}
-      {/* else, "Login to sunc to cloud" */}
       <h1>Biblioteca</h1>
       <div className={styles.category}>
         <p
@@ -152,8 +125,8 @@ const Library = () => {
       </div>
 
       <div className={styles.movieList}>
-        {data?.length !== 0 && ids?.length !== 0 && ids !== undefined ? (
-          data?.map((ele: any) => {
+        {!isLoading && data?.length > 0 && ids.length > 0 ? (
+          data.map((ele: any) => {
             if (category === "watchlist") {
               return (
                 <div className={styles.watchlistItems}>
@@ -163,24 +136,20 @@ const Library = () => {
                     data-tooltip-id="tooltip"
                     data-tooltip-content="Remove from Watchlist"
                     onClick={() =>
-                      handleWatchlistremove({ type: subCategory, id: ele?.id })
+                      handleWatchlistRemove({ type: subCategory, id: ele?.id })
                     }
                   />
                 </div>
               );
-            } else
+            } else {
               return <MovieCardSmall data={ele} media_type={subCategory} />;
+            }
           })
-        ) : ids?.length === 0 || ids === undefined ? (
-          <p>A sua lista esta vazia, adicione o seu conteudo favorito !</p>
+        ) : ids.length === 0 ? (
+          <p>A sua lista esta vazia, adicione o seu conteudo favorito!</p>
         ) : (
           dummyList.map((ele) => <Skeleton className={styles.loading} />)
         )}
-        {/* {
-          (data?.length === 0 || ids?.length === 0) && dummyList.map((ele) => (
-            <Skeleton className={styles.loading} />
-          ))
-        } */}
       </div>
     </div>
   );

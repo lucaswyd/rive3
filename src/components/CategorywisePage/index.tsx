@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from "react";
 import axiosFetch from "@/Utils/fetch";
 import styles from "./style.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
@@ -6,17 +12,19 @@ import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import InfiniteScroll from "@/pages/InfiniteScroll";
+import { motion } from "framer-motion";
 import debounce from "lodash/debounce";
 
-function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+const capitalizeFirstLetter = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
-const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const dummyList = Array.from({ length: 10 }, (_, i) => i + 1);
 
 const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
-  const [trigger, setTrigger] = useState(false);
-  const CapitalCategoryType = capitalizeFirstLetter(categoryType);
+  const CapitalCategoryType = useMemo(
+    () => capitalizeFirstLetter(categoryType),
+    [categoryType],
+  );
   const [category, setCategory] = useState("trending");
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,27 +55,22 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
 
       try {
         setLoading(true);
-        let newData;
-        if (category === "filter") {
-          newData = await axiosFetch({
-            requestID: `${category}${CapitalCategoryType}`,
-            page: currentPage,
-            genreKeywords: filterGenreList,
-            country: filterCountry,
-            year: filterYear !== null ? filterYear : undefined,
-            sortBy: "popularity.desc",
-          });
-        } else {
-          newData = await axiosFetch({
-            requestID: `${category}${CapitalCategoryType}`,
-            page: currentPage,
-          });
-        }
+        const params = {
+          requestID: `${category}${CapitalCategoryType}`,
+          page: currentPage,
+          sortBy: "popularity.desc",
+          genreKeywords: category === "filter" ? filterGenreList : undefined,
+          country: category === "filter" ? filterCountry : undefined,
+          year:
+            category === "filter" && filterYear !== null
+              ? filterYear
+              : undefined,
+        };
 
+        const newData = await axiosFetch(params);
         setData((prevData) => [...prevData, ...newData.results]);
         setTotalPages(newData.total_pages);
         setLoading(false);
-
         localStorage.setItem(cacheKey, JSON.stringify(newData));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -93,14 +96,22 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const handleFilterClick = () => {
     setCurrentPage(1);
     setCategory("filter");
-    setShowFilter(!showFilter);
+    setShowFilter((prevShowFilter) => !prevShowFilter);
   };
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+      },
+    }),
   };
 
   return (
@@ -108,7 +119,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
       <h1>{CapitalCategoryType}</h1>
       <div className={styles.category}>
         <p
-          className={`${category === "trending" ? styles.active : styles.inactive}`}
+          className={category === "trending" ? styles.active : styles.inactive}
           onClick={() => setCategory("trending")}
         >
           Tendencias
@@ -136,8 +147,6 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           filterCountry={filterCountry}
           filterYear={filterYear !== null ? filterYear.toString() : ""}
           setCategory={setCategory}
-          trigger={trigger}
-          setTrigger={setTrigger}
         />
       )}
       <InfiniteScroll
@@ -147,7 +156,15 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
       >
         <div className={styles.movieList}>
           {data.map((ele, index) => (
-            <MovieCardSmall key={index} data={ele} media_type={categoryType} />
+            <motion.div
+              key={index}
+              custom={index}
+              initial="hidden"
+              animate="visible"
+              variants={itemVariants}
+            >
+              <MovieCardSmall data={ele} media_type={categoryType} />
+            </motion.div>
           ))}
           {loading &&
             dummyList.map((ele, index) => (
@@ -162,4 +179,4 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   );
 };
 
-export default CategorywisePage;
+export default React.memo(CategorywisePage);
