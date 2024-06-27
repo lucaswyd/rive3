@@ -12,7 +12,7 @@ import {
   setContinueWatching,
   removeContinueWatching,
   checkContinueWatching,
-} from "@/Utils/continueWatching";
+} from "@/Utils/continueWatching"; // Import the continue watching functions
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -99,13 +99,19 @@ const HomeListAll = () => {
       const continueWatchingData = getContinueWatching();
       const continueWatchingMovies = await Promise.all(
         continueWatchingData.movie.map(async (id: number) => {
-          const response = await axiosFetch({ requestID: "movieData", id });
+          const response = await axiosFetch({
+            requestID: "movieData",
+            id: id.toString(),
+          });
           return response;
         }),
       );
       const continueWatchingTv = await Promise.all(
         continueWatchingData.tv.map(async (id: number) => {
-          const response = await axiosFetch({ requestID: "tvData", id });
+          const response = await axiosFetch({
+            requestID: "tvData",
+            id: id.toString(),
+          });
           return response;
         }),
       );
