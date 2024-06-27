@@ -12,17 +12,17 @@ import {
   setContinueWatching,
   removeContinueWatching,
   checkContinueWatching,
-} from "@/Utils/continueWatching"; // Import the continue watching functions
+} from "@/Utils/continueWatching";
 
 const dummyList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const HomeListAll = () => {
-  const [latestMovie, setLatestMovie] = useState([]);
-  const [latestTv, setLatestTv] = useState([]);
-  const [popularMovie, setPopularMovie] = useState([]);
-  const [popularTv, setPopularTv] = useState([]);
-  const [continueWatching, setContinueWatchingList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [latestMovie, setLatestMovie] = useState<any[]>([]);
+  const [latestTv, setLatestTv] = useState<any[]>([]);
+  const [popularMovie, setPopularMovie] = useState<any[]>([]);
+  const [popularTv, setPopularTv] = useState<any[]>([]);
+  const [continueWatching, setContinueWatchingList] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [latestMovieRef, latestMovieInView] = useInView({
     triggerOnce: true,
@@ -98,13 +98,13 @@ const HomeListAll = () => {
     const fetchContinueWatchingData = async () => {
       const continueWatchingData = getContinueWatching();
       const continueWatchingMovies = await Promise.all(
-        continueWatchingData.movie.map(async (id) => {
+        continueWatchingData.movie.map(async (id: number) => {
           const response = await axiosFetch({ requestID: "movieData", id });
           return response;
         }),
       );
       const continueWatchingTv = await Promise.all(
-        continueWatchingData.tv.map(async (id) => {
+        continueWatchingData.tv.map(async (id: number) => {
           const response = await axiosFetch({ requestID: "tvData", id });
           return response;
         }),
