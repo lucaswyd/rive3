@@ -22,9 +22,9 @@ const Carousel: React.FC<CarouselProps> = ({
   trailerKey,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState("");
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imagePlaceholder, setImagePlaceholder] = useState(false);
+  const [direction, setDirection] = useState<string>("");
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [imagePlaceholder, setImagePlaceholder] = useState<boolean>(false);
 
   const images = useMemo(
     () => (imageArr.length === 0 ? ["/images/logolmg.svg"] : imageArr),
@@ -61,20 +61,16 @@ const Carousel: React.FC<CarouselProps> = ({
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1,
     );
-    setIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1,
-    );
-  }, [images.length, setIndex]);
+    setIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1);
+  }, [currentIndex, images.length, setIndex]);
 
   const handlePrevious = useCallback(() => {
     setDirection("left");
     setCurrentIndex((prevIndex) =>
       prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
     );
-    setIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? images.length - 1 : prevIndex - 1,
-    );
-  }, [images.length, setIndex]);
+    setIndex(currentIndex - 1 < 0 ? images.length - 1 : currentIndex - 1);
+  }, [currentIndex, images.length, setIndex]);
 
   const handlers = useSwipeable({
     onSwipedLeft: handleNext,
