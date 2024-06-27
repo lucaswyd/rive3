@@ -4,7 +4,16 @@ import { useSwipeable } from "react-swipeable";
 import styles from "./style.module.scss";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 
-const Carousel = ({
+interface CarouselProps {
+  imageArr: string[];
+  setIndex: (index: number) => void;
+  mobileHeight: string;
+  desktopHeight: string;
+  objectFit: string;
+  trailerKey?: string;
+}
+
+const Carousel: React.FC<CarouselProps> = ({
   imageArr,
   setIndex,
   mobileHeight,
