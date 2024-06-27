@@ -10,7 +10,7 @@ import NProgress from "nprogress";
 import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
 import { QueryClient, QueryClientProvider } from "react-query"; // Import react-query
-import Navbar from "@/components/Navbar"; // Importar o Navbar
+import Navbar from "../components/Navbar/index"; // Importar o Navbar
 
 const defaultColors = {
   ascent_color: "gold",
