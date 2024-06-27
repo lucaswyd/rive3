@@ -118,11 +118,14 @@ export default function App({ Component, pageProps }: any) {
   return (
     <>
       <Head>
-        <title>Wareztuga</title>
+        <title>
+          Wareztuga - Assistir Filmes Online HD Legendado, Assistir Series
+          Online HD Legendado, Assistir Futebol Online Grátis
+        </title>
         <meta name="description" content="Filmes Online HD Legendado Gratis" />
         <meta
           name="keywords"
-          content="Filmes, Series, Futebol, SportTV, ELS, Cinema, Warez"
+          content="Você quer assistir filmes e séries online sem anúncios gratis ? Acesse já o Wareztuga! Filmes, Series, Futebol, Televisao, tudo em um só lugar! "
         />
         <link rel="manifest" href="manifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useMemo,
-} from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axiosFetch from "@/Utils/fetch";
 import styles from "./style.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
@@ -42,12 +36,12 @@ const CategorywisePage: React.FC<CategorywisePageProps> = ({
   const [filterYear, setFilterYear] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [trigger, setTrigger] = useState<boolean>(false);
 
   const fetchData = useCallback(
     debounce(async (page: number, reset = false) => {
+      setLoading(true);
       try {
-        setLoading(true);
-
         const params = {
           requestID: `${category}${CapitalCategoryType}`,
           page,
@@ -142,6 +136,8 @@ const CategorywisePage: React.FC<CategorywisePageProps> = ({
           filterCountry={filterCountry}
           filterYear={filterYear !== null ? filterYear.toString() : ""}
           setCategory={setCategory}
+          trigger={trigger}
+          setTrigger={setTrigger}
         />
       )}
       <InfiniteScroll
