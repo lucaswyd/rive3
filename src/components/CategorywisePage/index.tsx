@@ -105,7 +105,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
