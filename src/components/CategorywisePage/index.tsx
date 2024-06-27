@@ -11,7 +11,7 @@ import MovieCardSmall from "@/components/MovieCardSmall";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
-import InfiniteScroll from "@/pages/InfiniteScroll";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { motion } from "framer-motion";
 import debounce from "lodash/debounce";
 
@@ -20,46 +20,37 @@ const capitalizeFirstLetter = (string: string) =>
 
 const dummyList = Array.from({ length: 10 }, (_, i) => i + 1);
 
-const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
+interface CategorywisePageProps {
+  categoryType: string;
+}
+
+const CategorywisePage: React.FC<CategorywisePageProps> = ({
+  categoryType,
+}) => {
   const CapitalCategoryType = useMemo(
     () => capitalizeFirstLetter(categoryType),
     [categoryType],
   );
-  const [category, setCategory] = useState("trending");
+
+  const [category, setCategory] = useState<string>("trending");
   const [data, setData] = useState<any[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [showFilter, setShowFilter] = useState(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [showFilter, setShowFilter] = useState<boolean>(false);
   const [filterGenreList, setFilterGenreList] = useState<string>("");
   const [filterCountry, setFilterCountry] = useState<string>("");
   const [filterYear, setFilterYear] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
-  const fetching = useRef(false);
-
-  const [trigger, setTrigger] = useState(false); // Adicionando estado de trigger
+  const [loading, setLoading] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   const fetchData = useCallback(
-    debounce(async () => {
-      if (fetching.current) return;
-      fetching.current = true;
-
-      const cacheKey = `${category}_${CapitalCategoryType}_${currentPage}_${filterGenreList}_${filterCountry}_${filterYear}`;
-      const cachedData = localStorage.getItem(cacheKey);
-
-      if (cachedData) {
-        const parsedData = JSON.parse(cachedData);
-        setData((prevData) => [...prevData, ...parsedData.results]);
-        setTotalPages(parsedData.total_pages);
-        setLoading(false);
-        fetching.current = false;
-        return;
-      }
-
+    debounce(async (page: number, reset = false) => {
       try {
         setLoading(true);
+
         const params = {
           requestID: `${category}${CapitalCategoryType}`,
-          page: currentPage,
+          page,
           sortBy: "popularity.desc",
           genreKeywords: category === "filter" ? filterGenreList : undefined,
           country: category === "filter" ? filterCountry : undefined,
@@ -70,33 +61,35 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
         };
 
         const newData = await axiosFetch(params);
-        setData((prevData) => [...prevData, ...newData.results]);
+
+        if (reset) {
+          setData(newData.results);
+        } else {
+          setData((prevData) => [...prevData, ...newData.results]);
+        }
+
         setTotalPages(newData.total_pages);
-        setLoading(false);
-        localStorage.setItem(cacheKey, JSON.stringify(newData));
+        setHasMore(page < newData.total_pages);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setLoading(false);
       } finally {
-        fetching.current = false;
+        setLoading(false);
       }
     }, 300),
-    [
-      category,
-      currentPage,
-      filterGenreList,
-      filterCountry,
-      filterYear,
-      CapitalCategoryType,
-    ],
+    [category, filterGenreList, filterCountry, filterYear, CapitalCategoryType],
   );
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchData(1, true);
+  }, [category, filterGenreList, filterCountry, filterYear]);
+
+  useEffect(() => {
+    if (currentPage > 1) {
+      fetchData(currentPage);
+    }
+  }, [currentPage]);
 
   const handleFilterClick = () => {
-    setCurrentPage(1);
     setCategory("filter");
     setShowFilter((prevShowFilter) => !prevShowFilter);
   };
@@ -149,14 +142,14 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           filterCountry={filterCountry}
           filterYear={filterYear !== null ? filterYear.toString() : ""}
           setCategory={setCategory}
-          trigger={trigger}
-          setTrigger={setTrigger}
         />
       )}
       <InfiniteScroll
-        loadMore={() => setCurrentPage((prevPage) => prevPage + 1)}
-        hasMore={currentPage < totalPages}
-        loading={loading}
+        dataLength={data.length}
+        next={() => setCurrentPage((prevPage) => prevPage + 1)}
+        hasMore={hasMore}
+        loader={<Skeleton className={styles.loading} />}
+        endMessage={<p style={{ textAlign: "center" }}>Você chegou ao fim!</p>}
       >
         <div className={styles.movieList}>
           {data.map((ele, index) => (
@@ -177,7 +170,7 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
         </div>
       </InfiniteScroll>
       <button className={styles.scrollToTopButton} onClick={scrollToTop}>
-        Carregando mais ....
+        Voltar ao topo
       </button>
     </div>
   );

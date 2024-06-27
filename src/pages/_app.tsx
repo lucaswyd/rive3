@@ -10,7 +10,8 @@ import NProgress from "nprogress";
 import "@/styles/nprogress.scss";
 import "react-loading-skeleton/dist/skeleton.css";
 import { QueryClient, QueryClientProvider } from "react-query"; // Import react-query
-import Navbar from "../components/Navbar/index"; // Importar o Navbar
+import Navbar from "@/components/Navbar"; // Importar o Navbar
+import DownloadButton from "@/pages/DownloadButton"; // Importar o DownloadButton
 
 const defaultColors = {
   ascent_color: "gold",
@@ -136,10 +137,11 @@ export default function App({ Component, pageProps }: any) {
         <link rel="shortcut icon" href="/images/logolmg.svg" />
       </Head>
       <QueryClientProvider client={queryClient}>
-        {" "}
-        {/* Provide QueryClient */}
+        <Navbar />
+        <div className="top-bar">
+          <DownloadButton /> {/* Adicionar DownloadButton aqui */}
+        </div>
         <Layout>
-          <Navbar /> {/* Adicionar Navbar aqui */}
           <Toaster
             toastOptions={{
               className: "sooner-toast-desktop",

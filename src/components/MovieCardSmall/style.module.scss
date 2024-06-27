@@ -5,20 +5,19 @@
     height: 15rem;
     width: 10rem;
     border-radius: 0.9rem;
-
     border: none;
     outline: none;
     margin-bottom: 0.3rem;
     object-fit: cover;
-
     box-shadow: 5px 3px 8px black;
   }
 
   .img:hover {
-    transform: scale(0.96);
     backdrop-filter: blur(9rem);
     box-shadow: 5px 10px 10px black;
     transition: 0.2s ease-in-out;
+    box-sizing: border-box;
+    border: white;
   }
   p {
     display: none;
