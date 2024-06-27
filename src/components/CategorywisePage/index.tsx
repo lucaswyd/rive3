@@ -36,6 +36,8 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
   const [loading, setLoading] = useState(true);
   const fetching = useRef(false);
 
+  const [trigger, setTrigger] = useState(false); // Adicionando estado de trigger
+
   const fetchData = useCallback(
     debounce(async () => {
       if (fetching.current) return;
@@ -147,6 +149,8 @@ const CategorywisePage = ({ categoryType }: { categoryType: string }) => {
           filterCountry={filterCountry}
           filterYear={filterYear !== null ? filterYear.toString() : ""}
           setCategory={setCategory}
+          trigger={trigger}
+          setTrigger={setTrigger}
         />
       )}
       <InfiniteScroll
