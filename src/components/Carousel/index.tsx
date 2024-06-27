@@ -4,16 +4,7 @@ import { useSwipeable } from "react-swipeable";
 import styles from "./style.module.scss";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 
-interface CarouselProps {
-  imageArr: string[];
-  setIndex: (index: number) => void;
-  mobileHeight: string;
-  desktopHeight: string;
-  objectFit: string;
-  trailerKey?: string; // Opcional
-}
-
-const Carousel: React.FC<CarouselProps> = ({
+const Carousel = ({
   imageArr,
   setIndex,
   mobileHeight,
@@ -45,19 +36,15 @@ const Carousel: React.FC<CarouselProps> = ({
       objectFit,
     );
 
-    const interval = setInterval(handleNext, 600000);
+    const interval = setInterval(handleNext, 6000);
     return () => clearInterval(interval);
   }, [desktopHeight, mobileHeight, objectFit]);
 
   const slideVariants = {
-    hiddenRight: { x: "10%", opacity: 0 },
-    hiddenLeft: { x: "-10%", opacity: 0 },
-    visible: {
-      x: "0",
-      opacity: imageLoaded ? 1 : 0,
-      transition: { duration: 1 },
-    },
-    exit: { opacity: 0, x: "-10%", transition: { duration: 1.5 } },
+    hiddenRight: { x: "100%", opacity: 0 },
+    hiddenLeft: { x: "-100%", opacity: 0 },
+    visible: { x: "0", opacity: 1, transition: { duration: 1 } },
+    exit: { opacity: 0, transition: { duration: 1.5 } },
   };
 
   const handleNext = useCallback(() => {
@@ -95,7 +82,9 @@ const Carousel: React.FC<CarouselProps> = ({
   return (
     <div {...handlers} className={styles.carousel}>
       <div
-        className={`${styles.carousel_images} ${!imageLoaded ? styles.skeleton : ""}`}
+        className={`${styles.carousel_images} ${
+          !imageLoaded ? styles.skeleton : ""
+        }`}
       >
         <AnimatePresence initial={false} custom={direction}>
           {trailerKey ? (
@@ -139,6 +128,20 @@ const Carousel: React.FC<CarouselProps> = ({
           <BsCaretLeftFill className={styles.left} onClick={handlePrevious} />
           <BsCaretRightFill className={styles.right} onClick={handleNext} />
         </div>
+      </div>
+      <div className={styles.dots}>
+        {images.map((_, index) => (
+          <div
+            key={index}
+            className={`${styles.dot} ${
+              currentIndex === index ? styles.active : ""
+            }`}
+            onClick={() => {
+              setCurrentIndex(index);
+              setIndex(index);
+            }}
+          />
+        ))}
       </div>
     </div>
   );
