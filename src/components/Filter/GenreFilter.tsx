@@ -23,9 +23,22 @@ const genres = [
   { id: "37", name: "Faroeste" },
 ];
 
-const GenreFilter = ({ filterGenreList, setFilterGenreList, fetchData }) => {
-  const handleGenreClick = (genreId) => {
-    setFilterGenreList(genreId);
+interface GenreFilterProps {
+  filterGenreList: string[];
+  setFilterGenreList: (genreList: string[]) => void;
+  fetchData: () => void;
+}
+
+const GenreFilter: React.FC<GenreFilterProps> = ({
+  filterGenreList,
+  setFilterGenreList,
+  fetchData,
+}) => {
+  const handleGenreClick = (genreId: string) => {
+    const updatedGenreList = filterGenreList.includes(genreId)
+      ? filterGenreList.filter((id) => id !== genreId)
+      : [...filterGenreList, genreId];
+    setFilterGenreList(updatedGenreList);
     fetchData(); // Chamar fetchData para atualizar os dados
   };
 
