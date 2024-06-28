@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axiosFetch from "@/Utils/fetch";
 import styles from "./style.module.scss";
 import MovieCardSmall from "@/components/MovieCardSmall";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Filter from "../Filter";
 import Skeleton from "react-loading-skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -30,7 +29,6 @@ const CategorywisePage: React.FC<CategorywisePageProps> = ({
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [showFilter, setShowFilter] = useState<boolean>(false);
   const [filterGenreList, setFilterGenreList] = useState<string>("");
   const [filterCountry, setFilterCountry] = useState<string>("");
   const [filterYear, setFilterYear] = useState<number | null>(null);
@@ -83,11 +81,6 @@ const CategorywisePage: React.FC<CategorywisePageProps> = ({
     }
   }, [currentPage]);
 
-  const handleFilterClick = () => {
-    setCategory("filter");
-    setShowFilter((prevShowFilter) => !prevShowFilter);
-  };
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -106,40 +99,19 @@ const CategorywisePage: React.FC<CategorywisePageProps> = ({
   return (
     <div className={styles.MoviePage}>
       <h1>{CapitalCategoryType}</h1>
-      <div className={styles.category}>
-        <p
-          className={category === "trending" ? styles.active : styles.inactive}
-          onClick={() => setCategory("trending")}
-        >
-          Tendencias
-        </p>
-        <p
-          className={`${category === "filter" ? styles.active : styles.inactive} ${styles.filter}`}
-          onClick={handleFilterClick}
-        >
-          Filtro{" "}
-          {category === "filter" ? (
-            <MdFilterAlt className={styles.active} />
-          ) : (
-            <MdFilterAltOff />
-          )}
-        </p>
-      </div>
-      {showFilter && (
-        <Filter
-          categoryType={categoryType}
-          setShowFilter={setShowFilter}
-          setFilterYear={setFilterYear}
-          setFilterCountry={setFilterCountry}
-          setFilterGenreList={setFilterGenreList}
-          filterGenreList={filterGenreList}
-          filterCountry={filterCountry}
-          filterYear={filterYear !== null ? filterYear.toString() : ""}
-          setCategory={setCategory}
-          trigger={trigger}
-          setTrigger={setTrigger}
-        />
-      )}
+      <Filter
+        categoryType={categoryType}
+        setShowFilter={() => {}}
+        setFilterYear={setFilterYear}
+        setFilterCountry={setFilterCountry}
+        setFilterGenreList={setFilterGenreList}
+        filterGenreList={filterGenreList}
+        filterCountry={filterCountry}
+        filterYear={filterYear !== null ? filterYear.toString() : ""}
+        setCategory={setCategory}
+        trigger={trigger}
+        setTrigger={setTrigger}
+      />
       <InfiniteScroll
         dataLength={data.length}
         next={() => setCurrentPage((prevPage) => prevPage + 1)}

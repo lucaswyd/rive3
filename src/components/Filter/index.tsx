@@ -118,88 +118,32 @@ const Filter = ({
 
   return (
     <div className={styles.Filter}>
-      <h1>Filter</h1>
-      <h1
-        className={styles.close}
-        onClick={() => {
-          setShowFilter(false);
-        }}
-      >
-        x
-      </h1>
-
-      <h2>Genres</h2>
-      {genreData.map((ele) => {
-        const selectedGenres =
-          typeof filterGenreList === "string" ? filterGenreList.split(",") : [];
-        const isChecked = selectedGenres.includes(ele.id.toString());
-        return (
-          <div
-            key={ele.id}
-            className={`${styles.checkboxDiv} ${
-              isChecked ? styles.active : styles.inactive
-            }`}
-          >
-            <label className={"container"} htmlFor={ele.id}>
-              {ele.name}
-              <input
-                type="checkbox"
-                id={ele.id}
-                name={ele.name}
-                value={ele.id}
-                onChange={() => handleGenreSelect(ele.id)}
-                checked={isChecked}
-              />
-              <span className={"checkmark"}></span>
-            </label>
-          </div>
-        );
-      })}
-
-      <h2>Country</h2>
-      {countryData.map((ele) => {
-        return (
-          <div
-            key={ele.abbr}
-            className={`${styles.checkboxDiv} ${
-              filterCountry === ele.abbr ? styles.active : styles.inactive
-            }`}
-          >
-            <label className={"container"} htmlFor={ele.name}>
-              {ele.name}
-              <input
-                type="checkbox"
-                id={ele.name}
-                name={ele.name}
-                value={ele.name}
-                onChange={() => handleCountrySelect(ele.abbr)}
-                checked={filterCountry === ele.abbr}
-              />
-              <span className={"checkmark"}></span>
-            </label>
-          </div>
-        );
-      })}
-
-      <h2>Year</h2>
-      <input
-        type="text"
-        id="input"
-        name="input"
-        value={filterYear || ""}
-        onChange={(e) => {
-          setFilterYear(e.target.value);
-        }}
-        placeholder="Enter Year"
-      />
-
-      <div className={styles.filterButtons}>
-        <div className={styles.filterSubmit} onClick={handleFilterSubmit}>
-          Submit
-        </div>
-        <div className={styles.filterSubmit} onClick={handleFilterReset}>
-          Reset
-        </div>
+      <div className={styles.filterRow}>
+        <select onChange={(e) => handleGenreSelect(e.target.value)}>
+          <option value="">Gênero</option>
+          {genreData.map((genre) => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+        <select onChange={(e) => setFilterYear(e.target.value)}>
+          <option value="">Ano</option>
+          {Array.from(new Array(50), (v, i) => (
+            <option key={i} value={2024 - i}>
+              {2024 - i}
+            </option>
+          ))}
+        </select>
+        <select onChange={(e) => handleCountrySelect(e.target.value)}>
+          <option value="">Recomendado</option>
+          {countryData.map((country) => (
+            <option key={country.abbr} value={country.abbr}>
+              {country.name}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleFilterSubmit}>Procurar</button>
       </div>
     </div>
   );

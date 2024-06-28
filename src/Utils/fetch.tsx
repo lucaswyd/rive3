@@ -75,9 +75,9 @@ export default async function axiosFetch({
     personTv: `${baseURL}/person/${id}/tv_credits?language=${language}&page=${page}`,
 
     // filters
-    genresMovie: `${baseURL}/genre/movie/list?language=${language}`,
-    genresTv: `${baseURL}/genre/tv/list?language=${language}`,
-    countries: `${baseURL}/configuration/countries?language=${language}`,
+    genresMovie: `${baseURL}/genre/movie/list?language=pt-PT`,
+    genresTv: `${baseURL}/genre/tv/list?language=pt-PT`,
+    countries: `${baseURL}/configuration/countries?language=pt-PT`,
     languages: `${baseURL}/configuration/languages`,
   };
   const final_request = requests[request];
