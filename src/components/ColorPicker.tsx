@@ -1,13 +1,24 @@
 import React, { ChangeEvent } from "react";
 import styles from "@/styles/Settings.module.scss";
 
+interface Colors {
+  ascent_color: string;
+  bg_color: string;
+  bg_gradient: string;
+  primary_1: string;
+  primary_2: string;
+  primary_3: string;
+  primary_4: string;
+  watchPageBtn: string;
+}
+
 interface ColorPickerProps {
   label: string;
   color: string;
-  colorName: string;
+  colorName: keyof Colors;
   handleColorChange: (
     e: ChangeEvent<HTMLInputElement>,
-    colorName: string,
+    colorName: keyof Colors,
   ) => void;
 }
 
