@@ -1,26 +1,41 @@
-.carousel_images,
-.carousel_images .img,
-.carousel_images .img span {
+.carousel {
+  width: 100vw; /* Ocupa toda a largura da viewport */
+  overflow: hidden;
+  position: relative; /* Para permitir o posicionamento absoluto das setas de navegação e dos pontos */
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 9%; /* Ajuste conforme necessário */
+    background: linear-gradient(to bottom, transparent, var(--bg-color) 100%);
+
+    pointer-events: none; /* Para garantir que o gradiente não interfira na interação com a imagem */
+    z-index: 2;
+  }
+}
+
+.carousel_images {
   height: var(--carousel-desktop-height);
   width: 100%;
   max-height: 100vh;
   max-width: 100vw;
-  margin: auto;
   overflow: hidden;
-  border-radius: 0 0 2rem 2rem;
-  // background-attachment: fixed;
+
   position: relative; /* Para permitir posicionamento absoluto do gradiente */
 }
 
-.carousel_images img {
+.carousel_images img,
+.carousel_images video {
   width: 100%;
   height: 100%;
   object-position: top;
-  // object-fit: cover;
-  object-fit: var((--carousel-object-fit));
-  border-radius: 0 0 2rem 2rem;
+  object-fit: var(--carousel-object-fit);
+
   transition: opacity 2s ease;
-  border: none;
+
   position: relative; /* Para que o gradiente seja sobreposto à imagem */
 }
 
@@ -31,7 +46,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 0 0 2rem 2rem;
+
   background-image: radial-gradient(
     circle at 66% 48%,
     transparent 10%,
@@ -43,18 +58,15 @@
 .slide_direction {
   display: flex;
   justify-content: space-between;
-  display: none;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+  z-index: 3; /* Aumentar para que as setas estejam acima do gradiente */
 }
 
 .dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 1rem;
-  width: 100%;
-  gap: 0.5rem;
-  z-index: 1;
+  display: none;
 }
 
 .dot {
@@ -64,6 +76,7 @@
   background: gray;
   cursor: pointer;
 }
+
 .dot.active {
   background: var(--ascent-color);
 }
@@ -72,7 +85,8 @@
 .right {
   font-size: 1.5rem;
   color: var(--ascent-color);
-  z-index: 3;
+  z-index: 4; /* Aumentar para que as setas estejam acima do gradiente */
+  cursor: pointer;
 }
 
 .left {
@@ -92,9 +106,7 @@
 }
 
 @media (max-width: 769px) {
-  .carousel_images,
-  .carousel_images .img,
-  .carousel_images .img span {
+  .carousel_images {
     height: var(--carousel-mobile-height);
   }
 }

@@ -2,12 +2,11 @@
   min-height: 15rem;
   width: 10rem;
   .img {
-    height: 15rem;
+    height: 14.5rem;
     width: 10rem;
-    border-radius: 0.9rem;
-    border: none;
+    border-radius: 0.4rem;
+
     outline: none;
-    margin-bottom: 0.3rem;
     object-fit: cover;
     box-shadow: 5px 3px 8px black;
   }
@@ -15,18 +14,14 @@
   .img:hover {
     backdrop-filter: blur(9rem);
     box-shadow: 5px 10px 10px black;
-    transition: 0.2s ease-in-out;
+
     box-sizing: border-box;
-    border: white;
+    border: solid white;
+    transition-duration: 0.15s;
+    transition: cubic-bezier(0.4, 0, 0.2, 1);
   }
   p {
-    display: none;
-    color: var(--primary-2);
-    margin-left: 0.2rem;
-    height: 4ch;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    // font-size: 0.9rem;
+    display: none !important;
   }
 }
 
@@ -35,8 +30,8 @@
     min-height: 10rem;
     width: 7rem;
     .img {
-      height: 10rem;
-      width: 7rem;
+      height: 9.5rem;
+      width: 6.5rem;
     }
     p {
       display: none;

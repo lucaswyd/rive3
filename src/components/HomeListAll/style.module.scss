@@ -1,22 +1,52 @@
 .HomeListAll {
-  padding: 20px;
+  padding: 40px;
+  box-sizing: border-box;
 
   .sectionTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 1.6rem;
     margin: 20px 0;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+
+    .navigation {
+      display: flex;
+      gap: 20px;
+
+      svg {
+        cursor: pointer;
+        font-size: 24px;
+        color: var(--primary-3);
+
+        &:hover {
+          color: #ccc;
+        }
+      }
+    }
   }
   .HomeListSection {
+    overflow: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
     display: flex;
-    margin: 1rem 0.5rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0.5rem;
+    margin-bottom: 3rem;
     //justify-content: center;
     //align-items: center;
     //flex-wrap: wrap;
     width: 100%;
 
     gap: 0.5rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    & > * {
+      scroll-snap-align: start;
+    }
 
     .loading {
       height: 15rem;
@@ -56,6 +86,7 @@
 
 @media (max-width: 769px) {
   .HomeListAll {
+    padding: 7px;
     .HomeListSection {
       .loading {
         height: 10rem;

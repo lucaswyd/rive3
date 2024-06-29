@@ -1,4 +1,6 @@
 .DetailPage {
+  margin-top: 49px;
+  box-sizing: border-box;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -9,6 +11,7 @@
   flex-direction: row;
   // gap: 1rem;
   .biggerPic {
+    margin-bottom: 40px;
     flex: 3;
     position: relative;
     border-radius: 1rem;
@@ -66,6 +69,7 @@
   }
 
   .DetailBanner {
+    margin-bottom: 40px;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -214,6 +218,7 @@
     }
   }
   .DetailPage {
+    box-sizing: border-box;
     height: unset;
     min-height: 100vh;
     overflow-y: auto;
@@ -261,6 +266,7 @@
       }
     }
     .detailBiggerPic {
+      box-sizing: border-box;
       width: 70%;
       // max-width: 100%;
       // min-width: 70%;

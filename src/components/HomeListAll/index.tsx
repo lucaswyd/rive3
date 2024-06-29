@@ -123,6 +123,19 @@ const HomeListAll = () => {
     fetchContinueWatchingData();
   }, []);
 
+  const scroll = (index: number, direction: "left" | "right") => {
+    const scrollAmount = direction === "left" ? -700 : 700;
+    const element = document.querySelectorAll(`.${styles.HomeListSection}`)[
+      index
+    ];
+    if (element) {
+      element.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div className={styles.HomeListAll}>
       <ToastContainer />
@@ -131,20 +144,12 @@ const HomeListAll = () => {
         Continue Assistindo
         <div className={styles.navigation}>
           <MdChevronLeft
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[0]
-                .scrollBy(-700, 0);
-            }}
+            onClick={() => scroll(0, "left")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Left"
           />
           <MdChevronRight
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[0]
-                .scrollBy(700, 0);
-            }}
+            onClick={() => scroll(0, "right")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Right"
           />
@@ -164,20 +169,12 @@ const HomeListAll = () => {
         Últimos Filmes
         <div className={styles.navigation}>
           <MdChevronLeft
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[1]
-                .scrollBy(-700, 0);
-            }}
+            onClick={() => scroll(1, "left")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Left"
           />
           <MdChevronRight
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[1]
-                .scrollBy(700, 0);
-            }}
+            onClick={() => scroll(1, "right")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Right"
           />
@@ -197,20 +194,12 @@ const HomeListAll = () => {
         Últimas Séries
         <div className={styles.navigation}>
           <MdChevronLeft
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[2]
-                .scrollBy(-700, 0);
-            }}
+            onClick={() => scroll(2, "left")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Left"
           />
           <MdChevronRight
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[2]
-                .scrollBy(700, 0);
-            }}
+            onClick={() => scroll(2, "right")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Right"
           />
@@ -230,20 +219,12 @@ const HomeListAll = () => {
         Filmes Populares
         <div className={styles.navigation}>
           <MdChevronLeft
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[3]
-                .scrollBy(-700, 0);
-            }}
+            onClick={() => scroll(3, "left")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Left"
           />
           <MdChevronRight
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[3]
-                .scrollBy(700, 0);
-            }}
+            onClick={() => scroll(3, "right")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Right"
           />
@@ -263,20 +244,12 @@ const HomeListAll = () => {
         Séries Populares
         <div className={styles.navigation}>
           <MdChevronLeft
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[4]
-                .scrollBy(-700, 0);
-            }}
+            onClick={() => scroll(4, "left")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Left"
           />
           <MdChevronRight
-            onClick={() => {
-              document
-                .querySelectorAll(`.${styles.HomeListSection}`)[4]
-                .scrollBy(700, 0);
-            }}
+            onClick={() => scroll(4, "right")}
             data-tooltip-id="tooltip"
             data-tooltip-content="Swipe Right"
           />

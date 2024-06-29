@@ -71,9 +71,9 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+
   font-family: "Roboto Mono", serif;
-  user-select: none;
+
   scroll-behavior: smooth;
 }
 
@@ -200,16 +200,18 @@ input {
 .top-bar {
   display: flex;
   justify-content: flex-end;
-  padding: 0px;
+  padding-bottom: 12px;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 3;
+  background-color: var(--primary-1);
 }
 
 // styles.module.scss
 
 .downloadButton {
+  padding-bottom: 5px;
   background: var(--ascent-color);
   color: var(--primary-1);
   border: none;

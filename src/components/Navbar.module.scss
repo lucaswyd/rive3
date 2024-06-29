@@ -15,11 +15,12 @@
 }
 
 .downloadButton {
+  margin: 0.4rem;
   background: var(--ascent-color);
   color: var(--primary-1);
   border: none;
   border-radius: 0.3rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0;
   cursor: pointer;
   font-size: 1rem;
   display: flex;

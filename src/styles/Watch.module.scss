@@ -25,8 +25,9 @@
   }
 }
 .iframe {
-  height: 95%;
-  width: 90%;
+  margin-top: 150px;
+  height: 80%;
+  width: 85%;
   border: none;
   outline: none;
   overflow: hidden;
@@ -36,6 +37,7 @@
   }
 }
 .source {
+  margin-top: 100px !important;
   position: absolute;
   flex-direction: row;
   top: 0rem;
@@ -114,7 +116,7 @@
   .source {
     position: absolute;
     top: -2rem;
-    width: 80%; /* Garante que a largura seja 100% */
+    width: 70%; /* Garante que a largura seja 100% */
     background: var(--bg-color);
     color: var(--ascent-color);
     outline: none;
@@ -124,7 +126,7 @@
     flex-wrap: wrap; /* Permite que os botões quebrem para a linha seguinte se necessário */
     justify-content: center; /* Centraliza os botões */
     margin: 1rem auto;
-    padding: 1rem; /* Adiciona um pouco de espaçamento interno */
+    padding: 0rem; /* Adiciona um pouco de espaçamento interno */
     z-index: 1;
 
     .sourceButton {
@@ -152,13 +154,13 @@
 
   .watch {
     padding-left: unset;
-    padding: 1.5rem 0.5rem;
+    padding: 6rem 0.5rem;
     padding-bottom: 5rem;
     position: relative;
 
     .iframe {
-      padding: 3rem 1rem;
-      height: 80%;
+      padding-bottom: 180px !important;
+      height: 50%;
       width: 100%;
       border: none;
       outline: none;
@@ -166,19 +168,15 @@
     }
 
     :where(.episodeControl) svg {
-      margin-top: 3rem;
+      margin-top: 9rem;
       font-size: 2rem;
       z-index: 1;
       position: relative;
-      margin-left: 4rem;
+      margin-left: 4.8rem;
       pointer-events: auto; /* Garantir que o svg em si seja clicável */
     }
     .backBtn svg {
-      margin-right: 2rem;
-
-      font-size: 3rem;
-      pointer-events: auto;
-      z-index: 1;
+      display: none !important;
     }
 
     :where(.episodeControl) {
