@@ -7,6 +7,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/Utils/firebase";
 import { logoutUser } from "@/Utils/firebaseUser";
 import { toast } from "sonner";
+import ColorPicker from "@/components/ColorPicker";
+import ThemeButtons from "@/components/ThemeButtons";
 
 const defaultColors = {
   ascent_color: "gold",
@@ -201,21 +203,17 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
         <h1>Conta</h1>
         {user ? (
           <div className={styles.group}>
-            <>
-              <p className={styles.logout} onClick={() => logoutUser()}>
-                Sair
-              </p>
-            </>
+            <p className={styles.logout} onClick={() => logoutUser()}>
+              Sair
+            </p>
             <h4 className={styles.profileCard}>
               Estamos corrigindo as falhas na Cloud da Watchlist
             </h4>
           </div>
         ) : (
           <div className={styles.group}>
-            <>
-              <Link href="/login">Login</Link>
-              <Link href="/signup">Signup</Link>
-            </>
+            <Link href="/login">Login</Link>
+            <Link href="/signup">Signup</Link>
             <h4 className={styles.profileCard}>
               Faça login para sincronizar com a nuvem
             </h4>
@@ -226,95 +224,56 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
           <div>
             <label htmlFor="mode">Voltar as cores padrão</label>
             <div>
-              <button
-                className={`${mode === "light" ? styles.selected : ""}`}
-                onClick={() => {
-                  handleSelect({ type: "mode", value: "light" });
-                }}
-              >
-                Claro
-              </button>
-              <button
-                className={`${mode === "dark" ? styles.selected : ""}`}
-                onClick={() => {
-                  handleSelect({ type: "mode", value: "dark" });
-                }}
-              >
-                Escuro
-              </button>
+              <ThemeButtons mode={mode} handleSelect={handleSelect} />
             </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="ascent_color">Botões </label>
-              <input
-                type="color"
-                id="ascent_color"
-                value={colors.ascent_color}
-                onChange={(e) => handleColorChange(e, "ascent_color")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="bg_color">Background </label>
-              <input
-                type="color"
-                id="bg_color"
-                value={colors.bg_color}
-                onChange={(e) => handleColorChange(e, "bg_color")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="bg_gradient">Widget 'Apenas PC' </label>
-              <input
-                type="color"
-                id="bg_gradient"
-                value={colors.bg_gradient}
-                onChange={(e) => handleColorChange(e, "bg_gradient")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="primary_1">Barra de Navegação </label>
-              <input
-                type="color"
-                id="primary_1"
-                value={colors.primary_1}
-                onChange={(e) => handleColorChange(e, "primary_1")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="primary_2">Textos </label>
-              <input
-                type="color"
-                id="primary_2"
-                value={colors.primary_2}
-                onChange={(e) => handleColorChange(e, "primary_2")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="primary_3">Titulo </label>
-              <input
-                type="color"
-                id="primary_3"
-                value={colors.primary_3}
-                onChange={(e) => handleColorChange(e, "primary_3")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="primary_4">Efeitos</label>
-              <input
-                type="color"
-                id="primary_4"
-                value={colors.primary_4}
-                onChange={(e) => handleColorChange(e, "primary_4")}
-              />
-            </div>
-            <div className={styles.colorPicker}>
-              <label htmlFor="watchPageBtn">Botão do próximo episódio </label>
-              <input
-                type="color"
-                id="watchPageBtn"
-                value={colors.watchPageBtn}
-                onChange={(e) => handleColorChange(e, "watchPageBtn")}
-              />
-            </div>
+            <ColorPicker
+              label="Botões"
+              color={colors.ascent_color}
+              colorName="ascent_color"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Background"
+              color={colors.bg_color}
+              colorName="bg_color"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Widget 'Apenas PC'"
+              color={colors.bg_gradient}
+              colorName="bg_gradient"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Barra de Navegação"
+              color={colors.primary_1}
+              colorName="primary_1"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Textos"
+              color={colors.primary_2}
+              colorName="primary_2"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Titulo"
+              color={colors.primary_3}
+              colorName="primary_3"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Efeitos"
+              color={colors.primary_4}
+              colorName="primary_4"
+              handleColorChange={handleColorChange}
+            />
+            <ColorPicker
+              label="Botão do próximo episódio"
+              color={colors.watchPageBtn}
+              colorName="watchPageBtn"
+              handleColorChange={handleColorChange}
+            />
           </div>
         </div>
         <h1>Centro da App</h1>

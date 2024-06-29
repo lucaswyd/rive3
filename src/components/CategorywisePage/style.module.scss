@@ -104,6 +104,7 @@
 
 @media (max-width: 769px) {
   .MoviePage {
+    width: 100vw;
     padding-left: unset;
     padding: 1.5rem 1rem;
     padding-bottom: 5rem;
@@ -111,11 +112,11 @@
       gap: 1rem;
     }
     .movieList {
-      gap: 1rem 0.5rem;
+      gap: 2rem 0.3rem;
       margin-bottom: 1.5rem;
       .loading {
         height: 10rem;
-        width: 7rem;
+        width: 10rem;
       }
     }
     .pagination {
