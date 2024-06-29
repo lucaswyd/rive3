@@ -23,7 +23,7 @@ const MovieCardSmall = ({ data, media_type }: any) => {
         setImageLoading(false);
       };
       img.onerror = (e) => {
-        console.error(e);
+        console.error("Image failed to load:", e);
       };
     }
   }, [data]);
@@ -35,29 +35,20 @@ const MovieCardSmall = ({ data, media_type }: any) => {
       className={styles.MovieCardSmall}
       aria-label={data?.name || "poster"}
     >
-      <div
-        className={`${styles.img} ${data?.poster_path !== null && data?.poster_path !== undefined ? "skeleton" : null}`}
-      >
+      <div className={`${styles.img} ${imageLoading ? "skeleton" : "loaded"}`}>
         <AnimatePresence mode="sync">
+          {imageLoading && <Skeleton width="100%" height="100%" />}
           <motion.img
             key={data?.id}
             src={imageUrl || ""}
             initial={{ opacity: 0 }}
-            animate={{
-              opacity: imageLoading ? 0 : 1,
-            }}
+            animate={{ opacity: imageLoading ? 0 : 1 }}
             height="100%"
             width="100%"
             exit="exit"
-            className={`${styles.img} ${imageLoading ? "skeleton" : null}`}
-            onLoad={() => {
-              setTimeout(() => {
-                setImageLoading(false);
-              }, 500);
-            }}
             loading="lazy"
             onError={(e) => console.log(e)}
-            alt={data?.id || "sm"}
+            alt={data?.title || data?.name || "sm"}
           />
         </AnimatePresence>
       </div>
