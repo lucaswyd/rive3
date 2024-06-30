@@ -159,8 +159,8 @@
     position: relative;
 
     .iframe {
-      padding-bottom: 180px !important;
-      height: 50%;
+      padding-bottom: 80px !important;
+      height: 80%;
       width: 100%;
       border: none;
       outline: none;
@@ -168,7 +168,8 @@
     }
 
     :where(.episodeControl) svg {
-      margin-top: 9rem;
+      box-sizing: border-box;
+      margin-top: 8.5rem;
       font-size: 2rem;
       z-index: 1;
       position: relative;
