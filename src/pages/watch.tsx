@@ -13,8 +13,7 @@ import Player from "@/components/Artplayer";
 const Watch = () => {
   const params = useSearchParams();
   const { back, push } = useRouter();
-
-  const [type, setType] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>("");
   const [id, setId] = useState<any>();
   const [season, setSeason] = useState<any>();
   const [episode, setEpisode] = useState<any>();
@@ -24,71 +23,82 @@ const Watch = () => {
   const [nextSeasonMinEpisodes, setNextSeasonMinEpisodes] = useState(1);
   const [loading, setLoading] = useState(true);
   const [watchDetails, setWatchDetails] = useState(false);
-  const [data, setData] = useState<any>();
-  const [seasonData, setSeasonData] = useState<any>();
+  const [data, setdata] = useState<any>();
+  const [seasondata, setseasonData] = useState<any>();
   const [source, setSource] = useState("WZ");
-  const [embedMode, setEmbedMode] = useState<any>(false);
+  const [embedMode, setEmbedMode] = useState<any>();
   const [nonEmbedSourcesIndex, setNonEmbedSourcesIndex] = useState<any>("");
   const [nonEmbedSources, setNonEmbedSources] = useState<any>("");
-  const [nonEmbedCaptions, setNonEmbedCaptions] = useState<any>();
+  const [nonEmbedCaptions, setnonEmbedCaptions] = useState<any>();
   const [nonEmbedVideoProviders, setNonEmbedVideoProviders] = useState([]);
   const [nonEmbedSourcesNotFound, setNonEmbedSourcesNotFound] =
     useState<any>(false);
+  const nextBtn: any = useRef(null);
+  const backBtn: any = useRef(null);
+  const moreBtn: any = useRef(null);
 
-  const nextBtn = useRef(null);
-  const backBtn = useRef(null);
-  const moreBtn = useRef(null);
+  if (type === null && params.get("id") !== null) setType(params.get("type"));
+  if (id === null && params.get("id") !== null) setId(params.get("id"));
+  if (season === null && params.get("season") !== null)
+    setSeason(params.get("season"));
+  if (episode === null && params.get("episode") !== null)
+    setEpisode(params.get("episode"));
 
   useEffect(() => {
-    if (params.get("type") !== null) setType(params.get("type"));
-    if (params.get("id") !== null) setId(params.get("id"));
-    if (params.get("season") !== null) setSeason(params.get("season"));
-    if (params.get("episode") !== null) setEpisode(params.get("episode"));
-
+    if (
+      localStorage.getItem("RiveStreamEmbedMode") !== undefined &&
+      localStorage.getItem("RiveStreamEmbedMode") !== null
+    )
+      setEmbedMode(
+        JSON.parse(localStorage.getItem("RiveStreamEmbedMode") || "false"),
+      );
+    else setEmbedMode(false);
+    const latestAgg: any = localStorage.getItem("RiveStreamLatestAgg");
+    if (latestAgg !== null && latestAgg !== undefined) setSource(latestAgg);
     setLoading(true);
+    setType(params.get("type"));
+    setId(params.get("id"));
+    setSeason(params.get("season"));
+    setEpisode(params.get("episode"));
     setContinueWatching({ type: params.get("type"), id: params.get("id") });
-
     const fetch = async () => {
-      const res = await axiosFetch({ requestID: `${type}Data`, id: id });
-      setData(res);
+      const res: any = await axiosFetch({ requestID: `${type}Data`, id: id });
+      setdata(res);
       setMaxSeason(res?.number_of_seasons);
       const seasonData = await axiosFetch({
         requestID: `tvEpisodes`,
         id: id,
         season: season,
       });
-      setSeasonData(seasonData);
-      if (seasonData?.episodes?.length > 0) {
+      setseasonData(seasonData);
+      seasonData?.episodes?.length > 0 &&
         setMaxEpisodes(
           seasonData?.episodes[seasonData?.episodes?.length - 1]
             ?.episode_number,
         );
-        setMinEpisodes(seasonData?.episodes[0]?.episode_number);
-      }
+      setMinEpisodes(seasonData?.episodes[0]?.episode_number);
       if (parseInt(episode) >= maxEpisodes - 1) {
-        const nextSeasonData = await axiosFetch({
+        var nextseasonData = await axiosFetch({
           requestID: `tvEpisodes`,
           id: id,
           season: parseInt(season) + 1,
         });
-        if (nextSeasonData?.episodes?.length > 0) {
-          setNextSeasonMinEpisodes(nextSeasonData?.episodes[0]?.episode_number);
-        }
+        nextseasonData?.episodes?.length > 0 &&
+          setNextSeasonMinEpisodes(nextseasonData?.episodes[0]?.episode_number);
       }
     };
-
     if (type === "tv") fetch();
 
     const handleKeyDown = (event: any) => {
       if (event.shiftKey && event.key === "N") {
         event.preventDefault();
-        nextBtn?.current.click();
+        if (nextBtn?.current) nextBtn.current.click();
       } else if (event.shiftKey && event.key === "P") {
         event.preventDefault();
-        backBtn?.current.click();
+        if (backBtn?.current) backBtn.current.click();
       } else if (event.shiftKey && event.key === "M") {
         event.preventDefault();
-        moreBtn?.current.click();
+        if (moreBtn?.current) moreBtn.current.click();
       }
     };
 
@@ -101,68 +111,81 @@ const Watch = () => {
 
   useEffect(() => {
     let autoEmbedMode: NodeJS.Timeout;
-    if (!embedMode && id) {
+    if (embedMode === false && id !== undefined && id !== null) {
       const fetch = async () => {
-        const providers = await axiosFetch({
+        const providers: any = await axiosFetch({
           requestID: `VideoProviderServices`,
         });
         setNonEmbedVideoProviders(
-          providers?.data?.map((ele: any) => ({
-            name: ele,
-            status: "available",
-          })),
+          providers?.data?.map((ele: any) => {
+            return {
+              name: ele,
+              status: "available",
+            };
+          }),
         );
-        const res = { sources: [], captions: [] };
+        const res: any = { sources: [], captions: [] };
         for (const ele of providers?.data || []) {
           setNonEmbedVideoProviders((prevProviders: any) =>
-            prevProviders.map((provider: any) =>
-              provider.name === ele
-                ? { ...provider, status: "fetching" }
-                : provider,
-            ),
+            prevProviders.map((provider: any) => {
+              if (provider.name === ele) {
+                return {
+                  ...provider,
+                  status: "fetching",
+                };
+              }
+              return provider;
+            }),
           );
           try {
-            const tempRes = await axiosFetch({
+            const tempRes: any = await axiosFetch({
               requestID: `${type}VideoProvider`,
               id: id,
               season: season,
               episode: episode,
               service: ele,
             });
+            console.log({ tempRes });
+
             tempRes?.data?.sources?.forEach((source: any) => {
               res.sources.push(source);
             });
             tempRes?.data?.captions?.forEach((caption: any) => {
               res.captions.push(caption);
             });
+
             setNonEmbedVideoProviders((prevProviders: any) =>
-              prevProviders.map((provider: any) =>
-                provider.name === ele
-                  ? {
-                      ...provider,
-                      status:
-                        tempRes?.data?.sources?.length > 0
-                          ? "success"
-                          : "error",
-                    }
-                  : provider,
-              ),
+              prevProviders.map((provider: any) => {
+                if (provider.name === ele) {
+                  return {
+                    ...provider,
+                    status:
+                      tempRes?.data?.sources?.length > 0 ? "success" : "error",
+                  };
+                }
+                return provider;
+              }),
             );
           } catch (error) {
             console.error(`Error fetching data for provider ${ele}:`, error);
             setNonEmbedVideoProviders((prevProviders: any) =>
-              prevProviders.map((provider: any) =>
-                provider.name === ele
-                  ? { ...provider, status: "error" }
-                  : provider,
-              ),
+              prevProviders.map((provider: any) => {
+                if (provider.name === ele) {
+                  return {
+                    ...provider,
+                    status: "error",
+                  };
+                }
+                return provider;
+              }),
             );
           }
         }
-        if (res.sources.length > 0) {
-          setNonEmbedSources(res.sources);
-          setNonEmbedSourcesIndex(0);
-          setNonEmbedCaptions(res.captions);
+        console.log({ res });
+        if (res?.sources?.length > 0) {
+          setNonEmbedSources(res?.sources);
+          res?.sources?.length > 0 ? setNonEmbedSourcesIndex(0) : null;
+          setnonEmbedCaptions(res?.captions);
           clearTimeout(autoEmbedMode);
           setNonEmbedSourcesNotFound(false);
         } else {
@@ -177,14 +200,13 @@ const Watch = () => {
     }
   }, [params, id, season, episode, embedMode]);
 
-  const handleBackward = () => {
+  function handleBackward() {
     if (episode > minEpisodes)
       push(
         `/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) - 1}`,
       );
-  };
-
-  const handleForward = () => {
+  }
+  function handleForward() {
     if (episode < maxEpisodes)
       push(
         `/watch?type=tv&id=${id}&season=${season}&episode=${parseInt(episode) + 1}`,
@@ -193,7 +215,7 @@ const Watch = () => {
       push(
         `/watch?type=tv&id=${id}&season=${parseInt(season) + 1}&episode=${nextSeasonMinEpisodes}`,
       );
-  };
+  }
 
   const handleButtonClick = (value: string) => {
     setSource(value);
@@ -280,6 +302,7 @@ const Watch = () => {
         >
           ADS FREE
         </button>
+
         <button
           className={`${styles.sourceButton} ${source === "MULTI" ? styles.active : ""}`}
           onClick={() => handleButtonClick("MULTI")}
@@ -320,7 +343,7 @@ const Watch = () => {
 
       <div className={`${styles.loader} skeleton`}></div>
 
-      {source === "AGG" && id && (
+      {source === "AGG" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
@@ -334,7 +357,7 @@ const Watch = () => {
           referrerPolicy="origin"
         ></iframe>
       )}
-      {source === "VID" && id && (
+      {source === "VID" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
@@ -348,7 +371,7 @@ const Watch = () => {
           referrerPolicy="origin"
         ></iframe>
       )}
-      {source === "PRO" && id && (
+      {source === "PRO" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
@@ -362,7 +385,7 @@ const Watch = () => {
           referrerPolicy="origin"
         ></iframe>
       )}
-      {source === "EMB" && id && (
+      {source === "EMB" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
@@ -376,7 +399,7 @@ const Watch = () => {
           referrerPolicy="origin"
         ></iframe>
       )}
-      {source === "MULTI" && id && (
+      {source === "MULTI" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
@@ -390,7 +413,7 @@ const Watch = () => {
           referrerPolicy="origin"
         ></iframe>
       )}
-      {source === "SUP" && id && (
+      {source === "SUP" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
@@ -404,14 +427,15 @@ const Watch = () => {
           referrerPolicy="origin"
         ></iframe>
       )}
-      {source === "WZ" && id && (
+
+      {source === "WZ" && id !== "" && id !== null && (
         <iframe
           scrolling="no"
           src={
             type === "movie"
               ? `${STREAM_URL_WZ}/media/tmdb-movie-${id}`
-              : seasonData?.episodes?.length > 0
-                ? `${STREAM_URL_WZ}/media/tmdb-tv-${id}/${seasonData.id}/${seasonData.episodes[Math.abs(episode - seasonData.episodes[0].episode_number)].id}`
+              : seasondata?.episodes?.length > 0
+                ? `${STREAM_URL_WZ}/media/tmdb-tv-${id}/${seasondata.id}/${seasondata.episodes[Math.abs(episode - seasondata.episodes[0].episode_number)].id}`
                 : `${STREAM_URL_WZ}/media/tmdb-tv-${id}`
           }
           className={styles.iframe}
