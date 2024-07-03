@@ -1,9 +1,8 @@
 {
-  "id": "com.example.warez",
+  "id": "pt.wareztuga.app",
   "theme_color": "#f4f7fe",
   "background_color": "#f4f7fe",
-  "display": "fullscreen",
-  "orientation": "portrait",
+  "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "name": "Warez",
