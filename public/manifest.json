@@ -1,21 +1,12 @@
 {
-  "id": "pt.wareztuga.app",
   "theme_color": "#f4f7fe",
   "background_color": "#f4f7fe",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "name": "Warez",
-  "short_name": "Warez",
-  "description": "App de Filmes e Séries Grátis",
-  "categories": [
-    "entertainment",
-    "movies",
-    "tv"
-  ],
-  "iarc_rating_id": "IARC-ID",
-  "lang": "pt-BR",
-  "prefer_related_applications": false,
+  "short_name": "WZT",
+  "description": "App de Filmes e Series Gratis",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
@@ -39,13 +30,9 @@
       "type": "image/png"
     },
     {
-      "src": "/images/logolmg.svg",
+      "src": "/images/logolmg.png",
       "sizes": "any",
       "type": "image/png"
     }
-  ],
-  "launch_handler": {
-    "route_to": "auto"
-  },
-  "scope_extension": "/extended-scope"
+  ]
 }
