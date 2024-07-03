@@ -13,11 +13,12 @@ interface Fetch {
   query?: string;
   season?: number;
   episode?: number;
+  service?: string;
 }
 export default async function axiosFetch({
   requestID,
   id,
-  language = "en-US",
+  language = "pt-PT",
   page = 1,
   genreKeywords,
   sortBy = "popularity.desc",
@@ -26,6 +27,7 @@ export default async function axiosFetch({
   query,
   season,
   episode,
+  service,
 }: Fetch) {
   const request = requestID;
   // const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
@@ -56,7 +58,7 @@ export default async function axiosFetch({
     tvData: `${baseURL}?id=${id}&requestID=tvData&language=${language}`,
     personData: `${baseURL}?id=${id}&requestID=personData&language=${language}`,
     movieVideos: `${baseURL}?id=${id}&requestID=movieVideos&language=${language}`,
-    tvVideos: `${baseURL}?id=${id}/&?requestID=tvVideos&language=${language}`,
+    tvVideos: `${baseURL}?id=${id}&requestID=tvVideos&language=${language}`,
     movieImages: `${baseURL}?id=${id}&requestID=movieImages`,
     tvImages: `${baseURL}?id=${id}&requestID=tvImages`,
     personImages: `${baseURL}?id=${id}&requestID=personImages`,
@@ -84,21 +86,39 @@ export default async function axiosFetch({
     // collections
     collection: `${baseURL}?requestID=collection&id=${id}`,
     searchCollection: `${baseURL}?requestID=searchCollection&query=${query}&page=${page}`,
+
+    // withKeywords
+    withKeywordsTv: `${baseURL}?requestID=withKeywordsTv&genreKeywords=${genreKeywords}&language=${language}&sortBy=${sortBy}${year != undefined ? "&year=" + year : ""}${country != undefined ? "&country=" + country : ""}&page=${page}`,
+    withKeywordsMovie: `${baseURL}?requestID=withKeywordsMovie&genreKeywords=${genreKeywords}&language=${language}&sortBy=${sortBy}${year != undefined ? "&year=" + year : ""}${country != undefined ? "&country=" + country : ""}&page=${page}`,
+
+    // provider
+    VideoProviderServices: `${baseURL}?requestID=VideoProviderServices`,
+    movieVideoProvider: `${baseURL}?requestID=movieVideoProvider&id=${id}&service=${service}`,
+    tvVideoProvider: `${baseURL}?requestID=tvVideoProvider&id=${id}&season=${season}&episode=${episode}&service=${service}`,
+
+    // EXTERNAL provider
+    movieExternalVideoProvider: `${baseURL}?requestID=movieExternalVideoProvider&id=${id}`,
+    tvExternalVideoProvider: `${baseURL}?requestID=tvExternalVideoProvider&id=${id}&season=${season}&episode=${episode}`,
   };
   const final_request = requests[request];
   // console.log({ final_request });
 
   // client side caching
   const cacheKey = final_request;
-  const cachedResult = getCache(cacheKey);
-  if (cachedResult) {
+  const cachedResult = await getCache(cacheKey);
+  if (
+    cachedResult &&
+    cachedResult !== null &&
+    cachedResult !== undefined &&
+    cachedResult !== ""
+  ) {
     return await cachedResult;
   }
 
   try {
     const response = await axios.get(final_request);
-    setCache(cacheKey, response?.data);
-    return await response.data; // Return the resolved data from the response
+    if (response?.data?.data !== null) setCache(cacheKey, response?.data);
+    return await response?.data; // Return the resolved data from the response
   } catch (error) {
     console.error("Error fetching data:", error);
     // Handle errors appropriately (e.g., throw a custom error or return null)

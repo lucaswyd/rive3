@@ -12,11 +12,12 @@ interface Fetch {
   query?: string;
   season?: number;
   episode?: number;
+  service?: string;
 }
 export default async function axiosFetch({
   requestID,
   id,
-  language,
+  language = "pt-PT",
   page = 1,
   genreKeywords,
   sortBy,
@@ -25,21 +26,25 @@ export default async function axiosFetch({
   query,
   season,
   episode,
+  service,
 }: Fetch) {
   const request = requestID;
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-  const baseURL = "https://api.themoviedb.org/3";
+  const baseURL = process.env.NEXT_PUBLIC_TMDB_API;
+  const randomURL = process.env.NEXT_PUBLIC_RANDOM_URL;
+  const ProviderURL = process.env.NEXT_PUBLIC_PROVIDER_URL;
+  const ExternalProviderURL = process.env.NEXT_PUBLIC_EXTERNAL_PROVIDER_URL;
   const requests: any = {
-    latestMovie: `${baseURL}/movie/now_playing?language=pt-PT&page=${page}`, //nowPlayingMovie
+    latestMovie: `${baseURL}/movie/now_playing?language=${language}&page=${page}`, //nowPlayingMovie
     latestTv: `${baseURL}/tv/airing_today?language=${language}&page=${page}`, // airingTodayTv
     popularMovie: `${baseURL}/movie/popular?language=${language}&page=${page}&sort_by=${sortBy}`, // current popular, so similar to latestMovie data
     popularTv: `${baseURL}/tv/popular?language=${language}&page=${page}&sort_by=${sortBy}`,
     topRatedMovie: `${baseURL}/movie/top_rated?language=${language}&page=${page}`,
     topRatedTv: `${baseURL}/tv/top_rated?language=${language}&page=${page}`,
     filterMovie: `${baseURL}/discover/movie?with_genres=${genreKeywords}&language=${language}&sort_by=${sortBy}${year != undefined ? "&year=" + year : ""}${country != undefined ? "&with_origin_country=" + country : ""}&page=${page}`,
-    filterTv: `${baseURL}/discover/tv?with_genres=${genreKeywords}&language=${language}&sort_by=${sortBy}${year != undefined ? "&first_air_date_year=" + year : ""}${country != undefined ? "&with_origin_country=" + country : ""}&page=${page}`,
+    filterTv: `${baseURL}/discover/tv?with_genres=${genreKeywords}&language=${language}&sort_by=${sortBy}${year != undefined ? "&first_air_date_year=" + year : ""}${country != undefined ? "&with_origin_country=" + country : ""}&page=${page}&with_runtime.gte=1`,
     onTheAirTv: `${baseURL}/tv/on_the_air?language=${language}&page=${page}`,
-    trending: `${baseURL}/trending/all/day?language=pt-PT&page=${page}`,
+    trending: `${baseURL}/trending/all/day?language=${language}&page=${page}`,
     trendingMovie: `${baseURL}/trending/movie/week?language=${language}&page=${page}`,
     trendingTv: `${baseURL}/trending/tv/week?language=${language}&page=${page}`,
     trendingMovieDay: `${baseURL}/trending/movie/day?language=${language}&page=${page}`,
@@ -48,11 +53,10 @@ export default async function axiosFetch({
     searchKeyword: `${baseURL}/search/keyword?query=${query}&language=${language}&page=${page}`,
     searchMovie: `${baseURL}/search/movie?query=${query}&language=${language}&page=${page}`,
     searchTv: `${baseURL}/search/tv?query=${query}&language=${language}&page=${page}`,
-    discover: `${baseURL}/discover/tv?with_network=213&${language}&page=${page}`,
 
     // for a ID
-    movieData: `${baseURL}/movie/${id}?language=pt-PT`,
-    tvData: `${baseURL}/tv/${id}?language=pt-PT`,
+    movieData: `${baseURL}/movie/${id}?language=${language}`,
+    tvData: `${baseURL}/tv/${id}?language=${language}`,
     personData: `${baseURL}/person/${id}?language=${language}`,
     movieVideos: `${baseURL}/movie/${id}/videos?language=${language}`,
     tvVideos: `${baseURL}/tv/${id}/videos?language=${language}`,
@@ -75,10 +79,30 @@ export default async function axiosFetch({
     personTv: `${baseURL}/person/${id}/tv_credits?language=${language}&page=${page}`,
 
     // filters
-    genresMovie: `${baseURL}/genre/movie/list?language=pt-PT`,
-    genresTv: `${baseURL}/genre/tv/list?language=pt-PT`,
-    countries: `${baseURL}/configuration/countries?language=pt-PT`,
+    genresMovie: `${baseURL}/genre/movie/list?language=${language}`,
+    genresTv: `${baseURL}/genre/tv/list?language=${language}`,
+    countries: `${baseURL}/configuration/countries?language=${language}`,
     languages: `${baseURL}/configuration/languages`,
+
+    // random
+    random: `${randomURL}`,
+
+    // collections
+    collection: `${baseURL}/collection/${id}?language=${language}`,
+    searchCollection: `${baseURL}/search/collection?query=${query}&language=${language}&page=${page}`,
+
+    // withKeywords
+    withKeywordsTv: `${baseURL}/discover/tv?with_keywords=${genreKeywords}&language=${language}&sort_by=${sortBy}${year != undefined ? "&first_air_date_year=" + year : ""}${country != undefined ? "&with_origin_country=" + country : ""}&page=${page}&air_date.lte=${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}${sortBy === "first_air_date.desc" ? "&with_runtime.gte=1" : null}`,
+    withKeywordsMovie: `${baseURL}/discover/movie?with_keywords=${genreKeywords}&language=${language}&sort_by=${sortBy}${year != undefined ? "&first_air_date_year=" + year : ""}${country != undefined ? "&with_origin_country=" + country : ""}&page=${page}&release_date.lte=${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}&with_runtime.gte=1`,
+
+    // provider
+    VideoProviderServices: `${ProviderURL}/providers`,
+    movieVideoProvider: `${ProviderURL}/${service}/movie/${id}`,
+    tvVideoProvider: `${ProviderURL}/${service}/tv/${id}/${season}/${episode}`,
+
+    // External provider
+    movieExternalVideoProvider: `${ExternalProviderURL}/${id}?s=0&e=0`,
+    tvExternalVideoProvider: `${ExternalProviderURL}/${id}?s=${season}e=${episode}&e=0`,
   };
   const final_request = requests[request];
   // console.log({ final_request });
@@ -87,7 +111,7 @@ export default async function axiosFetch({
     const response = await axios.get(final_request, {
       params: { api_key: API_KEY },
     });
-    return await response.data; // Return the resolved data from the response
+    return await response?.data; // Return the resolved data from the response
   } catch (error) {
     console.error("Error fetching data:", error);
     // Handle errors appropriately (e.g., throw a custom error or return null)

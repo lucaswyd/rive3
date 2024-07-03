@@ -67,6 +67,9 @@ export default function App({ Component, pageProps }: any) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
+      const DisableDevtool = require("disable-devtool");
+      DisableDevtool();
+
       // Recupera as cores personalizadas do localStorage e aplica
       const savedColors = localStorage.getItem("colors");
       if (savedColors) {
